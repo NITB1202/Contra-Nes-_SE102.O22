@@ -6,12 +6,12 @@ C:\Program Files (x86)\Windows Kits\10\Include\10.0.22000.0\um\dinput.h(48,1): m
   C:\Program Files (x86)\Windows Kits\10\Include\10.0.22000.0\um\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
 C:\Users\ADMIN\Desktop\Contra\Contra\Game.h(8,1): warning C4005: 'DIRECTINPUT_VERSION': macro redefinition
 C:\Program Files (x86)\Windows Kits\10\Include\10.0.22000.0\um\dinput.h(48,1): message : see previous definition of 'DIRECTINPUT_VERSION'
-C:\Users\ADMIN\Desktop\Contra\Contra\Player.cpp(37,7): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+C:\Users\ADMIN\Desktop\Contra\Contra\Player.cpp(80,7): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
   WinMain.cpp
   C:\Program Files (x86)\Windows Kits\10\Include\10.0.22000.0\um\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
 C:\Users\ADMIN\Desktop\Contra\Contra\Game.h(8,1): warning C4005: 'DIRECTINPUT_VERSION': macro redefinition
 C:\Program Files (x86)\Windows Kits\10\Include\10.0.22000.0\um\dinput.h(48,1): message : see previous definition of 'DIRECTINPUT_VERSION'
-C:\Users\ADMIN\Desktop\Contra\Contra\WinMain.cpp(212,6): warning C4101: 'msg': unreferenced local variable
+C:\Users\ADMIN\Desktop\Contra\Contra\WinMain.cpp(221,6): warning C4101: 'msg': unreferenced local variable
   Generating Code...
-C:\Users\ADMIN\Desktop\Contra\Contra\Player.cpp(96): warning C4715: 'Player::IsPressed': not all control paths return a value
+C:\Users\ADMIN\Desktop\Contra\Contra\Player.cpp(203): warning C4715: 'Player::IsPressed': not all control paths return a value
   Contra.vcxproj -> C:\Users\ADMIN\Desktop\Contra\x64\Debug\Contra.exe

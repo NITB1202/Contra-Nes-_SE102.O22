@@ -3,10 +3,10 @@
 
 void AnimationHandler::setIDLE(int ID, float x, float y)
 {
+	if (currentFrame != -1) currentFrame = -1;
 	Animation ani = AnimationLib::GetInstance()->GetAnimation(ID);
-	RECT rect = ani.GetSprite(0);
 	lastRendertime = GetTickCount64();
-	Game::GetInstance()->Draw(x, y, ani.GetTexture(), &rect, ani.GetScaleX(), ani.GetScaleY());
+	Game::GetInstance()->Draw(x, y, ani.GetTexture(), ani.GetScaleX(), ani.GetScaleY(),flipHorizontal);
 }
 
 void AnimationHandler::Render(int ID, float x, float y)
@@ -31,5 +31,13 @@ void AnimationHandler::Render(int ID, float x, float y)
 	}
 
 	RECT rect = ani.GetSprite(currentFrame);
-	Game::GetInstance()->Draw(x, y, ani.GetTexture(), &rect, ani.GetScaleX(), ani.GetScaleY());
+	Game::GetInstance()->Draw(x, y, ani.GetTexture(), ani.GetScaleX(), ani.GetScaleY(),flipHorizontal,&rect);
+}
+
+void AnimationHandler::FlipSpriteHorizontal(bool flip)
+{
+	if (flip)
+		flipHorizontal = 1;
+	else
+		flipHorizontal = 0;
 }

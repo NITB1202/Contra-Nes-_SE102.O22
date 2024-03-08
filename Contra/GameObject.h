@@ -14,6 +14,7 @@ protected:
 	float vx;
 	float vy;
 
+	int state = -1;
 	int AnimationID = -1;
 	AnimationHandler AniHandler;
 
@@ -30,13 +31,14 @@ public:
 	void SetPosition(float x, float y) { this->x = x, this->y = y; }
 	void SetSpeed(float vx, float vy) { this->vx = vx, this->vy = vy; }
 
-	virtual void SetState(int state) { AnimationID = state; }
-	int GetState() { return this->AnimationID; }
+	virtual void SetState(int state) { this->state = state; }
+	int GetState() { return state; }
 
 	float GetX() { return x; }
 	float GetY() { return y; }
 	float GetVx() { return vx; }
 	float GetVy() { return vy; }
+	AnimationHandler GetAnimationHandler() { return AniHandler; }
 
 	virtual void Update(DWORD dt) = 0;
 	virtual void Render() = 0;

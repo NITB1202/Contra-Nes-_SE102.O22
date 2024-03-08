@@ -27,8 +27,8 @@ int GameRun();
 void Render();
 void Update(DWORD dt);
 
-#define PLAYER_START_X 20
-#define PLAYER_START_Y 250
+#define PLAYER_START_X 50
+#define PLAYER_START_Y 200
 
 vector<LPGAMEOBJECT> gameObject;
 
@@ -55,22 +55,31 @@ void LoadResource()
 	LPTEXTURE tex;
 	AnimationLib* aniLib = AnimationLib::GetInstance();
 
-	tex = game->LoadTexture(TEXTURE_PATH_RUNMAN_LEFT);
-	aniLib->AddAnimation(RUNMAN_RUN_LEFT_ANIMATION, Animation(tex, RUNMAN_SPRITE_WIDTH, RUNMAN_SPRITE_HEIGHT, 2, 2));
-
 	tex = game->LoadTexture(TEXTURE_PATH_RUNMAN_RIGHT);
 	aniLib->AddAnimation(RUNMAN_RUN_RIGHT_ANIMATION, Animation(tex, RUNMAN_SPRITE_WIDTH, RUNMAN_SPRITE_HEIGHT, 2, 2));
 	
 	tex= game->LoadTexture(TEXTURE_PATH_PLAYER_RUN_RIGHT);
 	aniLib->AddAnimation(PLAYER_RUN_RIGHT_ANIMATION, Animation(tex, PLAYER_SPRITE_WIDTH, PLAYER_SPRITE_HEIGHT, 2, 2));
 
-	tex = game->LoadTexture(TEXTURE_PATH_PLAYER_RUN_LEFT);
-	aniLib->AddAnimation(PLAYER_RUN_LEFT_ANIMATION, Animation(tex, PLAYER_SPRITE_WIDTH, PLAYER_SPRITE_HEIGHT, 2, 2));
-
 	tex = game->LoadTexture(TEXTURE_PATH_PLAYER_TOP_RIGHT);
-	aniLib->AddAnimation(PLAYER_TOP_RIGHT, Animation(tex, PLAYER_SPRITE_WIDTH, PLAYER_SPRITE_HEIGHT, 2, 2));
+	aniLib->AddAnimation(PLAYER_TOP_RIGHT_ANIMATION, Animation(tex, PLAYER_SPRITE_WIDTH, PLAYER_SPRITE_HEIGHT, 2, 2));
 
-	player->SetState(PLAYER_RUN_RIGHT_ANIMATION);
+	tex = game->LoadTexture(TEXTURE_PATH_PLAYER_DOWN_RIGHT);
+	aniLib->AddAnimation(PLAYER_DOWN_RIGHT_ANIMATION, Animation(tex, PLAYER_SPRITE_WIDTH, PLAYER_SPRITE_HEIGHT, 2, 2));
+
+	tex = game->LoadTexture(TEXTURE_PATH_PLAYER_FACE_RIGHT_IDLE);
+	aniLib->AddAnimation(PLAYER_IDLE_RIGHT_ANIMATION, Animation(tex, PLAYER_SPRITE_WIDTH, PLAYER_SPRITE_HEIGHT, 2, 2));
+
+	tex = game->LoadTexture(TEXURE_PATH_PLAYER_GUN_UP);
+	aniLib->AddAnimation(PLAYER_GUN_UP, Animation(tex, PLAYER_SPRITE_WIDTH, PLAYER_GUN_UP_HEIGHT, 2, 2));
+
+	tex = game->LoadTexture(TEXURE_PATH_PLAYER_LAY_DOWN);
+	aniLib->AddAnimation(PLAYER_LAY_DOWN_ANIMATION, Animation(tex, PLAYER_LAY_DOWN_WIDTH, PLAYER_SPRITE_HEIGHT, 2, 2));
+
+	tex = game->LoadTexture(TEXTURE_PATH_PLAYER_JUMP_UP);
+	aniLib->AddAnimation(PLAYER_JUMP_UP, Animation(tex, PLAYER_JUMP_WIDTH, PLAYER_JUMP_HEIGHT, 2, 2));
+
+	player->SetState(PLAYER_IDLE_RIGHT);
 
 	gameObject.push_back(runman);
 	gameObject.push_back(player);

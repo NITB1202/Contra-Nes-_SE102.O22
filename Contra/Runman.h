@@ -8,8 +8,6 @@ public:
 	void Render() override;
 	void Update(DWORD dt) override;
 };
-
-#define TEXTURE_PATH_RUNMAN_LEFT L"image\\Enemy\\run_man_left.png"
 #define TEXTURE_PATH_RUNMAN_RIGHT L"image\\Enemy\\run_man_right.png"
 
 #define RUNMAN_SPRITE_WIDTH 24

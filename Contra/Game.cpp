@@ -162,7 +162,7 @@ LPTEXTURE Game::LoadTexture(LPCWSTR texturePath)
 	return new Texture(tex, gSpriteTextureRV);
 }
 
-void Game::Draw(float x, float y, LPTEXTURE tex, RECT* rect, float scaleX, float scaleY)
+void Game::Draw(float x, float y, LPTEXTURE tex, float scaleX, float scaleY, int flipHorizontal, RECT* rect)
 {
 	if (tex == NULL) return;
 
@@ -176,27 +176,35 @@ void Game::Draw(float x, float y, LPTEXTURE tex, RECT* rect, float scaleX, float
 
 	if (rect == NULL)
 	{
+		spriteWidth = tex->getWidth();
+		spriteHeight = tex->getHeight();
+
 		// top-left location in U,V coords
 		sprite.TexCoord.x = 0;
 		sprite.TexCoord.y = 0;
 
 		// Determine the texture size in U,V coords
-		sprite.TexSize.x = 1.0f;
-		sprite.TexSize.y = 1.0f;
+		sprite.TexSize.x = 1;
+		sprite.TexSize.y = 1;
 
-		spriteWidth = tex->getWidth();
-		spriteHeight = tex->getHeight();
 	}
 	else
 	{
 		sprite.TexCoord.x = rect->left / (float)tex->getWidth();
 		sprite.TexCoord.y = rect->top / (float)tex->getHeight();
 
-		spriteWidth = (rect->right - rect->left + 1);
-		spriteHeight = (rect->bottom - rect->top + 1);
+		spriteWidth = rect->right - rect->left;
+		spriteHeight = rect->bottom - rect->top;
 
 		sprite.TexSize.x = spriteWidth / (float)tex->getWidth();
 		sprite.TexSize.y = spriteHeight / (float)tex->getHeight();
+	}
+
+
+	if (flipHorizontal)
+	{
+		sprite.TexCoord.x = sprite.TexCoord.x + sprite.TexSize.x;
+		sprite.TexSize.x = -sprite.TexSize.x;
 	}
 
 	// Set the texture index. Single textures will use 0
@@ -204,7 +212,6 @@ void Game::Draw(float x, float y, LPTEXTURE tex, RECT* rect, float scaleX, float
 
 	// The color to apply to this sprite, full color applies white.
 	sprite.ColorModulate = D3DXCOLOR(1, 1, 1, 1);
-
 	//
 	// Build the rendering matrix based on sprite location 
 	//
@@ -224,6 +231,7 @@ void Game::Draw(float x, float y, LPTEXTURE tex, RECT* rect, float scaleX, float
 
 	spriteHandler->DrawSpritesImmediate(&sprite, 1, 0, 0);
 }
+
 int Game::IsKeyDown(int KeyCode)
 {
 	return (keyStates[KeyCode] & 0x80) > 0;

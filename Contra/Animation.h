@@ -13,6 +13,7 @@ class Animation
 	float scaleY;
 
 	int size;
+
 public:
 
 	Animation(LPTEXTURE tex = NULL, int sw = 0, int sh = 0, float sx = 1,float sy = 1)

@@ -6,7 +6,7 @@ void Runman::Update(DWORD dt)
 
 	int BackBufferWidth = Game::GetInstance()->GetBackBufferWidth();
 
-	if (x <= RUNMAN_SPRITE_WIDTH / 2 || x >= BackBufferWidth - RUNMAN_SPRITE_WIDTH) {
+	if (x <= RUNMAN_SPRITE_WIDTH  || x >= BackBufferWidth - RUNMAN_SPRITE_WIDTH) {
 
 		vx = -vx;
 
@@ -24,9 +24,15 @@ void Runman::Update(DWORD dt)
 void Runman::Render()
 {
 	if (vx >= 0)
+	{
+		AniHandler.FlipSpriteHorizontal(0);
 		AnimationID = RUNMAN_RUN_RIGHT_ANIMATION;
+	}
 	else
-		AnimationID = RUNMAN_RUN_LEFT_ANIMATION;
+	{
+		AniHandler.FlipSpriteHorizontal(1);
+		AnimationID = RUNMAN_RUN_RIGHT_ANIMATION;
+	}
 
 	AniHandler.Render(AnimationID, x, y);
 }

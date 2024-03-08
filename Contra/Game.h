@@ -48,7 +48,7 @@ public:
 	void ProcessKeyboard();
 
 	LPTEXTURE LoadTexture(LPCWSTR texturePath);
-	void Draw(float x, float y, LPTEXTURE tex, RECT* rect = NULL, float scaleX = 1,float scaleY = 1);
+	void Draw(float x, float y, LPTEXTURE tex, float scaleX = 1, float scaleY = 1, int flipHorizontal = 0, RECT* rect = NULL);
 
 	ID3D10Device* GetDirect3DDevice() { return this->pD3DDevice; }
 	IDXGISwapChain* GetSwapChain() { return this->pSwapChain; }
