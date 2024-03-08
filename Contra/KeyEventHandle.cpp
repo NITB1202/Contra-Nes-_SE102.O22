@@ -15,7 +15,7 @@ void KeyEventHandler::KeyState(BYTE* state)
 	if (player->GetState() == PLAYER_JUMP_UP)
 		return;
 
-	if (player->IsPressed(2))
+	if (player->IsPressed(DIK_RIGHT))
 	{
 		player->SetState(PLAYER_RUN_RIGHT);
 
@@ -28,7 +28,7 @@ void KeyEventHandler::KeyState(BYTE* state)
 		return;
 	}
 
-	if (player->IsPressed(4))
+	if (player->IsPressed(DIK_LEFT))
 	{
 		player->SetState(PLAYER_RUN_LEFT);
 
@@ -41,13 +41,13 @@ void KeyEventHandler::KeyState(BYTE* state)
 		return;
 	}
 
-	if (player->IsPressed(1))
+	if (player->IsPressed(DIK_UP))
 	{
 		player->SetState(PLAYER_GUN_UP);
 		return;
 	}
 
-	if (player->IsPressed(3))
+	if (player->IsPressed(DIK_DOWN))
 	{
 		player->SetState(PLAYER_LAY_DOWN);
 		return;
@@ -71,16 +71,16 @@ void KeyEventHandler::OnKeyDown(int KeyCode)
 		}
 		break;
 	case DIK_RIGHT:
-		player->Press(2);
+		player->Press(DIK_RIGHT);
 		break;
 	case DIK_LEFT:
-		player->Press(4);
+		player->Press(DIK_LEFT);
 		break;
 	case DIK_UP:
-		player->Press(1);
+		player->Press(DIK_UP);
 		break;
 	case DIK_DOWN:
-		player->Press(3);
+		player->Press(DIK_DOWN);
 		break;
 	}
 }
@@ -89,16 +89,16 @@ void KeyEventHandler::OnKeyUp(int KeyCode)
 	switch (KeyCode)
 	{
 	case DIK_RIGHT:
-		player->Release(2);
+		player->Release(DIK_RIGHT);
 		break;
 	case DIK_LEFT:
-		player->Release(4);
+		player->Release(DIK_LEFT);
 		break;
 	case DIK_UP:
-		player->Release(1);
+		player->Release(DIK_UP);
 		break;
 	case DIK_DOWN:
-		player->Release(3);
+		player->Release(DIK_DOWN);
 		break;
 	}
 }

@@ -58,8 +58,8 @@ public:
 	void Update(DWORD dt);
 
 	void Press(int key);
-	void Release(int key);
-	bool IsPressed(int key);
+	void Release(int keyCode);
+	bool IsPressed(int keyCode);
 	void ResetAction() { AniHandler.SetCurrentFrame(-1); }
 	int GetFace() { return face; }
 };

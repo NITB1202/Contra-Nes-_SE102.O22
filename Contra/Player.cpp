@@ -150,38 +150,38 @@ void Player::Render()
 	
 }
 
-void Player::Press(const int key)
+void Player::Press(int keyCode)
 {
-	switch (key)
+	switch (keyCode)
 	{
-	case 1:
+	case DIK_UP:
 		upPressed = true;
 		break;
-	case 2:
+	case DIK_RIGHT:
 		rightPressed = true;
 		break;
-	case 3:
+	case DIK_DOWN:
 		downPressed = true;
 		break;
-	case 4:
+	case DIK_LEFT:
 		leftPressed = true;
 		break;
 	}
 }
-void Player::Release(int key)
+void Player::Release(int keyCode)
 {
-	switch (key)
+	switch (keyCode)
 	{
-	case 1:
+	case DIK_UP:
 		upPressed = false;
 		break;
-	case 2:
+	case DIK_RIGHT:
 		rightPressed = false;
 		break;
-	case 3:
+	case DIK_DOWN:
 		downPressed = false;
 		break;
-	case 4:
+	case DIK_LEFT:
 		leftPressed = false;
 		break;
 	}
@@ -191,13 +191,13 @@ bool Player::IsPressed(int key)
 {
 	switch (key)
 	{
-	case 1:
+	case DIK_UP:
 		return upPressed;
-	case 2:
+	case DIK_RIGHT:
 		return rightPressed;
-	case 3:
+	case DIK_DOWN:
 		return downPressed;
-	case 4:
+	case DIK_LEFT:
 		return leftPressed;
 	}
 }
