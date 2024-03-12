@@ -13,6 +13,9 @@
 #define MAX_FRAME_RATE 100
 #define PATH L"Map\\Map1\\Map1TileSet.png"
 
+// List of path scene
+#define PATH_SCENE_0 "\\SceneInfo\\Scene0.txt"
+
 HWND CreateGameWindow(HINSTANCE hInstance, int screenWidth, int screenHeight, int nCmdShow);
 void LoadResource();
 int GameRun();
@@ -21,6 +24,22 @@ void Update(DWORD dt);
 
 LPPLAYER player;
 vector<string> scenelink;
+
+// get directory path
+string GetPath() 
+{
+	// get path
+	TCHAR path[MAX_PATH];
+	GetCurrentDirectory(MAX_PATH, path);
+
+	// convert wstring then string
+	wstring convert_srt(&path[0]);
+
+	string path_str(convert_srt.begin(), convert_srt.end());
+
+	return path_str;
+}
+
 
 LRESULT CALLBACK WinProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 {
@@ -63,7 +82,7 @@ void LoadResource()
 	tex = game->LoadTexture(TEXTURE_PATH_PLAYER_JUMP_UP);
 	aniLib->AddAnimation(PLAYER_JUMP_UP, Animation(tex, PLAYER_JUMP_WIDTH, PLAYER_JUMP_HEIGHT, 1.5, 1.5));
 
-	string scene0 = "C:\\Users\\ADMIN\\Desktop\\Contra\\Contra\\SceneInfo\\Scene0.txt";
+	string scene0 = GetPath() +PATH_SCENE_0;
 	
 	scenelink.push_back(scene0);
 
