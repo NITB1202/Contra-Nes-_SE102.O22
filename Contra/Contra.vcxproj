@@ -156,6 +156,7 @@
     <ClCompile Include="Runman.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="Shooter.cpp" />
+    <ClCompile Include="Sniper.cpp" />
     <ClCompile Include="WinMain.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -171,6 +172,7 @@
     <ClInclude Include="Runman.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="Shooter.h" />
+    <ClInclude Include="Sniper.h" />
     <ClInclude Include="Texture.h" />
   </ItemGroup>
   <ItemGroup>
