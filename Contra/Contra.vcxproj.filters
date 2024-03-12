@@ -13,6 +13,12 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Header Files\Enermies">
+      <UniqueIdentifier>{392f62f7-8a7b-4a1f-a6ea-8ece6f96a699}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Enermies">
+      <UniqueIdentifier>{45c7a8f8-d397-482c-8da3-03503e1691bd}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="WinMain.cpp">
@@ -47,6 +53,9 @@
     </ClCompile>
     <ClCompile Include="Scene.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Shooter.cpp">
+      <Filter>Source Files\Enermies</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -85,6 +94,9 @@
     </ClInclude>
     <ClInclude Include="Scene.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Shooter.h">
+      <Filter>Header Files\Enermies</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
