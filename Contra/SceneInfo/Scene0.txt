@@ -1,0 +1,3 @@
+Map\\Map1\\Map1TileSet.png
+C:\\Users\\ADMIN\\Desktop\\Contra\\Contra\\Map\\Map1\\Map1Matrix.txt
+100 300 203 0 440

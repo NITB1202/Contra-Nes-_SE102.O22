@@ -5,7 +5,6 @@ RECT Animation :: GetSprite(int index)
 	int texWidth = texture->getWidth();
 	int texHeight = texture->getHeight();
 	int SpriteEachRow = texWidth / spriteWidth;
-	int SpriteEachCol = texHeight / spriteHeight;
 	int spriteRow = index / SpriteEachRow;
 	int spriteCol = index % SpriteEachRow;
 

@@ -1,5 +1,5 @@
 #include "Player.h"
-#define GROUND 200
+#define GROUND 300
 
 void Player::SetState(int ID)
 {
@@ -57,7 +57,7 @@ void Player::SetState(int ID)
 		vy = 0;
 		break;
 	case PLAYER_JUMP_UP:
-		vy = -PLAYER_START_VY;
+		vy = PLAYER_START_VY;
 		break;
 	}
 
@@ -71,20 +71,20 @@ void Player::Update(DWORD dt)
 	
 
 	//basic collision
-	if (x < PLAYER_SPRITE_WIDTH)
-		x = PLAYER_SPRITE_WIDTH;
+	if (x < 0)
+		x = 0;
 	
 	int maxRightside = Game::GetInstance()->GetBackBufferWidth() - PLAYER_SPRITE_WIDTH;
 	
-	if (x > maxRightside)
-		x = maxRightside;
+	//if (x > maxRightside)
+		//x = maxRightside;
 
-	if (y < GROUND - maxJumpHeight)
+	if (y > GROUND + maxJumpHeight)
 	{
-		vy = PLAYER_START_VY;
+		vy = -PLAYER_START_VY;
 	}
 
-	if (y > GROUND)
+	if (y < GROUND)
 	{
 		y = GROUND;
 		vy = 0;
@@ -143,7 +143,7 @@ void Player::Render()
 			AnimationID = PLAYER_JUMP_UP;
 		break;
 	}
-	if(AnimationID==PLAYER_IDLE_RIGHT_ANIMATION || AnimationID==PLAYER_GUN_UP || AnimationID == PLAYER_LAY_DOWN_ANIMATION)
+	if (AnimationID == PLAYER_IDLE_RIGHT_ANIMATION || AnimationID == PLAYER_GUN_UP || AnimationID == PLAYER_LAY_DOWN_ANIMATION)
 		AniHandler.setIDLE(AnimationID, x, y);
 	else
 		AniHandler.Render(AnimationID, x, y);

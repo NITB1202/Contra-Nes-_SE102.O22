@@ -73,6 +73,23 @@ void Game::InitDirect3D(HWND hwnd,HINSTANCE hInstance)
 
 	pD3DDevice->RSSetViewports(1, &vp);
 
+	D3D10_SAMPLER_DESC desc;
+	desc.Filter = D3D10_FILTER_MIN_MAG_POINT_MIP_LINEAR;
+	desc.AddressU = D3D10_TEXTURE_ADDRESS_CLAMP;
+	desc.AddressV = D3D10_TEXTURE_ADDRESS_CLAMP;
+	desc.AddressW = D3D10_TEXTURE_ADDRESS_CLAMP;
+	desc.MipLODBias = 0;
+	desc.MaxAnisotropy = 1;
+	desc.ComparisonFunc = D3D10_COMPARISON_NEVER;
+	desc.BorderColor[0] = 1.0f;
+	desc.BorderColor[1] = 1.0f;
+	desc.BorderColor[2] = 1.0f;
+	desc.BorderColor[3] = 1.0f;
+	desc.MinLOD = -FLT_MAX;
+	desc.MaxLOD = FLT_MAX;
+
+	pD3DDevice->CreateSamplerState(&desc, &this->pPointSamplerState);
+
 	// Create sprite handler
 	hr = D3DX10CreateSprite(pD3DDevice, 0, &spriteHandler);
 
@@ -108,32 +125,67 @@ void Game::InitDirect3D(HWND hwnd,HINSTANCE hInstance)
 	pD3DDevice->CreateBlendState(&StateDesc, &this->pBlendStateAlpha);
 
 }
-/*
-	Utility function to wrap D3DX10CreateTextureFromFileEx
-*/
+
+void Game::SetPointSamplerState()
+{
+	pD3DDevice->VSSetSamplers(0, 1, &pPointSamplerState);
+	pD3DDevice->GSSetSamplers(0, 1, &pPointSamplerState);
+	pD3DDevice->PSSetSamplers(0, 1, &pPointSamplerState);
+}
+
 LPTEXTURE Game::LoadTexture(LPCWSTR texturePath)
 {
 	ID3D10Resource* pD3D10Resource = NULL;
 	ID3D10Texture2D* tex = NULL;
 
+	// Retrieve image information first 
+	D3DX10_IMAGE_INFO imageInfo;
+	HRESULT hr = D3DX10GetImageInfoFromFile(texturePath, NULL, &imageInfo, NULL);
+	if (FAILED(hr))
+	{
+		//DebugOut((wchar_t*)L"[ERROR] D3DX10GetImageInfoFromFile failed for  file: %s with error: %d\n", texturePath, hr);
+		return NULL;
+	}
+
+	D3DX10_IMAGE_LOAD_INFO info;
+	ZeroMemory(&info, sizeof(D3DX10_IMAGE_LOAD_INFO));
+	info.Width = imageInfo.Width;
+	info.Height = imageInfo.Height;
+	info.Depth = imageInfo.Depth;
+	info.FirstMipLevel = 0;
+	info.MipLevels = 1;
+	info.Usage = D3D10_USAGE_DEFAULT;
+	info.BindFlags = D3DX10_DEFAULT;
+	info.CpuAccessFlags = D3DX10_DEFAULT;
+	info.MiscFlags = D3DX10_DEFAULT;
+	info.Format = imageInfo.Format;
+	info.Filter = D3DX10_FILTER_NONE;
+	info.MipFilter = D3DX10_DEFAULT;
+	info.pSrcInfo = &imageInfo;
+
 	// Loads the texture into a temporary ID3D10Resource object
-	HRESULT hr = D3DX10CreateTextureFromFile(pD3DDevice,
+	hr = D3DX10CreateTextureFromFile(pD3DDevice,
 		texturePath,
-		NULL, //&info,
+		&info,
 		NULL,
 		&pD3D10Resource,
 		NULL);
 
 	// Make sure the texture was loaded successfully
 	if (FAILED(hr))
+	{
+		//DebugOut((wchar_t*)L"[ERROR] Failed to load texture file: %s with error: %d\n", texturePath, hr);
 		return NULL;
+	}
 
 	// Translates the ID3D10Resource object into a ID3D10Texture2D object
 	pD3D10Resource->QueryInterface(__uuidof(ID3D10Texture2D), (LPVOID*)&tex);
 	pD3D10Resource->Release();
 
-	if (!tex)
+	if (!tex) {
+		//DebugOut((wchar_t*)L"[ERROR] Failed to convert from ID3D10Resource to ID3D10Texture2D \n");
 		return NULL;
+	}
 
 	//
 	// Create the Share Resource View for this texture 
@@ -159,11 +211,40 @@ LPTEXTURE Game::LoadTexture(LPCWSTR texturePath)
 
 	pD3DDevice->CreateShaderResourceView(tex, &SRVDesc, &gSpriteTextureRV);
 
+	//DebugOut(L"[INFO] Texture loaded Ok from file: %s \n", texturePath);
+
 	return new Texture(tex, gSpriteTextureRV);
+}
+
+void Game :: InitScene(vector<string> scenelink)
+{
+	camera = new Camera(0, backbufferHeight, backbufferWidth, backbufferHeight);
+
+	for (int i = 0; i < scenelink.size(); i++)
+	{
+		Scene temp(scenelink[i], camera);
+		scenes.push_back(temp);
+	}
 }
 
 void Game::Draw(float x, float y, LPTEXTURE tex, float scaleX, float scaleY, int flipHorizontal, RECT* rect)
 {
+	//x,y dang la toa do the gioi chuyen ve toa do ve thong thuong
+	int onscreenX = x - camera->getX();
+	int onscreenY = camera->getY() - y;
+
+	if (rect == NULL)
+	{
+		onscreenX += tex->getWidth() / 2;
+		onscreenY += tex->getHeight() / 2;
+	}
+	else
+	{
+		onscreenX += (rect->right - rect->left) / 2;
+		onscreenY -= (rect->top - rect->bottom) / 2;
+	}
+	//dua tam ve top left
+
 	if (tex == NULL) return;
 
 	int spriteWidth = 0;
@@ -220,11 +301,11 @@ void Game::Draw(float x, float y, LPTEXTURE tex, float scaleX, float scaleY, int
 	D3DXMATRIX matTranslation;
 
 	// Create the translation matrix(ma tran dich chuyen)
-	D3DXMatrixTranslation(&matTranslation, x, (backbufferHeight - y), 0.1f);
+	D3DXMatrixTranslation(&matTranslation, onscreenX, (backbufferHeight - onscreenY), 0.2f);
 
 	// Scale the sprite to its correct width and height because by default, DirectX draws it with width = height = 1.0f 
 	D3DXMATRIX matScaling;	//ma tran ti le
-	D3DXMatrixScaling(&matScaling, (FLOAT)spriteWidth * scaleX, (FLOAT)spriteHeight * scaleY, 1.0f);
+	D3DXMatrixScaling(&matScaling, (FLOAT)spriteWidth * scaleX, (FLOAT)spriteHeight * scaleY, 0.0f);
 
 	// Setting the sprite’s position and size
 	sprite.matWorld = (matScaling * matTranslation);
@@ -237,7 +318,7 @@ int Game::IsKeyDown(int KeyCode)
 	return (keyStates[KeyCode] & 0x80) > 0;
 }
 
-void Game::InitKeyboard(LPKEYEVENTHANDLER handler)
+void Game::InitKeyboard()
 {
 	HRESULT hr = DirectInput8Create(this->hInstance, DIRECTINPUT_VERSION, IID_IDirectInput8, (VOID**)&di, NULL);
 	if (hr != DI_OK)
@@ -283,7 +364,7 @@ void Game::InitKeyboard(LPKEYEVENTHANDLER handler)
 	if (hr != DI_OK)
 		return;
 
-	this->keyHandler = handler;
+	this->keyHandler = new KeyEventHandler();
 }
 
 void Game::ProcessKeyboard()

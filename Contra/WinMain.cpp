@@ -1,8 +1,7 @@
 #include <windows.h>
 #include <d3dx10.h>
-#include "Runman.h"
-#include "Player.h"
 #include "Game.h"
+#include "Player.h"
 #include "AnimationLib.h"
 
 #define WINDOW_TITLE L"Contra"
@@ -10,16 +9,9 @@
 #define WINDOW_ICON_PATH L"contra_icon.ico"
 
 #define SCREEN_WIDTH 640
-#define SCREEN_HEIGHT 480
-#define MAX_FRAME_RATE 60
-#define BACKGROUND_COLOR D3DXCOLOR(0,0,0,1) //BLACK
-
-Runman* runman;
-Player* player;
-KeyEventHandler* keyHandler;
-
-#define RUNMAN_START_X 300.0f
-#define RUNMAN_START_Y 100.0f
+#define SCREEN_HEIGHT 440
+#define MAX_FRAME_RATE 100
+#define PATH L"Map\\Map1\\Map1TileSet.png"
 
 HWND CreateGameWindow(HINSTANCE hInstance, int screenWidth, int screenHeight, int nCmdShow);
 void LoadResource();
@@ -27,10 +19,8 @@ int GameRun();
 void Render();
 void Update(DWORD dt);
 
-#define PLAYER_START_X 50
-#define PLAYER_START_Y 200
-
-vector<LPGAMEOBJECT> gameObject;
+LPPLAYER player;
+vector<string> scenelink;
 
 LRESULT CALLBACK WinProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 {
@@ -49,46 +39,44 @@ LRESULT CALLBACK WinProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 void LoadResource()
 {
 	Game* game = Game::GetInstance();
-	runman = new Runman(RUNMAN_START_X, RUNMAN_START_Y, -RUNMAN_START_VX, RUNMAN_START_VY);
-	player = new Player(PLAYER_START_X, PLAYER_START_Y, PLAYER_START_VX, PLAYER_START_VY);
-
 	LPTEXTURE tex;
 	AnimationLib* aniLib = AnimationLib::GetInstance();
 
-	tex = game->LoadTexture(TEXTURE_PATH_RUNMAN_RIGHT);
-	aniLib->AddAnimation(RUNMAN_RUN_RIGHT_ANIMATION, Animation(tex, RUNMAN_SPRITE_WIDTH, RUNMAN_SPRITE_HEIGHT, 2, 2));
-	
-	tex= game->LoadTexture(TEXTURE_PATH_PLAYER_RUN_RIGHT);
-	aniLib->AddAnimation(PLAYER_RUN_RIGHT_ANIMATION, Animation(tex, PLAYER_SPRITE_WIDTH, PLAYER_SPRITE_HEIGHT, 2, 2));
+	tex = game->LoadTexture(TEXTURE_PATH_PLAYER_RUN_RIGHT);
+	aniLib->AddAnimation(PLAYER_RUN_RIGHT_ANIMATION, Animation(tex, PLAYER_SPRITE_WIDTH, PLAYER_SPRITE_HEIGHT,1.5,1.5));
 
 	tex = game->LoadTexture(TEXTURE_PATH_PLAYER_TOP_RIGHT);
-	aniLib->AddAnimation(PLAYER_TOP_RIGHT_ANIMATION, Animation(tex, PLAYER_SPRITE_WIDTH, PLAYER_SPRITE_HEIGHT, 2, 2));
+	aniLib->AddAnimation(PLAYER_TOP_RIGHT_ANIMATION, Animation(tex, PLAYER_SPRITE_WIDTH, PLAYER_SPRITE_HEIGHT, 1.5, 1.5));
 
 	tex = game->LoadTexture(TEXTURE_PATH_PLAYER_DOWN_RIGHT);
-	aniLib->AddAnimation(PLAYER_DOWN_RIGHT_ANIMATION, Animation(tex, PLAYER_SPRITE_WIDTH, PLAYER_SPRITE_HEIGHT, 2, 2));
+	aniLib->AddAnimation(PLAYER_DOWN_RIGHT_ANIMATION, Animation(tex, PLAYER_SPRITE_WIDTH, PLAYER_SPRITE_HEIGHT, 1.5, 1.5));
 
 	tex = game->LoadTexture(TEXTURE_PATH_PLAYER_FACE_RIGHT_IDLE);
-	aniLib->AddAnimation(PLAYER_IDLE_RIGHT_ANIMATION, Animation(tex, PLAYER_SPRITE_WIDTH, PLAYER_SPRITE_HEIGHT, 2, 2));
+	aniLib->AddAnimation(PLAYER_IDLE_RIGHT_ANIMATION, Animation(tex, PLAYER_SPRITE_WIDTH, PLAYER_SPRITE_HEIGHT, 1.5, 1.5));
 
 	tex = game->LoadTexture(TEXURE_PATH_PLAYER_GUN_UP);
-	aniLib->AddAnimation(PLAYER_GUN_UP, Animation(tex, PLAYER_SPRITE_WIDTH, PLAYER_GUN_UP_HEIGHT, 2, 2));
+	aniLib->AddAnimation(PLAYER_GUN_UP, Animation(tex, PLAYER_SPRITE_WIDTH, PLAYER_GUN_UP_HEIGHT, 1.5, 1.5));
 
 	tex = game->LoadTexture(TEXURE_PATH_PLAYER_LAY_DOWN);
-	aniLib->AddAnimation(PLAYER_LAY_DOWN_ANIMATION, Animation(tex, PLAYER_LAY_DOWN_WIDTH, PLAYER_SPRITE_HEIGHT, 2, 2));
+	aniLib->AddAnimation(PLAYER_LAY_DOWN_ANIMATION, Animation(tex, PLAYER_LAY_DOWN_WIDTH, PLAYER_SPRITE_HEIGHT, 1.5, 1.5));
 
 	tex = game->LoadTexture(TEXTURE_PATH_PLAYER_JUMP_UP);
-	aniLib->AddAnimation(PLAYER_JUMP_UP, Animation(tex, PLAYER_JUMP_WIDTH, PLAYER_JUMP_HEIGHT, 2, 2));
+	aniLib->AddAnimation(PLAYER_JUMP_UP, Animation(tex, PLAYER_JUMP_WIDTH, PLAYER_JUMP_HEIGHT, 1.5, 1.5));
 
-	player->SetState(PLAYER_IDLE_RIGHT);
+	string scene0 = "C:\\Users\\ADMIN\\Desktop\\Contra\\Contra\\SceneInfo\\Scene0.txt";
+	
+	scenelink.push_back(scene0);
 
-	gameObject.push_back(runman);
-	gameObject.push_back(player);
+	player = new Player(0, 150);
+
 }
 
 void Update(DWORD dt)
 {
-	for (int i = 0; i < gameObject.size(); i++)
-		gameObject[i]->Update(dt);
+	Game* game = Game::GetInstance();
+	game->GetCurrentScene().Update(game->GetCamera());
+	game->GetCamera()->UpdateByX(dt);
+	player->Update(dt);
 }
 
 /*
@@ -106,7 +94,7 @@ void Render()
 	if (pD3DDevice != NULL)
 	{
 		// clear the background 
-		pD3DDevice->ClearRenderTargetView(pRenderTargetView, BACKGROUND_COLOR);
+		//pD3DDevice->ClearRenderTargetView(pRenderTargetView, BACKGROUND_COLOR);
 
 		spriteHandler->Begin(D3DX10_SPRITE_SORT_TEXTURE);
 
@@ -114,9 +102,8 @@ void Render()
 		FLOAT NewBlendFactor[4] = { 0,0,0,0 };
 		pD3DDevice->OMSetBlendState(game->GetAlphaBlending(), NewBlendFactor, 0xffffffff);
 
-		for (int i = 0; i < gameObject.size(); i++)
-			gameObject[i]->Render();
-
+		game->GetCurrentScene().Render();
+		player->Render();
 		spriteHandler->End();
 		pSwapChain->Present(0, 0);
 	}
@@ -227,10 +214,11 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 	Game* game = Game::GetInstance();
 	game->InitDirect3D(hwnd, hInstance);
-	keyHandler = new KeyEventHandler();
-	game->InitKeyboard(keyHandler);
+	game->InitKeyboard();
 	
 	LoadResource();
+
+	game->InitScene(scenelink);
 	
 	GameRun();
 

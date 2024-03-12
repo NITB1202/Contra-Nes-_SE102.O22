@@ -1,9 +1,15 @@
 #pragma once
 #include <d3d10.h>
 #include <dinput.h>
+#include <string>
+#include <vector>
 
 #include "Texture.h"
 #include "KeyEventHandler.h"
+#include "Camera.h"
+#include "Scene.h"
+
+using namespace std;
 
 #define DIRECTINPUT_VERSION 0x0800
 #define KEYBOARD_BUFFER_SIZE 1024
@@ -28,6 +34,7 @@ private:
 	ID3D10BlendState* pBlendStateAlpha = NULL;			
 
 	ID3DX10Sprite* spriteHandler = NULL;
+	ID3D10SamplerState* pPointSamplerState;
 
 	LPDIRECTINPUT8       di;		// The DirectInput object         
 	LPDIRECTINPUTDEVICE8 didv;		// The keyboard device 
@@ -36,18 +43,27 @@ private:
 	DIDEVICEOBJECTDATA keyEvents[KEYBOARD_BUFFER_SIZE];		// Buffered keyboard data
 
 	LPKEYEVENTHANDLER keyHandler;
+	LPCAMERA camera;
 
+	vector<Scene> scenes;
+	int currentScene = 0;
 
 public:
 
 	void InitDirect3D(HWND hwnd,HINSTANCE hInstance);
-	
+	void InitScene(vector<string> scenelink);
 	// Keyboard related functions 
-	void InitKeyboard(LPKEYEVENTHANDLER handler);
+	void InitKeyboard();
 	int IsKeyDown(int KeyCode);
 	void ProcessKeyboard();
 
+	void SetPointSamplerState();
+
 	LPTEXTURE LoadTexture(LPCWSTR texturePath);
+	LPCAMERA GetCamera() { return camera; }
+	Scene GetCurrentScene() { return scenes[currentScene]; }
+	void SwitchScene(int sceneIndex) { currentScene = sceneIndex; }
+
 	void Draw(float x, float y, LPTEXTURE tex, float scaleX = 1, float scaleY = 1, int flipHorizontal = 0, RECT* rect = NULL);
 
 	ID3D10Device* GetDirect3DDevice() { return this->pD3DDevice; }

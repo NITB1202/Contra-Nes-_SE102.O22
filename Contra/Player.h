@@ -35,7 +35,7 @@
 #define PLAYER_JUMP_UP 210
 
 #define PLAYER_START_VX 0.2f
-#define PLAYER_START_VY 0.2f
+#define PLAYER_START_VY 0.25f
 
 #define PLAYER_GRAVITY 0.16f
 
@@ -52,7 +52,7 @@ private:
 	int maxJumpHeight = 60;
 
 public:
-	Player(float x, float y, float vx, float vy) :GameObject(x, y, vx, vy) {};
+	Player(float x, float y, float vx = PLAYER_START_VX, float vy = PLAYER_START_VY) :GameObject(x, y, vx, vy) {};
 	void SetState(int ID);
 	void Render();
 	void Update(DWORD dt);
@@ -63,3 +63,4 @@ public:
 	void ResetAction() { AniHandler.SetCurrentFrame(-1); }
 	int GetFace() { return face; }
 };
+typedef Player* LPPLAYER;

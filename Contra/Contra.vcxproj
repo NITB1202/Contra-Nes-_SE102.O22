@@ -148,10 +148,13 @@
     <ClCompile Include="Animation.cpp" />
     <ClCompile Include="AnimationHandler.cpp" />
     <ClCompile Include="AnimationLib.cpp" />
+    <ClCompile Include="Camera.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="KeyEventHandle.cpp" />
+    <ClCompile Include="Map.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Runman.cpp" />
+    <ClCompile Include="Scene.cpp" />
     <ClCompile Include="WinMain.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -159,10 +162,13 @@
     <ClInclude Include="AnimationLib.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameObject.h" />
+    <ClInclude Include="Camera.h" />
     <ClInclude Include="KeyEventHandler.h" />
     <ClInclude Include="Animation.h" />
+    <ClInclude Include="Map.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="Runman.h" />
+    <ClInclude Include="Scene.h" />
     <ClInclude Include="Texture.h" />
   </ItemGroup>
   <ItemGroup>
