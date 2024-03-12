@@ -43,7 +43,6 @@ private:
 	DIDEVICEOBJECTDATA keyEvents[KEYBOARD_BUFFER_SIZE];		// Buffered keyboard data
 
 	LPKEYEVENTHANDLER keyHandler;
-	LPCAMERA camera;
 
 	vector<Scene> scenes;
 	int currentScene = 0;
@@ -57,10 +56,7 @@ public:
 	int IsKeyDown(int KeyCode);
 	void ProcessKeyboard();
 
-	void SetPointSamplerState();
-
 	LPTEXTURE LoadTexture(LPCWSTR texturePath);
-	LPCAMERA GetCamera() { return camera; }
 	Scene GetCurrentScene() { return scenes[currentScene]; }
 	void SwitchScene(int sceneIndex) { currentScene = sceneIndex; }
 

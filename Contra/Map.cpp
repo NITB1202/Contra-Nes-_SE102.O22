@@ -45,8 +45,9 @@ bool IsInterger(double num) {
 	return num - static_cast<int>(num) == 0;
 }
 
-void Map :: Update(LPCAMERA cam)
+void Map :: Update()
 {
+	LPCAMERA cam = Camera::GetInstance();
 	//toa do y huong len
 	colBegin = cam->getX() / tileWidth;
 	float num = cam->getX() + cam->getWidth();
@@ -62,7 +63,7 @@ void Map :: Update(LPCAMERA cam)
 		rowEnd = num / tileHeight;
 }
 
-void Map::DrawMap()
+void Map::Render()
 {
 	for (int i = rowBegin; i <= rowEnd; i++)
 		for (int j = colBegin; j <= colEnd; j++)

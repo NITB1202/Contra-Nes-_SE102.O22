@@ -5,11 +5,11 @@
 class Scene
 {
 	LPMAP map;
-	//BinaryTree object;
+	//BinaryTree objectList;
 
 public:
-	Scene(string path, LPCAMERA camera);
-	void Update(LPCAMERA cam);
+	Scene(string path);
+	void Update();
 	void Render();
 
 	int GetMapWidth() { return map->GetWidth(); }

@@ -28,7 +28,7 @@ public:
 	Map(LPWSTR MapPath, string MatrixPath);
 	int GetWidth() { return width; }
 	int GetHeitgh() { return height; }
-	void DrawMap();
-	void Update(LPCAMERA cam);
+	void Render();
+	void Update();
 };
 typedef Map* LPMAP;

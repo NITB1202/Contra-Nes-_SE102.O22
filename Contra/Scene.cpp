@@ -14,7 +14,7 @@ LPWSTR ConvertStringToLPWSTR(const string& str)
 	return lpwstr;
 }
 
-Scene::Scene(string path, LPCAMERA camera)
+Scene::Scene(string path)
 {
 	ifstream file(path);
 	if (!file.is_open())
@@ -38,20 +38,21 @@ Scene::Scene(string path, LPCAMERA camera)
 
 	player->SetPosition(playerBeginX, playerBeginY);
 	player->SetState(state);
-	camera->setPosCamera(camBeginX, camBeginY);
+
+	Camera::GetInstance()->setPosCamera(camBeginX, camBeginY);
 
 	map = new Map(ConvertStringToLPWSTR(mapPath), matrixPath);
 
 	file.close();
 }
 
-void Scene :: Update(LPCAMERA cam)
+void Scene :: Update()
 {
-	map->Update(cam);
+	map->Update();
 	//gameobject->Update();
 }
 
 void Scene :: Render()
 {
-	map->DrawMap();
+	map->Render();
 }

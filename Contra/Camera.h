@@ -3,6 +3,8 @@
 
 class Camera
 {
+	static Camera* instance;
+
 	float camx;
 	float camy;
 	
@@ -10,14 +12,11 @@ class Camera
 	int height;
 
 	float vx = 0.2f;
-	float vy = 0.1f;
-
-	int mapWidth;
-	int mapHeight;
+	float vy = 0.2f;
 
 public:
-
-	Camera(float x, float y, int w, int h);
+	
+	void Init(int w, int h);
 	void setPosCamera(float x, float y);
 
 	float getX() { return camx; }
@@ -26,7 +25,9 @@ public:
 	int getHeight() { return height; }
 	
 	void UpdateByX(DWORD dt);
-	void UpdateByY();
+	void UpdateByY(DWORD dt);
+
+	static Camera* GetInstance();
 
 };
 typedef Camera* LPCAMERA;

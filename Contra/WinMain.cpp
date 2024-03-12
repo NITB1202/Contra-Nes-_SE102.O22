@@ -67,15 +67,14 @@ void LoadResource()
 	
 	scenelink.push_back(scene0);
 
-	player = new Player(0, 150);
+	player = new Player(0, 0);
 
 }
 
 void Update(DWORD dt)
 {
-	Game* game = Game::GetInstance();
-	game->GetCurrentScene().Update(game->GetCamera());
-	game->GetCamera()->UpdateByX(dt);
+	Game::GetInstance()->GetCurrentScene().Update();
+	Camera::GetInstance()->UpdateByX(dt);
 	player->Update(dt);
 }
 

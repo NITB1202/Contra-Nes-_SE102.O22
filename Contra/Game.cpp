@@ -126,13 +126,6 @@ void Game::InitDirect3D(HWND hwnd,HINSTANCE hInstance)
 
 }
 
-void Game::SetPointSamplerState()
-{
-	pD3DDevice->VSSetSamplers(0, 1, &pPointSamplerState);
-	pD3DDevice->GSSetSamplers(0, 1, &pPointSamplerState);
-	pD3DDevice->PSSetSamplers(0, 1, &pPointSamplerState);
-}
-
 LPTEXTURE Game::LoadTexture(LPCWSTR texturePath)
 {
 	ID3D10Resource* pD3D10Resource = NULL;
@@ -218,21 +211,26 @@ LPTEXTURE Game::LoadTexture(LPCWSTR texturePath)
 
 void Game :: InitScene(vector<string> scenelink)
 {
-	camera = new Camera(0, backbufferHeight, backbufferWidth, backbufferHeight);
+	LPCAMERA camera = Camera::GetInstance();
+	camera->Init(backbufferWidth, backbufferHeight);
 
 	for (int i = 0; i < scenelink.size(); i++)
 	{
-		Scene temp(scenelink[i], camera);
+		Scene temp(scenelink[i]);
 		scenes.push_back(temp);
 	}
 }
 
 void Game::Draw(float x, float y, LPTEXTURE tex, float scaleX, float scaleY, int flipHorizontal, RECT* rect)
 {
+	LPCAMERA camera = Camera::GetInstance();
+
 	//x,y dang la toa do the gioi chuyen ve toa do ve thong thuong
 	int onscreenX = x - camera->getX();
 	int onscreenY = camera->getY() - y;
 
+
+	//dua tam ve top left
 	if (rect == NULL)
 	{
 		onscreenX += tex->getWidth() / 2;
@@ -243,7 +241,6 @@ void Game::Draw(float x, float y, LPTEXTURE tex, float scaleX, float scaleY, int
 		onscreenX += (rect->right - rect->left) / 2;
 		onscreenY -= (rect->top - rect->bottom) / 2;
 	}
-	//dua tam ve top left
 
 	if (tex == NULL) return;
 

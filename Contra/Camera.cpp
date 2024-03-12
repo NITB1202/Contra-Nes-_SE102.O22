@@ -1,12 +1,12 @@
 #include "Camera.h"
 #include "Player.h"
 
+Camera* Camera::instance = NULL;
+
 extern Player* player;
 
-Camera::Camera(float x, float y, int w, int h)
+void Camera::Init(int w, int h)
 {
-	camx = x;
-	camy = y;
 	width = w;
 	height = h;
 }
@@ -28,7 +28,13 @@ void Camera::UpdateByX(DWORD dt)
 		camx = mapwidth - width;
 }
 
-void Camera::UpdateByY()
+void Camera::UpdateByY(DWORD dt)
 {
 
+}
+
+Camera* Camera::GetInstance()
+{
+	if (instance == NULL) instance = new Camera();
+	return instance;
 }
