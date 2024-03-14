@@ -1,4 +1,7 @@
 #include "Player.h"
+
+Player* Player::instance = NULL;
+
 #define GROUND 300
 
 void Player::SetState(int ID)
@@ -67,12 +70,13 @@ void Player::Update(DWORD dt)
 {
 
 	x += vx * dt; // chuyen dong thang deu khong gia toc
-	y += vy * dt+1/2*PLAYER_GRAVITY*dt*dt;
+	y += vy * dt - 1/2*PLAYER_GRAVITY*dt*dt;
 	
 
 	//basic collision
-	if (x < 0)
-		x = 0;
+	float camx = Camera::GetInstance()->getX();
+	if (x < camx)
+		x = camx ;
 	
 	int maxRightside = Game::GetInstance()->GetBackBufferWidth() - PLAYER_SPRITE_WIDTH;
 	
@@ -200,4 +204,10 @@ bool Player::IsPressed(int key)
 	case DIK_LEFT:
 		return leftPressed;
 	}
+}
+
+Player* Player::GetInstance() 
+{
+	if (instance == NULL) instance = new Player();
+	return instance;
 }

@@ -3,8 +3,6 @@
 
 Camera* Camera::instance = NULL;
 
-extern Player* player;
-
 void Camera::Init(int w, int h)
 {
 	width = w;
@@ -20,6 +18,8 @@ void Camera::setPosCamera(float x, float y)
 void Camera::UpdateByX(DWORD dt)
 {
 	Game* game = Game::GetInstance();
+	Player* player = Player::GetInstance();
+
 	if (player->GetX() > camx+width / 2)
 		camx += vx*dt;
 

@@ -19,7 +19,6 @@ int GameRun();
 void Render();
 void Update(DWORD dt);
 
-LPPLAYER player;
 vector<string> scenelink;
 
 LRESULT CALLBACK WinProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
@@ -66,16 +65,13 @@ void LoadResource()
 	string scene0 = "C:\\Users\\ADMIN\\Desktop\\Contra\\Contra\\SceneInfo\\Scene0.txt";
 	
 	scenelink.push_back(scene0);
-
-	player = new Player(0, 0);
-
 }
 
 void Update(DWORD dt)
 {
 	Game::GetInstance()->GetCurrentScene().Update();
 	Camera::GetInstance()->UpdateByX(dt);
-	player->Update(dt);
+	Player::GetInstance()->Update(dt);
 }
 
 /*
@@ -102,7 +98,7 @@ void Render()
 		pD3DDevice->OMSetBlendState(game->GetAlphaBlending(), NewBlendFactor, 0xffffffff);
 
 		game->GetCurrentScene().Render();
-		player->Render();
+		Player::GetInstance()->Render();
 		spriteHandler->End();
 		pSwapChain->Present(0, 0);
 	}

@@ -42,7 +42,7 @@
 class Player : public GameObject
 {
 private:
-
+	static Player* instance;
 	bool rightPressed = false;
 	bool leftPressed = false;
 	bool upPressed = false;
@@ -52,7 +52,9 @@ private:
 	int maxJumpHeight = 60;
 
 public:
-	Player(float x, float y, float vx = PLAYER_START_VX, float vy = PLAYER_START_VY) :GameObject(x, y, vx, vy) {};
+	Player(float x = 0, float y = 0, float vx = PLAYER_START_VX, float vy = PLAYER_START_VY) :GameObject(x, y, vx, vy) {};
+	static Player* GetInstance();
+
 	void SetState(int ID);
 	void Render();
 	void Update(DWORD dt);
