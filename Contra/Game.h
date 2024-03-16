@@ -1,7 +1,6 @@
 #pragma once
 #include <d3d10.h>
 #include <dinput.h>
-#include <string>
 #include <vector>
 
 #include "Texture.h"
@@ -50,7 +49,7 @@ private:
 public:
 
 	void InitDirect3D(HWND hwnd,HINSTANCE hInstance);
-	void InitScene(vector<string> scenelink);
+	void InitScene(vector<LPWSTR> scenelink);
 	// Keyboard related functions 
 	void InitKeyboard();
 	int IsKeyDown(int KeyCode);

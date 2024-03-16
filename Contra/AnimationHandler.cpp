@@ -1,5 +1,6 @@
 #include "AnimationHandler.h"
 #include "AnimationLib.h"
+#include "Game.h"
 
 void AnimationHandler::setIDLE(int ID, float x, float y)
 {

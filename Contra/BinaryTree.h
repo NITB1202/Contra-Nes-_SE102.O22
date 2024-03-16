@@ -1,11 +1,19 @@
 #pragma once
+#include <vector>
+#include <string>
 #include "GameObject.h"
+#include "Map.h"
+
+#define HORIZONTAL_BINARYTREE 111
+#define VERTICAL_BINARYTREE 112
+
+using namespace std;
 
 class TreeNode
 {
 public:
 
-	vector<LPGAMEOBJECT> objects;
+	vector<LPGAMEOBJECT> object;
 	
 	int start;
 	int end;
@@ -19,26 +27,36 @@ public:
 		end = e;
 	}
 
-	bool InBound(int x) { return start <= x && x <= end; }
-	void SetObj(LPGAMEOBJECT obj) { objects.push_back(obj); }
-
+	bool InBound(float x) { return start <= x && x <= end; }
+	void InsertObj(LPGAMEOBJECT obj) { object.push_back(obj); }
+	vector<LPGAMEOBJECT> GetObj() { return object; }
+	void GetBound(float& s,float& e) 
+	{
+		s = start;
+		e = end;
+	}
 };
 
 class BinaryTree
 {
+	int type;
 
-	int mapWidth;
-	int scrWidth;
+	int mapBound;
+	int scrBound;
 
 	TreeNode* root;
+	vector<LPGAMEOBJECT> currentObj;
 
-	TreeNode* CreateTree(float start, float end);
-	void Travel(TreeNode* parent, LPGAMEOBJECT obj);
+	void CreateTree(vector<LPGAMEOBJECT> objList);
+	void Insert(TreeNode* node, LPGAMEOBJECT object);
+	TreeNode* FindNode(float start, float end);
+	void GetObjectInSubTree(TreeNode* node, vector<LPGAMEOBJECT>& object);
 
 public:
 
-	BinaryTree();
-	void Init(vector<LPGAMEOBJECT> objList);
-	vector<LPGAMEOBJECT> GetInScreenObject();
-
+	BinaryTree(string objPath, LPMAP map, int type = HORIZONTAL_BINARYTREE);
+	vector<LPGAMEOBJECT> GetObjectInBound(RECT bound);
+	void Update(DWORD dt);
+	void Render();
 };
+typedef BinaryTree* LPBINARYTREE;

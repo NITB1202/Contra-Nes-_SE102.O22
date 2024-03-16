@@ -2,8 +2,7 @@
 //
 // Warpper class to simplify texture manipulation. See also Game::LoadTexture
 //
-#include "Windows.h"
-#include "D3DX10.h"
+#include "d3dx10.h"
 
 class Texture
 {

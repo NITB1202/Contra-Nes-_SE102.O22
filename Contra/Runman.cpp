@@ -1,24 +1,15 @@
 #include "Runman.h"
+#include "Game.h"
+#include "ObjectConfig.h"
 
 void Runman::Update(DWORD dt)
 {
 	x += vx * dt;
 
-	int BackBufferWidth = Game::GetInstance()->GetBackBufferWidth();
+	Camera* cam = Camera::GetInstance();
 
-	if (x <= RUNMAN_SPRITE_WIDTH  || x >= BackBufferWidth - RUNMAN_SPRITE_WIDTH) {
-
+	if (x < cam->getX() || x > cam->getX()+cam->getWidth()-RUNMAN_SPRITE_WIDTH)
 		vx = -vx;
-
-		if (x <= 0)
-		{
-			x = 0;
-		}
-		else if (x >= BackBufferWidth - RUNMAN_SPRITE_WIDTH)
-		{
-			x = (float)(BackBufferWidth - RUNMAN_SPRITE_WIDTH);
-		}
-	}
 }
 
 void Runman::Render()

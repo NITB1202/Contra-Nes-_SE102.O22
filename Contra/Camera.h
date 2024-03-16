@@ -23,6 +23,7 @@ public:
 	float getY() { return camy; }
 	int getWidth() { return width; }
 	int getHeight() { return height; }
+	RECT GetBound();
 	
 	void UpdateByX(DWORD dt);
 	void UpdateByY(DWORD dt);

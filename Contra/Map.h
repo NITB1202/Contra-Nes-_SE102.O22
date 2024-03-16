@@ -1,9 +1,9 @@
 #pragma once
-
 #include "Texture.h"
 #include "Camera.h"
 #include <string>
 #include <vector>
+
 using namespace std;
 
 class Map
@@ -27,7 +27,7 @@ public:
 
 	Map(LPWSTR MapPath, string MatrixPath);
 	int GetWidth() { return width; }
-	int GetHeitgh() { return height; }
+	int GetHeight() { return height; }
 	void Render();
 	void Update();
 };

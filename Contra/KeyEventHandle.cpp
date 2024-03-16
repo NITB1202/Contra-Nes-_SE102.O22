@@ -1,5 +1,6 @@
 #include "KeyEventHandler.h"
 #include "Player.h"
+#include "Game.h"
 
 void KeyEventHandler::KeyState(BYTE* state)
 {

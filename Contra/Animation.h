@@ -1,7 +1,5 @@
 #pragma once
 #include "Texture.h"
-#include "Windows.h"
-#include "Game.h"
 
 class Animation
 {

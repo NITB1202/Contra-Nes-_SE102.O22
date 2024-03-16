@@ -209,7 +209,7 @@ LPTEXTURE Game::LoadTexture(LPCWSTR texturePath)
 	return new Texture(tex, gSpriteTextureRV);
 }
 
-void Game :: InitScene(vector<string> scenelink)
+void Game :: InitScene(vector<LPWSTR> scenelink)
 {
 	LPCAMERA camera = Camera::GetInstance();
 	camera->Init(backbufferWidth, backbufferHeight);

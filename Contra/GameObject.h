@@ -1,12 +1,14 @@
 #pragma once
 #include "AnimationHandler.h"
-#include <unordered_map>
-
-using namespace std;
 
 class GameObject
 {
 protected:
+
+	int id = -1;
+
+	int width;
+	int height;
 
 	float x;
 	float y;
@@ -20,17 +22,15 @@ protected:
 
 public:
 
-	GameObject(float x, float y, float vx = 0, float vy = 0)
+	GameObject(float x, float y)
 	{
 		this->x = x;
 		this->y = y;
-		this->vx = vx;
-		this->vy = vy;
 	}
 
 	void SetPosition(float x, float y) { this->x = x, this->y = y; }
 	void SetSpeed(float vx, float vy) { this->vx = vx, this->vy = vy; }
-
+	void SetID(int id) { this->id = id; }
 	virtual void SetState(int state) { this->state = state; }
 	int GetState() { return state; }
 
@@ -39,6 +39,15 @@ public:
 	float GetVx() { return vx; }
 	float GetVy() { return vy; }
 	AnimationHandler GetAnimationHandler() { return AniHandler; }
+	int GetID() { return id;}
+	RECT GetCollisionBound() {
+		RECT rect;
+		rect.top = y;
+		rect.left = x;
+		rect.right = x + width;
+		rect.bottom = y - height;
+		return rect;
+	}
 
 	virtual void Update(DWORD dt) = 0;
 	virtual void Render() = 0;

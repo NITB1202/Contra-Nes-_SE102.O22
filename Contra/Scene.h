@@ -1,17 +1,17 @@
 #pragma once
 #include "Map.h"
-#include "Camera.h"
+#include "BinaryTree.h"
 
 class Scene
 {
 	LPMAP map;
-	//BinaryTree objectList;
+	LPBINARYTREE objList;
 
 public:
-	Scene(string path);
-	void Update();
+	Scene(LPWSTR path);
+	void Update(DWORD dt);
 	void Render();
 
 	int GetMapWidth() { return map->GetWidth(); }
-	int GetMapheight() { return map->GetHeitgh(); }
+	int GetMapheight() { return map->GetHeight(); }
 };

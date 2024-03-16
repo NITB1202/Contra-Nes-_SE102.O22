@@ -1,4 +1,7 @@
 #include "Player.h"
+#include "Camera.h"
+#include "Game.h"
+#include "ObjectConfig.h"
 
 Player* Player::instance = NULL;
 
@@ -63,7 +66,6 @@ void Player::SetState(int ID)
 		vy = PLAYER_START_VY;
 		break;
 	}
-
 }
 
 void Player::Update(DWORD dt)

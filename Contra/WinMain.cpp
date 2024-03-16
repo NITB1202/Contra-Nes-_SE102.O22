@@ -1,8 +1,8 @@
 #include <windows.h>
 #include <d3dx10.h>
+#include "Resource.h"
 #include "Game.h"
 #include "Player.h"
-#include "AnimationLib.h"
 
 #define WINDOW_TITLE L"Contra"
 #define WINDOW_CLASS_NAME L"MainWindow"
@@ -10,16 +10,13 @@
 
 #define SCREEN_WIDTH 640
 #define SCREEN_HEIGHT 440
-#define MAX_FRAME_RATE 100
-#define PATH L"Map\\Map1\\Map1TileSet.png"
+#define MAX_FRAME_RATE 60
 
 HWND CreateGameWindow(HINSTANCE hInstance, int screenWidth, int screenHeight, int nCmdShow);
 void LoadResource();
 int GameRun();
 void Render();
 void Update(DWORD dt);
-
-vector<string> scenelink;
 
 LRESULT CALLBACK WinProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 {
@@ -35,41 +32,9 @@ LRESULT CALLBACK WinProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 	return 0;
 }
 
-void LoadResource()
-{
-	Game* game = Game::GetInstance();
-	LPTEXTURE tex;
-	AnimationLib* aniLib = AnimationLib::GetInstance();
-
-	tex = game->LoadTexture(TEXTURE_PATH_PLAYER_RUN_RIGHT);
-	aniLib->AddAnimation(PLAYER_RUN_RIGHT_ANIMATION, Animation(tex, PLAYER_SPRITE_WIDTH, PLAYER_SPRITE_HEIGHT,1.5,1.5));
-
-	tex = game->LoadTexture(TEXTURE_PATH_PLAYER_TOP_RIGHT);
-	aniLib->AddAnimation(PLAYER_TOP_RIGHT_ANIMATION, Animation(tex, PLAYER_SPRITE_WIDTH, PLAYER_SPRITE_HEIGHT, 1.5, 1.5));
-
-	tex = game->LoadTexture(TEXTURE_PATH_PLAYER_DOWN_RIGHT);
-	aniLib->AddAnimation(PLAYER_DOWN_RIGHT_ANIMATION, Animation(tex, PLAYER_SPRITE_WIDTH, PLAYER_SPRITE_HEIGHT, 1.5, 1.5));
-
-	tex = game->LoadTexture(TEXTURE_PATH_PLAYER_FACE_RIGHT_IDLE);
-	aniLib->AddAnimation(PLAYER_IDLE_RIGHT_ANIMATION, Animation(tex, PLAYER_SPRITE_WIDTH, PLAYER_SPRITE_HEIGHT, 1.5, 1.5));
-
-	tex = game->LoadTexture(TEXURE_PATH_PLAYER_GUN_UP);
-	aniLib->AddAnimation(PLAYER_GUN_UP, Animation(tex, PLAYER_SPRITE_WIDTH, PLAYER_GUN_UP_HEIGHT, 1.5, 1.5));
-
-	tex = game->LoadTexture(TEXURE_PATH_PLAYER_LAY_DOWN);
-	aniLib->AddAnimation(PLAYER_LAY_DOWN_ANIMATION, Animation(tex, PLAYER_LAY_DOWN_WIDTH, PLAYER_SPRITE_HEIGHT, 1.5, 1.5));
-
-	tex = game->LoadTexture(TEXTURE_PATH_PLAYER_JUMP_UP);
-	aniLib->AddAnimation(PLAYER_JUMP_UP, Animation(tex, PLAYER_JUMP_WIDTH, PLAYER_JUMP_HEIGHT, 1.5, 1.5));
-
-	string scene0 = "C:\\Users\\ADMIN\\Desktop\\Contra\\Contra\\SceneInfo\\Scene0.txt";
-	
-	scenelink.push_back(scene0);
-}
-
 void Update(DWORD dt)
 {
-	Game::GetInstance()->GetCurrentScene().Update();
+	Game::GetInstance()->GetCurrentScene().Update(dt);
 	Camera::GetInstance()->UpdateByX(dt);
 	Player::GetInstance()->Update(dt);
 }
@@ -198,6 +163,7 @@ int GameRun()
 
 	return 1;
 }
+
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
 {
 	MSG msg;

@@ -1,8 +1,9 @@
 #include "Scene.h"
+#include "Player.h"
 #include <fstream>
 #include <sstream>
-#include "Player.h"
-//file scene gom co link file map va link file ma tran va link file obj
+
+//scene file include link to map file, link to matrix file and link to object file
 
 LPWSTR ConvertStringToLPWSTR(const string& str) 
 {
@@ -12,7 +13,7 @@ LPWSTR ConvertStringToLPWSTR(const string& str)
 	return lpwstr;
 }
 
-Scene::Scene(string path)
+Scene::Scene(LPWSTR path)
 {
 	ifstream file(path);
 	if (!file.is_open())
@@ -23,11 +24,19 @@ Scene::Scene(string path)
 	string matrixPath;
 	getline(file, matrixPath);
 
+	map = new Map(ConvertStringToLPWSTR(mapPath), matrixPath);
+
+	string objPath;
+	getline(file, objPath);
+
+	objList = new BinaryTree(objPath, map);
+
 	string pos;
 	getline(file, pos);
 	stringstream ss(pos);
 
 	float playerBeginX, playerBeginY, camBeginX, camBeginY, state;
+
 	ss >> playerBeginX;
 	ss >> playerBeginY;
 	ss >> state;
@@ -39,18 +48,17 @@ Scene::Scene(string path)
 
 	Camera::GetInstance()->setPosCamera(camBeginX, camBeginY);
 
-	map = new Map(ConvertStringToLPWSTR(mapPath), matrixPath);
-
 	file.close();
 }
 
-void Scene :: Update()
+void Scene :: Update(DWORD dt)
 {
 	map->Update();
-	//gameobject->Update();
+	objList->Update(dt);
 }
 
 void Scene :: Render()
 {
 	map->Render();
+	objList->Render();
 }
