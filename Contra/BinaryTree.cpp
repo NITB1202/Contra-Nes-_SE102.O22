@@ -13,19 +13,19 @@ bool CheckIntersect(RECT rect1, RECT rect2)
 	return overlapX && overlapY;
 }
 
-BinaryTree::BinaryTree(string objPath, LPMAP map, int type)
+BinaryTree::BinaryTree(string objPath, LPMAP m, int type)
 {
 	Game* game = Game::GetInstance();
 
 	if (type == HORIZONTAL_BINARYTREE)
 	{
 		scrBound = game->GetBackBufferWidth();
-		mapBound = map->GetWidth();
+		mapBound = m->GetWidth();
 	}
 	else
 	{
 		scrBound = game->GetBackBufferHeight();
-		mapBound = map->GetHeight();
+		mapBound = m->GetHeight();
 	}
 
 	ifstream fileObj(objPath);
@@ -34,7 +34,7 @@ BinaryTree::BinaryTree(string objPath, LPMAP map, int type)
 		return;
 
 	string line;
-	vector<LPGAMEOBJECT> objList;
+	map<int, LPGAMEOBJECT> objList;
 
 	while (getline(fileObj, line))
 	{
@@ -49,10 +49,12 @@ BinaryTree::BinaryTree(string objPath, LPMAP map, int type)
 		ss >> state;
 
 		LPGAMEOBJECT obj = InitObj(type);
-		obj->SetID(ID);
 		obj->SetPosition(x, y);
 		obj->SetState(state);
-		objList.push_back(obj);
+		objList.insert({ ID,obj });
+
+		if (IsMovingObject(type))
+			movingObj.insert({ ID,obj });
 	}
 
 	root = new TreeNode(0, mapBound);
@@ -62,15 +64,15 @@ BinaryTree::BinaryTree(string objPath, LPMAP map, int type)
 	fileObj.close();
 }
 
-void BinaryTree::Insert(TreeNode* node, LPGAMEOBJECT object)
+void BinaryTree::Insert(TreeNode* node, int ID, LPGAMEOBJECT object)
 {
 	float start, end;
 	node->GetBound(start, end);
 	float mid = (start + end) / 2;
 
-	if ((mid - start) < scrBound / 2) // can't split anymore
+	if ((mid - start) < scrBound) // can't split anymore
 	{
-		node->InsertObj(object);
+		node->InsertObj(ID, object);
 		return;
 	}
 
@@ -78,23 +80,24 @@ void BinaryTree::Insert(TreeNode* node, LPGAMEOBJECT object)
 	{
 		if (node->left == NULL)
 			node->left = new TreeNode(start, mid);
-		Insert(node->left, object);
+		Insert(node->left,ID, object);
 	}
-	else
+	
+	if (mid <= object->GetX() && object->GetX() <= end)
 	{
 		if (node->right == NULL)
 			node->right = new TreeNode(mid, end);
-		Insert(node->right, object);
+		Insert(node->right, ID, object);
 	}
 }
 
-void BinaryTree::CreateTree(vector<LPGAMEOBJECT> objList)
+void BinaryTree::CreateTree(map<int, LPGAMEOBJECT> objList)
 {
-	for (int i = 0; i < objList.size(); i++)
-		Insert(root, objList[i]);
+	for (auto it = objList.begin(); it != objList.end(); it++)
+		Insert(root, it->first,it->second);
 }
 
-TreeNode* BinaryTree::FindNode(float start, float end)
+TreeNode* BinaryTree::FindMinNodeContainBound(float x)
 {
 	bool con = true;
 	TreeNode* node = root;
@@ -103,13 +106,13 @@ TreeNode* BinaryTree::FindNode(float start, float end)
 	{
 		con = false;
 
-		if (node->left != NULL && node->left->InBound(start) && node->left->InBound(end))
+		if (node->left != NULL && node->left->InBound(x))
 		{
 			node = node->left;
 			con = true;
 		}
 
-		if (node->right != NULL && node->right->InBound(start) && node->right->InBound(end))
+		if (node->right != NULL && node->right->InBound(x))
 		{
 			node = node->right;
 			con = true;
@@ -119,53 +122,59 @@ TreeNode* BinaryTree::FindNode(float start, float end)
 	return node;
 }
 
-void BinaryTree::GetObjectInSubTree(TreeNode* node, vector<LPGAMEOBJECT>& objectList)
+map<int, LPGAMEOBJECT> BinaryTree::GetObjectInBound(RECT bound)
 {
-	if (node->left == NULL && node->right == NULL)
+	TreeNode* startNode = FindMinNodeContainBound(bound.left);
+	TreeNode* endNode = FindMinNodeContainBound(bound.right);
+	map<int,LPGAMEOBJECT> objectList;
+
+	if (startNode->IsLeaf() || endNode->IsLeaf())
 	{
-		vector<LPGAMEOBJECT> obj = node->GetObj();
-		objectList.insert(objectList.end(),obj.begin(), obj.end());
+		if (startNode == endNode)
+			objectList = startNode->GetObj();
+		else
+		{
+			map<int, LPGAMEOBJECT> leftObj = startNode->GetObj();
+			map<int, LPGAMEOBJECT> rightObj = endNode->GetObj();
+			objectList.insert(leftObj.begin(), leftObj.end());
+			objectList.insert(rightObj.begin(), rightObj.end());
+		}
 	}
-
-	if (node->left != NULL)
-		GetObjectInSubTree(node->left, objectList);
-
-	if (node->right != NULL)
-		GetObjectInSubTree(node->right, objectList);
-
-}
-
-vector<LPGAMEOBJECT> BinaryTree::GetObjectInBound(RECT bound)
-{
-	TreeNode* node = FindNode(bound.left, bound.right);
-	vector<LPGAMEOBJECT> objectList;
-	
-	GetObjectInSubTree(node, objectList);
-
-	//Check if the object intersect with bound, if not then delete it
-	for (int i = 0; i < objectList.size(); i++)
-		if (!CheckIntersect(objectList[i]->GetCollisionBound(), bound))
-			objectList.erase(objectList.begin() + i);
-
-	//Check if each object in list is unique, if not then delete it
-	sort(objectList.begin(), objectList.end(), [](LPGAMEOBJECT a, LPGAMEOBJECT b) {
-		return a->GetID() < b->GetID();
-		});
-	objectList.erase(unique(objectList.begin(), objectList.end()), objectList.end());
-
 	return objectList;
 }
 
 void BinaryTree::Update(DWORD dt)
 {
+	//remove and re-insert for moving object
+	for (auto it = movingObj.begin(); it != movingObj.end(); ++it)
+	{
+		it->second->Update(dt);
+		Remove(it->first, it->second);
+		Insert(root,it->first,it->second);
+	}
+
 	currentObj = GetObjectInBound(Camera::GetInstance()->GetBound());
 
-	for (int i = 0; i < currentObj.size(); i++)
-		currentObj[i]->Update(dt);
+	for (auto it = currentObj.begin(); it != currentObj.end(); ++it)
+	{
+		if (movingObj.find(it->first) == movingObj.end())
+			it->second->Update(dt);
+	}
 }
 
 void BinaryTree::Render()
 {
-	for (int i = 0; i < currentObj.size(); i++)
-		currentObj[i]->Render();
+	for (auto it = currentObj.begin(); it != currentObj.end(); ++it)
+		it->second->Render();
+}
+
+void BinaryTree::Remove(int ID,LPGAMEOBJECT obj)
+{
+	RECT bound = obj->GetCollisionBound();
+
+	TreeNode* startNode = FindMinNodeContainBound(bound.left);
+	TreeNode* endNode = FindMinNodeContainBound(bound.right);
+
+	startNode->Remove(ID);
+	endNode->Remove(ID);
 }

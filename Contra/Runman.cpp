@@ -8,8 +8,8 @@ void Runman::Update(DWORD dt)
 
 	Camera* cam = Camera::GetInstance();
 
-	if (x < cam->getX() || x > cam->getX()+cam->getWidth()-RUNMAN_SPRITE_WIDTH)
-		vx = -vx;
+	//if (x < cam->getX() || x > cam->getX()+cam->getWidth()-RUNMAN_SPRITE_WIDTH)
+		//vx = -vx;
 }
 
 void Runman::Render()

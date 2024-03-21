@@ -5,8 +5,6 @@ class GameObject
 {
 protected:
 
-	int id = -1;
-
 	int width;
 	int height;
 
@@ -30,16 +28,14 @@ public:
 
 	void SetPosition(float x, float y) { this->x = x, this->y = y; }
 	void SetSpeed(float vx, float vy) { this->vx = vx, this->vy = vy; }
-	void SetID(int id) { this->id = id; }
 	virtual void SetState(int state) { this->state = state; }
-	int GetState() { return state; }
 
+	int GetState() { return state; }
 	float GetX() { return x; }
 	float GetY() { return y; }
 	float GetVx() { return vx; }
 	float GetVy() { return vy; }
 	AnimationHandler GetAnimationHandler() { return AniHandler; }
-	int GetID() { return id;}
 	RECT GetCollisionBound() {
 		RECT rect;
 		rect.top = y;

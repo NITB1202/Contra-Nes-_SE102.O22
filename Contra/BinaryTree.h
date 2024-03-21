@@ -1,8 +1,9 @@
 #pragma once
-#include <vector>
 #include <string>
+#include <map>
 #include "GameObject.h"
 #include "Map.h"
+
 
 #define HORIZONTAL_BINARYTREE 111
 #define VERTICAL_BINARYTREE 112
@@ -13,7 +14,7 @@ class TreeNode
 {
 public:
 
-	vector<LPGAMEOBJECT> object;
+	map<int, LPGAMEOBJECT> objectInNode;
 	
 	int start;
 	int end;
@@ -28,13 +29,15 @@ public:
 	}
 
 	bool InBound(float x) { return start <= x && x <= end; }
-	void InsertObj(LPGAMEOBJECT obj) { object.push_back(obj); }
-	vector<LPGAMEOBJECT> GetObj() { return object; }
+	void InsertObj(int ID, LPGAMEOBJECT obj) { objectInNode.insert({ ID,obj }); }
+	map<int, LPGAMEOBJECT> GetObj() { return objectInNode;}
 	void GetBound(float& s,float& e) 
 	{
 		s = start;
 		e = end;
 	}
+	bool IsLeaf() { return left == NULL && right == NULL; }
+	void Remove(int ID) { objectInNode.erase(ID); }
 };
 
 class BinaryTree
@@ -45,17 +48,17 @@ class BinaryTree
 	int scrBound;
 
 	TreeNode* root;
-	vector<LPGAMEOBJECT> currentObj;
+	map<int, LPGAMEOBJECT> currentObj;
+	map<int, LPGAMEOBJECT> movingObj;
 
-	void CreateTree(vector<LPGAMEOBJECT> objList);
-	void Insert(TreeNode* node, LPGAMEOBJECT object);
-	TreeNode* FindNode(float start, float end);
-	void GetObjectInSubTree(TreeNode* node, vector<LPGAMEOBJECT>& object);
-
+	void CreateTree(map<int, LPGAMEOBJECT> objList);
+	void Insert(TreeNode* node, int ID, LPGAMEOBJECT object);
+	TreeNode* FindMinNodeContainBound(float x);
+	void Remove(int ID, LPGAMEOBJECT obj);
 public:
 
 	BinaryTree(string objPath, LPMAP map, int type = HORIZONTAL_BINARYTREE);
-	vector<LPGAMEOBJECT> GetObjectInBound(RECT bound);
+	map<int, LPGAMEOBJECT> GetObjectInBound(RECT bound);
 	void Update(DWORD dt);
 	void Render();
 };
