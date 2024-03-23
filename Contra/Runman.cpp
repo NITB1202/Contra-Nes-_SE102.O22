@@ -16,13 +16,11 @@ void Runman::Render()
 {
 	if (vx >= 0)
 	{
-		AniHandler.FlipSpriteHorizontal(0);
 		AnimationID = RUNMAN_RUN_RIGHT_ANIMATION;
 	}
 	else
 	{
-		AniHandler.FlipSpriteHorizontal(1);
-		AnimationID = RUNMAN_RUN_RIGHT_ANIMATION;
+		AnimationID = RUNMAN_RUN_LEFT_ANIMATION;
 	}
 
 	AniHandler.Render(AnimationID, x, y);

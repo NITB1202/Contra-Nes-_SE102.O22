@@ -11,7 +11,7 @@
 class Turret : public GameObject
 {
 public:
-	int preState=0, delay = 0;
+	int preState = 0, delay = 0;
 	Turret(float x = 0, float y = 0) : GameObject(x, y) 
 	{
 		width = TURRET_SPRITE_WIDTH;

@@ -1,10 +1,10 @@
 #pragma once
 //player define
 
-#define TEXTURE_PATH_PLAYER_FACE_RIGHT_IDLE L"image\\Player\\bill_stand_right.png"
+#define TEXTURE_PATH_PLAYER_IDLE_RIGHT L"image\\Player\\bill_stand_right.png"
 #define TEXTURE_PATH_PLAYER_RUN_RIGHT L"image\\Player\\bill_run_right.png"
-#define TEXTURE_PATH_PLAYER_TOP_RIGHT L"image\\Player\\bill_topright.png"
-#define TEXTURE_PATH_PLAYER_DOWN_RIGHT L"image\\Player\\bill_downright.png"
+#define TEXTURE_PATH_PLAYER_GUN_TOP_RIGHT L"image\\Player\\bill_topright.png"
+#define TEXTURE_PATH_PLAYER_GUN_DOWN_RIGHT L"image\\Player\\bill_downright.png"
 #define TEXURE_PATH_PLAYER_GUN_UP L"image\\Player\\bill_up.png"
 #define TEXURE_PATH_PLAYER_LAY_DOWN L"image\\Player\\bill_lay_down.png"
 #define TEXTURE_PATH_PLAYER_JUMP_UP L"image\\Player\\bill_jump.png"
@@ -15,16 +15,6 @@
 #define PLAYER_JUMP_HEIGHT 20
 #define PLAYER_GUN_UP_HEIGHT 46
 #define PLAYER_LAY_DOWN_WIDTH 34
-
-#define PLAYER_IDLE_RIGHT_ANIMATION 300
-#define PLAYER_RUN_RIGHT_ANIMATION 301
-#define PLAYER_TOP_RIGHT_ANIMATION 302
-#define PLAYER_DOWN_RIGHT_ANIMATION 303
-#define PLAYER_LAY_DOWN_ANIMATION 304
-
-#define PLAYER_GUN_UP 208
-#define PLAYER_LAY_DOWN 209
-#define PLAYER_JUMP_UP 210
 
 //runman define
 
@@ -42,16 +32,10 @@
 #define TEXTURE_PATH_TURRET_OPENING L"image\\Enemy\\Turret\\Turret_Opening.png"
 #define TEXTURE_PATH_TURRET_0 L"image\\Enemy\\Turret\\Turret_0.png"
 #define TEXTURE_PATH_TURRET_30 L"image\\Enemy\\Turret\\Turret_30.png"
-#define TEXTURE_PATH_TURRET_n30 L"image\\Enemy\\Turret\\Turret_-30.png"
 #define TEXTURE_PATH_TURRET_60 L"image\\Enemy\\Turret\\Turret_60.png"
-#define TEXTURE_PATH_TURRET_n60 L"image\\Enemy\\Turret\\Turret_-60.png"
 #define TEXTURE_PATH_TURRET_90 L"image\\Enemy\\Turret\\Turret_90.png"
-#define TEXTURE_PATH_TURRET_n90 L"image\\Enemy\\Turret\\Turret_-90.png"
 #define TEXTURE_PATH_TURRET_120 L"image\\Enemy\\Turret\\Turret_120.png"
-#define TEXTURE_PATH_TURRET_n120 L"image\\Enemy\\Turret\\Turret_-120.png"
 #define TEXTURE_PATH_TURRET_150 L"image\\Enemy\\Turret\\Turret_150.png"
-#define TEXTURE_PATH_TURRET_n150 L"image\\Enemy\\Turret\\Turret_-150.png"
-#define TEXTURE_PATH_TURRET_180 L"image\\Enemy\\Turret\\Turret_-180.png"
 
 #define TURRET_CLOSE_ANIMATION 3000
 #define TURRET_OPENING_ANIMATION 3001

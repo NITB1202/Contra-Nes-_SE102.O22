@@ -4,6 +4,7 @@
 class Animation
 {
 	LPTEXTURE texture;
+
 	int spriteWidth;
 	int spriteHeight;
 
@@ -11,16 +12,18 @@ class Animation
 	float scaleY;
 
 	int size;
+	bool flipped;
 
 public:
 
-	Animation(LPTEXTURE tex = NULL, int sw = 0, int sh = 0, float sx = 1,float sy = 1)
+	Animation(LPTEXTURE tex = NULL, int sw = 0, int sh = 0, float sx = 1,float sy = 1, bool fl = false)
 	{
 		texture = tex;
 		spriteWidth = sw;
 		spriteHeight = sh;
 		scaleX = sx;
 		scaleY = sy;
+		flipped = fl;
 
 		size = (tex->getWidth() / sw)* (tex->getHeight() / sh);;
 	}
@@ -31,6 +34,7 @@ public:
 	float GetScaleX() { return scaleX; }
 	float GetScaleY() { return scaleY; }
 	int GetSize() { return size; }
+	bool IsFlipped() { return flipped; }
 	
 	RECT GetSprite(int index);
 };

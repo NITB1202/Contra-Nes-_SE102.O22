@@ -154,6 +154,7 @@
     <ClCompile Include="KeyEventHandle.cpp" />
     <ClCompile Include="Map.cpp" />
     <ClCompile Include="Player.cpp" />
+    <ClCompile Include="PlayerState.cpp" />
     <ClCompile Include="Runman.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="Turret.cpp" />
@@ -172,6 +173,7 @@
     <ClInclude Include="ObjectConfig.h" />
     <ClInclude Include="ObjectIDDefine.h" />
     <ClInclude Include="Player.h" />
+    <ClInclude Include="PlayerState.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="Runman.h" />
     <ClInclude Include="Scene.h" />
