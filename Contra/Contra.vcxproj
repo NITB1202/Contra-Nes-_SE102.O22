@@ -150,6 +150,7 @@
     <ClCompile Include="AnimationLib.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="Game.cpp" />
+    <ClCompile Include="Gulcan.cpp" />
     <ClCompile Include="KeyEventHandle.cpp" />
     <ClCompile Include="Map.cpp" />
     <ClCompile Include="Player.cpp" />
@@ -157,6 +158,7 @@
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="Shooter.cpp" />
     <ClCompile Include="Sniper.cpp" />
+    <ClCompile Include="WallTurret.cpp" />
     <ClCompile Include="WinMain.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -165,6 +167,7 @@
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="Camera.h" />
+    <ClInclude Include="Gulcan.h" />
     <ClInclude Include="KeyEventHandler.h" />
     <ClInclude Include="Animation.h" />
     <ClInclude Include="Map.h" />
@@ -174,6 +177,7 @@
     <ClInclude Include="Shooter.h" />
     <ClInclude Include="Sniper.h" />
     <ClInclude Include="Texture.h" />
+    <ClInclude Include="WallTurret.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

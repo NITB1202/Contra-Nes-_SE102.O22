@@ -60,6 +60,12 @@
     <ClCompile Include="Sniper.cpp">
       <Filter>Source Files\Enermies</Filter>
     </ClCompile>
+    <ClCompile Include="WallTurret.cpp">
+      <Filter>Source Files\Enermies</Filter>
+    </ClCompile>
+    <ClCompile Include="Gulcan.cpp">
+      <Filter>Source Files\Enermies</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h">
@@ -102,6 +108,12 @@
       <Filter>Header Files\Enermies</Filter>
     </ClInclude>
     <ClInclude Include="Sniper.h">
+      <Filter>Header Files\Enermies</Filter>
+    </ClInclude>
+    <ClInclude Include="WallTurret.h">
+      <Filter>Header Files\Enermies</Filter>
+    </ClInclude>
+    <ClInclude Include="Gulcan.h">
       <Filter>Header Files\Enermies</Filter>
     </ClInclude>
   </ItemGroup>
