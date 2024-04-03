@@ -43,7 +43,7 @@ private:
 
 	LPKEYEVENTHANDLER keyHandler;
 
-	vector<Scene> scenes;
+	vector<LPSCENE> scenes;
 	int currentScene = 0;
 
 public:
@@ -56,7 +56,7 @@ public:
 	void ProcessKeyboard();
 
 	LPTEXTURE LoadTexture(LPCWSTR texturePath);
-	Scene GetCurrentScene() { return scenes[currentScene]; }
+	LPSCENE GetCurrentScene() { return scenes[currentScene]; }
 	void SwitchScene(int sceneIndex) { currentScene = sceneIndex; }
 
 	void Draw(float x, float y, LPTEXTURE tex, float scaleX = 1, float scaleY = 1, int flipHorizontal = 0, RECT* rect = NULL);

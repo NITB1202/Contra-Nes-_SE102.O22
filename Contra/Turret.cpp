@@ -52,7 +52,7 @@ int Turret::Angle(int x1, int y1, int x2, int y2)
 	}
 	if ((x1 + 18 - x2) * (x1 + 18 - x2) + (y1 - 17 - y2) * (y1 - 17 - y2) < MinDistance)
 	{
-		angle = -30; MinDistance = (x1 + 18 - x2) * (x1 + 8 - x2) + (y1 - 17 - y2) * (y1 - 17 - y2);
+		angle = -30; MinDistance = (x1 + 18 - x2) * (x1 + 18 - x2) + (y1 - 17 - y2) * (y1 - 17 - y2);
 	}
 
 	return angle;

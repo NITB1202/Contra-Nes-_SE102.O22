@@ -1,11 +1,13 @@
 #include "PlayerState.h"
 #include "Player.h"
 #include "Game.h"
+#include "ObjectConfig.h"
 #include <dinput.h>
 
 //Player standing func
 PlayerState* PlayerStandingState::OnKeyDown(int keyCode)
 {
+
 	switch (keyCode)
 	{
 	case DIK_UP:
@@ -17,7 +19,7 @@ PlayerState* PlayerStandingState::OnKeyDown(int keyCode)
 	case DIK_RIGHT:
 		return new PlayerRunningState(RIGHT);
 	case DIK_A:
-		return new PlayerJumpingState(this->direction);
+		return new PlayerJumpingState(this->direction, Player::GetInstance()->GetY());
 	}
 
 	return NULL;
@@ -38,7 +40,9 @@ int PlayerStandingState::GetStateAnimation()
 
 void PlayerStandingState::UpdateStatus()
 {
-	Player::GetInstance()->SetSpeed(0, 0);
+	Player* player = Player::GetInstance();
+	player->SetSpeed(0, 0);
+	player->SetWidthHeight(PLAYER_WIDTH, PLAYER_HEIGHT);
 }
 
 //Player running func
@@ -47,7 +51,7 @@ PlayerState* PlayerRunningState::OnKeyDown(int keyCode)
 	switch (keyCode)
 	{
 	case DIK_A:
-		return new PlayerJumpingState(this->direction);
+		return new PlayerJumpingState(this->direction, Player::GetInstance()->GetY());
 	case DIK_LEFT:
 		direction = LEFT;
 		break;
@@ -85,6 +89,8 @@ void PlayerRunningState::UpdateStatus()
 
 	if(direction == LEFT)
 		player->SetSpeed(-PLAYER_START_VX, 0);
+
+	player->SetWidthHeight(PLAYER_WIDTH, PLAYER_HEIGHT);
 }
 
 //Player jumping func
@@ -107,35 +113,60 @@ void PlayerJumpingState::UpdateStatus()
 {
 	Player* player = Player::GetInstance();
 
-	if (player->GetY() < player->GetGroundLevel())
-	{
-		jumpingDone = true;
-		player->SetPosition(player->GetX(), player->GetGroundLevel());
-		player->SetSpeed(player->GetVx(), 0);
-		player->SetCurrentState(ChangeStateAfterJumpEnd());
-	}
+	player->SetSpeed(player->GetVx(), PLAYER_START_VY);
+	player->SetWidthHeight(PLAYER_JUMP_WIDTH, PLAYER_JUMP_HEIGHT);
 
-	if (player->GetY() > player->GetGroundLevel() + maxJumpHeight)
-		jumpingState = FALL;
-
-	if (!jumpingDone)
-	{
-		if (jumpingState == THROW)
-			player->SetSpeed(player->GetVx(), PLAYER_START_VY);
-		if(jumpingState == FALL)
-			player->SetSpeed(player->GetVx(), -PLAYER_START_VY);
-	}
+	if (player->GetY() > maxJumpHeight)
+		player->SetCurrentState(new PlayerFallState(this->direction));
 }
 
-PlayerState* PlayerJumpingState::ChangeStateAfterJumpEnd()
+//Player fall func
+PlayerState* PlayerFallState::OnKeyDown(int keyCode)
+{
+	return NULL;
+}
+
+PlayerState* PlayerFallState::OnKeyUp(int keyCode)
+{
+	return NULL;
+}
+
+int PlayerFallState::GetStateAnimation()
+{
+	return PLAYER_JUMP_UP_ANIMATION;
+}
+
+void PlayerFallState::UpdateStatus()
+{
+	Player* player = Player::GetInstance();
+
+	player->SetSpeed(player->GetVx(), -PLAYER_START_VY);
+	player->SetWidthHeight(PLAYER_WIDTH, PLAYER_HEIGHT);
+
+	if (player->IsOnGround())
+	{
+		player->SetCurrentState(ChangeStateAfterLanding());
+		//player->SetWidthHeight(PLAYER_WIDTH, PLAYER_HEIGHT);
+	}
+
+}
+
+PlayerState* PlayerFallState::ChangeStateAfterLanding()
 {
 	Game* game = Game::GetInstance();
 
-	if (game->IsKeyDown(DIK_LEFT) || game->IsKeyDown(DIK_RIGHT))
-		return new PlayerRunningState(this->direction);
+	if (game->IsKeyDown(DIK_LEFT))
+		return new PlayerRunningState(LEFT);
+
+	if (game->IsKeyDown(DIK_RIGHT))
+		return new PlayerRunningState(RIGHT);
+
+	if (game->IsKeyDown(DIK_A))
+		return new PlayerJumpingState(this->direction, Player::GetInstance()->GetY());
 
 	return new PlayerStandingState(this->direction);
 }
+
 
 //Player laying func
 PlayerState* PlayerLayingState::OnKeyDown(int keyCode)

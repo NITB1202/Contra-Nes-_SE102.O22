@@ -2,14 +2,18 @@
 #include "Game.h"
 #include "ObjectConfig.h"
 
+//Runman state define(temp)
+#define RUNMAN_RUN_RIGHT 101
+#define RUNMAN_RUN_LEFT 102
+
 void Runman::Update(DWORD dt)
 {
+	if (state == RUNMAN_RUN_RIGHT)
+		vx = RUNMAN_START_VX;
+	else
+		vx = -RUNMAN_START_VX;
+
 	x += vx * dt;
-
-	Camera* cam = Camera::GetInstance();
-
-	//if (x < cam->getX() || x > cam->getX()+cam->getWidth()-RUNMAN_SPRITE_WIDTH)
-		//vx = -vx;
 }
 
 void Runman::Render()

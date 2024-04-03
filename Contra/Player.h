@@ -2,8 +2,9 @@
 #include "GameObject.h"
 #include "PlayerState.h"
 
-#define PLAYER_SPRITE_WIDTH 28
-#define PLAYER_SPRITE_HEIGHT 40
+#define PLAYER_WIDTH 28
+#define PLAYER_HEIGHT 70
+#define WATER 10
 
 class Player : public GameObject
 {
@@ -13,23 +14,28 @@ private:
 	PlayerState* currentState;
 
 	int GunUpHeightAdjust = 8;
-	int groundLevel;
+	bool isOnGround = false;
 
 public:
-	Player(float x = 0, float y = 0) :GameObject(x, y) 
+	Player()	
 	{
-		width = PLAYER_SPRITE_WIDTH;
-		height = PLAYER_SPRITE_HEIGHT;
-		currentState = new PlayerStandingState(RIGHT);
+		baseType = PLAYER;
+		width = PLAYER_WIDTH;
+		height = PLAYER_HEIGHT;
+		currentState = new PlayerFallState(RIGHT);
 	};
-	void SetPosition(float x, float y);
 	static Player* GetInstance();
 	void OnKeyDown(int keyCode);
 	void OnKeyUp(int keyCode);
+
 	PlayerState* GetCurrentState() { return currentState; }
 	void SetCurrentState(PlayerState* newState);
-	int GetGroundLevel() { return groundLevel; }
+	bool IsOnGround() { return isOnGround; }
+
 	void Render();
 	void Update(DWORD dt);
+
+	void OnNoCollision(DWORD dt);
+	void OnCollisionWith(LPCOLLISIONEVENT e);
 };
 typedef Player* LPPLAYER;

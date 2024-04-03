@@ -4,14 +4,23 @@
 
 class Scene
 {
-	LPMAP map;
-	LPBINARYTREE objList;
+private:
+
+	LPMAP background;
+	LPBINARYTREE objectTree;
+
+	map<int, LPGAMEOBJECT> objectOnScreen;
 
 public:
+
 	Scene(LPWSTR path);
+
 	void Update(DWORD dt);
 	void Render();
 
-	int GetMapWidth() { return map->GetWidth(); }
-	int GetMapheight() { return map->GetHeight(); }
+	vector<LPGAMEOBJECT> GetCollidableObject(LPGAMEOBJECT obj);
+
+	LPMAP GetMap() { return background; }
+	LPBINARYTREE GetObjectTree() { return objectTree; }
 };
+typedef Scene* LPSCENE;

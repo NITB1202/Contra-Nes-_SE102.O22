@@ -1,9 +1,10 @@
 #include "Scene.h"
 #include "Player.h"
+#include "MyUtility.h"
 #include <fstream>
 #include <sstream>
 
-//scene file include link to map file, link to matrix file and link to object file
+using namespace std;
 
 LPWSTR ConvertStringToLPWSTR(const string& str) 
 {
@@ -24,12 +25,12 @@ Scene::Scene(LPWSTR path)
 	string matrixPath;
 	getline(file, matrixPath);
 
-	map = new Map(ConvertStringToLPWSTR(mapPath), matrixPath);
+	background = new Map(ConvertStringToLPWSTR(mapPath), matrixPath);
 
 	string objPath;
 	getline(file, objPath);
 
-	objList = new BinaryTree(objPath, map);
+	objectTree = new BinaryTree(objPath, background->GetWidth(), background->GetHeight());
 
 	string pos;
 	getline(file, pos);
@@ -44,7 +45,6 @@ Scene::Scene(LPWSTR path)
 	ss >> camBeginY;
 
 	Player::GetInstance()->SetPosition(playerBeginX, playerBeginY);
-	Player::GetInstance()->SetState(state);
 
 	Camera::GetInstance()->setPosCamera(camBeginX, camBeginY);
 
@@ -53,12 +53,37 @@ Scene::Scene(LPWSTR path)
 
 void Scene :: Update(DWORD dt)
 {
-	map->Update();
-	objList->Update(dt);
+	background->Update();
+
+	//Check if the object is actually collide with camera
+	RECT cameraBound = Camera::GetInstance()->GetBound();
+	objectOnScreen = objectTree->GetObjectInBound(cameraBound);
+	for (auto it = objectOnScreen.begin(); it != objectOnScreen.end();)
+		if (!MyUtility::CheckIntersect(cameraBound, it->second->GetCollisionBound()))
+			it = objectOnScreen.erase(it);	//If not then remove it
+		else
+		{
+			//Update object on screen
+			it->second->Update(dt);
+			it++;
+		}
 }
 
 void Scene :: Render()
 {
-	map->Render();
-	objList->Render();
+	background->Render();
+
+	for (auto it = objectOnScreen.begin(); it != objectOnScreen.end(); it++)
+		it->second->Render();
+}
+
+vector<LPGAMEOBJECT> Scene::GetCollidableObject(LPGAMEOBJECT obj)
+{
+	map<int, LPGAMEOBJECT> objectInTree = objectTree->GetObjectInBound(obj->GetCollisionBound());
+	vector<LPGAMEOBJECT> collidableObject;
+
+	for (auto it = objectInTree.begin(); it != objectInTree.end(); it++)
+		collidableObject.push_back(it->second);
+
+	return collidableObject;
 }

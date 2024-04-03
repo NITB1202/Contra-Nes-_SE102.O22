@@ -1,65 +1,53 @@
 #pragma once
+#include "GameObject.h"
+#include "MyUtility.h"
 #include <string>
 #include <map>
-#include "GameObject.h"
-#include "Map.h"
 
+using namespace std;
 
 #define HORIZONTAL_BINARYTREE 111
 #define VERTICAL_BINARYTREE 112
-
-using namespace std;
 
 class TreeNode
 {
 public:
 
-	map<int, LPGAMEOBJECT> objectInNode;
+	map<int, LPGAMEOBJECT> objectsInNode;
 	
-	int start;
-	int end;
+	RECT bound;
 
 	TreeNode* left = NULL;
 	TreeNode* right = NULL;
 
-	TreeNode(int s, int e)
-	{
-		start = s;
-		end = e;
-	}
+	TreeNode(RECT b) { bound = b;}
 
-	bool InBound(float x) { return start <= x && x <= end; }
-	void InsertObj(int ID, LPGAMEOBJECT obj) { objectInNode.insert({ ID,obj }); }
-	map<int, LPGAMEOBJECT> GetObj() { return objectInNode;}
-	void GetBound(float& s,float& e) 
-	{
-		s = start;
-		e = end;
-	}
+	bool IntersectWithBound(RECT rect) { MyUtility::CheckIntersect(bound, rect);}
+	void InsertObject(int ID, LPGAMEOBJECT obj) { objectsInNode.insert({ ID,obj }); }
+	map<int, LPGAMEOBJECT> GetObjectInNode() { return objectsInNode;}
+	RECT GetBound() { return bound; }
 	bool IsLeaf() { return left == NULL && right == NULL; }
-	void Remove(int ID) { objectInNode.erase(ID); }
+	void RemoveObject(int ID) { objectsInNode.erase(ID); }
 };
 
 class BinaryTree
 {
 	int type;
 
-	int mapBound;
-	int scrBound;
+	RECT mapSize;
+	RECT screenSize;
 
 	TreeNode* root;
-	map<int, LPGAMEOBJECT> currentObj;
-	map<int, LPGAMEOBJECT> movingObj;
 
-	void CreateTree(map<int, LPGAMEOBJECT> objList);
-	void Insert(TreeNode* node, int ID, LPGAMEOBJECT object);
-	TreeNode* FindMinNodeContainBound(float x);
-	void Remove(int ID, LPGAMEOBJECT obj);
 public:
 
-	BinaryTree(string objPath, LPMAP map, int type = HORIZONTAL_BINARYTREE);
+	BinaryTree(string objPath, int mapWidth, int mapHeight, int type = HORIZONTAL_BINARYTREE);
+
+	void Insert(TreeNode* node, int ID, LPGAMEOBJECT object);
+	void Remove(TreeNode* node, int ID, LPGAMEOBJECT object);
+	void GetObjectInTree(TreeNode* node, RECT bound, map<int, LPGAMEOBJECT>& objectList);
+
 	map<int, LPGAMEOBJECT> GetObjectInBound(RECT bound);
-	void Update(DWORD dt);
-	void Render();
+
 };
 typedef BinaryTree* LPBINARYTREE;

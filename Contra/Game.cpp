@@ -216,7 +216,7 @@ void Game :: InitScene(vector<LPWSTR> scenelink)
 
 	for (int i = 0; i < scenelink.size(); i++)
 	{
-		Scene temp(scenelink[i]);
+		LPSCENE temp = new Scene(scenelink[i]);
 		scenes.push_back(temp);
 	}
 }
@@ -238,8 +238,8 @@ void Game::Draw(float x, float y, LPTEXTURE tex, float scaleX, float scaleY, int
 	}
 	else
 	{
-		onscreenX += (rect->right - rect->left) / 2;
-		onscreenY -= (rect->top - rect->bottom) / 2;
+		onscreenX += ((rect->right - rect->left) / 2);
+		onscreenY += ((rect->bottom - rect->top) / 2);
 	}
 
 	if (tex == NULL) return;

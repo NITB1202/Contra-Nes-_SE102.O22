@@ -48,7 +48,6 @@ bool IsInterger(double num) {
 void Map :: Update()
 {
 	LPCAMERA cam = Camera::GetInstance();
-	//toa do y huong len
 	colBegin = cam->getX() / tileWidth;
 	float num = cam->getX() + cam->getWidth();
 	if (IsInterger(num) && (int)num % tileWidth == 0)

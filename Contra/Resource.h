@@ -2,7 +2,6 @@
 #include "AnimationLib.h"
 #include "Game.h"
 #include "objectConfig.h"
-#include "PlayerState.h"
 
 vector<LPWSTR> scenelink;
 
@@ -37,7 +36,7 @@ void LoadResource()
 	aniLib->AddAnimation(PLAYER_GUN_DOWN_LEFT_ANIMATION, Animation(tex, PLAYER_SPRITE_WIDTH, PLAYER_SPRITE_HEIGHT, 2, 2, true));
 
 	tex = game->LoadTexture(TEXTURE_PATH_PLAYER_JUMP_UP);
-	aniLib->AddAnimation(PLAYER_JUMP_UP_ANIMATION, Animation(tex, PLAYER_JUMP_WIDTH, PLAYER_JUMP_HEIGHT, 2, 2));
+	aniLib->AddAnimation(PLAYER_JUMP_UP_ANIMATION, Animation(tex, PLAYER_JUMP_SPRITE_WIDTH, PLAYER_JUMP_SPRITE_HEIGHT, 2, 2));
 
 	tex = game->LoadTexture(TEXTURE_PATH_RUNMAN_RIGHT);
 	aniLib->AddAnimation(RUNMAN_RUN_RIGHT_ANIMATION, Animation(tex, RUNMAN_SPRITE_WIDTH, RUNMAN_SPRITE_HEIGHT, 2, 2));

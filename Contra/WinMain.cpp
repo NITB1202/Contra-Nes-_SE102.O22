@@ -18,6 +18,8 @@ int GameRun();
 void Render();
 void Update(DWORD dt);
 
+Game* game = Game::GetInstance();
+
 LRESULT CALLBACK WinProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 {
 	switch (msg)
@@ -34,7 +36,7 @@ LRESULT CALLBACK WinProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 
 void Update(DWORD dt)
 {
-	Game::GetInstance()->GetCurrentScene().Update(dt);
+	game->GetCurrentScene()->Update(dt);
 	Camera::GetInstance()->UpdateByX(dt);
 	Player::GetInstance()->Update(dt);
 }
@@ -44,8 +46,6 @@ void Update(DWORD dt)
 */
 void Render()
 {
-	Game* game = Game::GetInstance();
-
 	ID3D10Device* pD3DDevice = game->GetDirect3DDevice();
 	IDXGISwapChain* pSwapChain = game->GetSwapChain();
 	ID3D10RenderTargetView* pRenderTargetView = game->GetRenderTargetView();
@@ -62,7 +62,7 @@ void Render()
 		FLOAT NewBlendFactor[4] = { 0,0,0,0 };
 		pD3DDevice->OMSetBlendState(game->GetAlphaBlending(), NewBlendFactor, 0xffffffff);
 
-		game->GetCurrentScene().Render();
+		game->GetCurrentScene()->Render();
 		Player::GetInstance()->Render();
 		spriteHandler->End();
 		pSwapChain->Present(0, 0);
@@ -153,8 +153,8 @@ int GameRun()
 		if (dt >= tickPerFrame)
 		{
 			frameStart = now;
-			Game::GetInstance()->ProcessKeyboard();
 			Update((DWORD)dt);
+			game->ProcessKeyboard();
 			Render();
 		}
 		else
@@ -173,7 +173,6 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	if (hwnd == 0) 
 		return 0;
 
-	Game* game = Game::GetInstance();
 	game->InitDirect3D(hwnd, hInstance);
 	game->InitKeyboard();
 	

@@ -1,9 +1,18 @@
 #pragma once
 #include "AnimationHandler.h"
+#include "Collision.h"
+
+enum objectClass {
+	PLAYER,
+	ENEMY,
+	GROUND
+};
 
 class GameObject
 {
 protected:
+
+	objectClass baseType;
 
 	int width;
 	int height;
@@ -11,30 +20,32 @@ protected:
 	float x;
 	float y;
 
-	float vx;
-	float vy;
+	float vx = 0;
+	float vy = 0;
 
 	int state = -1;
 	int AnimationID = -1;
 	AnimationHandler AniHandler;
 
+	bool isDeleted;
+		
 public:
-
-	GameObject(float x, float y)
-	{
-		this->x = x;
-		this->y = y;
-	}
 
 	void SetPosition(float x, float y) { this->x = x, this->y = y; }
 	void SetSpeed(float vx, float vy) { this->vx = vx, this->vy = vy; }
-	virtual void SetState(int state) { this->state = state; }
+	void SetWidthHeight(int w, int h) { width = w; height = h; }
+	void SetState(int state) { this->state = state; }
 
-	int GetState() { return state; }
 	float GetX() { return x; }
 	float GetY() { return y; }
 	float GetVx() { return vx; }
 	float GetVy() { return vy; }
+	int GetWidth() { return width; }
+	int GetHeight() { return height; }
+	int GetBaseType() { return baseType; }
+	void GetSpeed(float& vx, float& vy) { vx = this->vx; vy = this->vy; }
+
+
 	AnimationHandler GetAnimationHandler() { return AniHandler; }
 	RECT GetCollisionBound() {
 		RECT rect;
@@ -45,7 +56,15 @@ public:
 		return rect;
 	}
 
-	virtual void Update(DWORD dt) = 0;
-	virtual void Render() = 0;
+	virtual void Update(DWORD dt) {}
+	virtual void Render() {}
+
+	virtual void Delete() { isDeleted = true; }
+	bool IsDeleted() { return isDeleted; }
+	virtual int IsCollidable() { return 1; };
+
+	virtual void OnNoCollision(DWORD dt) {};
+	virtual void OnCollisionWith(LPCOLLISIONEVENT e) {};
+	virtual bool IsBlocking() { return true; }
 };
 typedef GameObject* LPGAMEOBJECT;

@@ -5,17 +5,18 @@
 #define T_INIT 0
 #define T_OPEN 1
 
-#define TURRET_SPRITE_HEIGHT 32
-#define TURRET_SPRITE_WIDTH 32
+#define TURRET_HEIGHT 48
+#define TURRET_WIDTH 48
 
 class Turret : public GameObject
 {
 public:
 	int preState = 0, delay = 0;
-	Turret(float x = 0, float y = 0) : GameObject(x, y) 
+	Turret()
 	{
-		width = TURRET_SPRITE_WIDTH;
-		height = TURRET_SPRITE_HEIGHT;
+		baseType = ENEMY;
+		width = TURRET_WIDTH;
+		height = TURRET_HEIGHT;
 	};
 	void Render() override;
 	void Update(DWORD dt) override;

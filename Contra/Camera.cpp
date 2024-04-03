@@ -37,7 +37,7 @@ void Camera::UpdateByX(DWORD dt)
 	if (player->GetX() < camx + width / 3 && player->GetCurrentState()->GetDirection() == LEFT)
 		camx -= vx * dt;
 
-	int mapwidth = game->GetCurrentScene().GetMapWidth();
+	int mapwidth = game->GetCurrentScene()->GetMap()->GetWidth();
 
 	if (camx < 0)
 		camx = 0;

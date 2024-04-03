@@ -5,13 +5,6 @@
 
 Player* Player::instance = NULL;
 
-void Player::SetPosition(float x, float y)
-{
-	this->x = x;
-	this->y = y;
-	groundLevel = y;
-}
-
 void Player::SetCurrentState(PlayerState* newState)
 {
 	delete currentState;
@@ -23,15 +16,42 @@ void Player::Update(DWORD dt)
 {
 	currentState->UpdateStatus();
 
-	x += vx * dt; // chuyen dong thang deu khong gia toc
-	y += vy * dt - 1/2*PLAYER_GRAVITY*dt*dt;
-	
-
+	vy += -0.5*PLAYER_GRAVITY * dt;
 	//basic collision
-	float camx = Camera::GetInstance()->getX();
-	if (x < camx)
-		x = camx;
+	Camera* camera = Camera::GetInstance();
+
+	if (x < camera->getX())
+		x = camera->getX();
+
+	isOnGround = false;
+
+	vector<LPGAMEOBJECT> colliableObject = Game::GetInstance()->GetCurrentScene()->GetCollidableObject(this);
+	Collision::GetInstance()->Process(this, dt, colliableObject);
+
+	if (!isOnGround && vy < 0 && currentState != dynamic_cast<PlayerFallState*>(currentState))
+		SetCurrentState(new PlayerFallState(currentState->GetDirection()));
 }
+
+void Player::OnNoCollision(DWORD dt)
+{
+	x += vx * dt;
+	y += vy * dt;
+}
+
+void Player::OnCollisionWith(LPCOLLISIONEVENT e)
+{
+	if (e->ny != 0 && e->object->IsBlocking())
+	{
+		vy = 0;
+		if (e->ny < 0) isOnGround = true;
+	}
+
+	if (e->nx != 0 && e->object->IsBlocking())
+		vx = 0;
+
+
+}
+
 
 void Player::Render()
 {
