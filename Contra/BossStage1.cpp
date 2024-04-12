@@ -1,23 +1,23 @@
-#include "Gulcan.h"
+#include "BossStage1.h"
 
 // set movement x y foreach Shooter state
-void Gulcan::SetState(int ID)
+void BossStage1::SetState(int ID)
 {
 	state = ID;
 
 	switch (ID)
 	{
-
+	
 	}
 }
 
-void Gulcan::Update(DWORD dt)
+void BossStage1::Update(DWORD dt)
 {
 	x += vx * dt;
 
 	int BackBufferWidth = Game::GetInstance()->GetBackBufferWidth();
 
-	if (x <= GULCAN_SPRITE_WIDTH || x >= BackBufferWidth - GULCAN_SPRITE_WIDTH) {
+	if (x <= BOSSSTAGE1_SPRITE_WIDTH || x >= BackBufferWidth - BOSSSTAGE1_SPRITE_WIDTH) {
 
 		vx = -vx;
 
@@ -25,14 +25,14 @@ void Gulcan::Update(DWORD dt)
 		{
 			x = 0;
 		}
-		else if (x >= BackBufferWidth - GULCAN_SPRITE_WIDTH)
+		else if (x >= BackBufferWidth - BOSSSTAGE1_SPRITE_WIDTH)
 		{
-			x = (float)(BackBufferWidth - GULCAN_SPRITE_WIDTH);
+			x = (float)(BackBufferWidth - BOSSSTAGE1_SPRITE_WIDTH);
 		}
 	}
 }
 
-void Gulcan::Render()
+void BossStage1::Render()
 {
 	if (face == 1)
 	{
@@ -44,7 +44,7 @@ void Gulcan::Render()
 	}
 
 	switch (state)
-	{
+	{	
 
 	}
 

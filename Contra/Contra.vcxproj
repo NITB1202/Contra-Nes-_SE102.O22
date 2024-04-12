@@ -148,6 +148,7 @@
     <ClCompile Include="Animation.cpp" />
     <ClCompile Include="AnimationHandler.cpp" />
     <ClCompile Include="AnimationLib.cpp" />
+    <ClCompile Include="BossStage1.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="Gulcan.cpp" />
@@ -164,6 +165,7 @@
   <ItemGroup>
     <ClInclude Include="AnimationHandler.h" />
     <ClInclude Include="AnimationLib.h" />
+    <ClInclude Include="BossStage1.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="Camera.h" />
