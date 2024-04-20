@@ -25,6 +25,9 @@ RECT getSweptBroadphaseRect(LPGAMEOBJECT object, float dx, float dy)
 
 LPCOLLISIONEVENT Collision::SweptAABB(LPGAMEOBJECT srcObject, LPGAMEOBJECT desObject, DWORD dt)
 {
+	if (!srcObject->IsCollidable() || !desObject->IsCollidable())
+		return NULL;
+
 	float mvx, mvy;
 	srcObject->GetSpeed(mvx, mvy);
 	float mdx = mvx*dt;
@@ -113,7 +116,7 @@ LPCOLLISIONEVENT Collision::SweptAABB(LPGAMEOBJECT srcObject, LPGAMEOBJECT desOb
 	if (tx_entry > ty_entry)
 	{
 		ny = 0.0f;
-		dx > 0 ? nx = -1.0f : nx = 1.0f;
+		dx > 0 ? nx = 1.0f : nx = -1.0f;
 	}
 	else
 	{

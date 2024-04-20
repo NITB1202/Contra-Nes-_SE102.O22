@@ -5,11 +5,13 @@
 enum objectClass {
 	PLAYER,
 	ENEMY,
-	GROUND
+	GROUND,
+	BULLET
 };
 
 class GameObject
 {
+
 protected:
 
 	objectClass baseType;
@@ -23,9 +25,11 @@ protected:
 	float vx = 0;
 	float vy = 0;
 
+	int direction = 1;
+
 	int state = -1;
 	int AnimationID = -1;
-	AnimationHandler AniHandler;
+	AnimationHandler* AniHandler = new AnimationHandler();
 
 	bool isDeleted;
 		
@@ -46,7 +50,7 @@ public:
 	void GetSpeed(float& vx, float& vy) { vx = this->vx; vy = this->vy; }
 
 
-	AnimationHandler GetAnimationHandler() { return AniHandler; }
+	AnimationHandler* GetAnimationHandler() { return AniHandler; }
 	RECT GetCollisionBound() {
 		RECT rect;
 		rect.top = y;
@@ -59,9 +63,9 @@ public:
 	virtual void Update(DWORD dt) {}
 	virtual void Render() {}
 
-	virtual void Delete() { isDeleted = true; }
+	void Delete() { isDeleted = true; }
 	bool IsDeleted() { return isDeleted; }
-	virtual int IsCollidable() { return 1; };
+	virtual bool IsCollidable() { return 1; };
 
 	virtual void OnNoCollision(DWORD dt) {};
 	virtual void OnCollisionWith(LPCOLLISIONEVENT e) {};

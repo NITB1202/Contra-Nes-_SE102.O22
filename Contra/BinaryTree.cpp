@@ -7,7 +7,7 @@ BinaryTree::BinaryTree(string objectPath, int mapWidth, int mapHeight, int type)
 {
 	Game* game = Game::GetInstance();
 	mapSize = { 0, mapHeight, mapWidth, 0 };
-	screenSize = { 0, game->GetBackBufferHeight(), game->GetBackBufferWidth(), 0 };
+
 	this->type = type;
 
 	ifstream fileObj(objectPath);
@@ -37,8 +37,8 @@ BinaryTree::BinaryTree(string objectPath, int mapWidth, int mapHeight, int type)
 		
 		y = mapHeight - y;
 		object->SetPosition(x, y);
-
 		object->SetWidthHeight(width, height);
+		object->SetState(state);
 
 		Insert(root, ID, object);
 	}
@@ -63,29 +63,20 @@ void SplitBoundVertical(RECT sourceRect, RECT& leftRect, RECT& rightRect)
 void BinaryTree::Insert(TreeNode* node, int ID, LPGAMEOBJECT object)
 {
 	RECT currentBound = node->GetBound();
+	
+	//Node size < screen size /2 -> stop 
+	if (MyUtility::CalculateArea(node->GetBound()) < MyUtility::CalculateArea(Camera::GetInstance()->GetBound()))
+	{
+		node->InsertObject(ID, object);
+		return;
+	}
+
 	RECT leftBound, rightBound;
 
 	if (type == HORIZONTAL_BINARYTREE)
-	{
 		SplitBoundHorizontal(currentBound, leftBound, rightBound);
-
-		if (leftBound.right - leftBound.left < screenSize.right / 2)
-		{
- 			node->InsertObject(ID, object);
-			return;
-		}
-	}
-
-	if (type == VERTICAL_BINARYTREE)
-	{
+	else
 		SplitBoundVertical(currentBound, leftBound, rightBound);
-
-		if (leftBound.top - leftBound.bottom < screenSize.top / 2)
-		{
-			node->InsertObject(ID, object);
-			return;
-		}
-	}
 
  	if (MyUtility::CheckIntersect(leftBound,object->GetCollisionBound()))
 	{
@@ -123,6 +114,10 @@ void BinaryTree::Remove(TreeNode* node, int ID, LPGAMEOBJECT object)
 	if (node->IsLeaf())
 	{
 		node->RemoveObject(ID);
+
+		if (node->GetObjectInNode().empty())
+			delete node;
+
 		return;
 	}
 
@@ -133,10 +128,16 @@ void BinaryTree::Remove(TreeNode* node, int ID, LPGAMEOBJECT object)
 		Remove(node->right, ID, object);
 }
 
+void BinaryTree::RemoveObjectInTree(int ID, LPGAMEOBJECT object)
+{
+	Remove(root, ID, object);
+}
+
 map<int, LPGAMEOBJECT> BinaryTree::GetObjectInBound(RECT bound)
 {
 	map<int, LPGAMEOBJECT> objectList;
 	GetObjectInTree(root, bound, objectList);
 	return objectList;
 }
+
 

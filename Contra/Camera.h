@@ -5,14 +5,12 @@ class Camera
 {
 	static Camera* instance;
 
-	float camx;
-	float camy;
-	
-	int width;
-	int height;
+	float camx, camy;
 
-	float vx = 0.2f;
-	float vy = 0.2f;
+	float vx = 0.15;
+	float vy = 0.15;
+
+	int width, height;
 
 public:
 	

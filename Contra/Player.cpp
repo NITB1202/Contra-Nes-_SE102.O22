@@ -9,7 +9,7 @@ void Player::SetCurrentState(PlayerState* newState)
 {
 	delete currentState;
 	currentState = newState;
-	AniHandler.Reset();
+	AniHandler->Reset();
 }
 
 void Player::Update(DWORD dt)
@@ -17,6 +17,7 @@ void Player::Update(DWORD dt)
 	currentState->UpdateStatus();
 
 	vy += -0.5*PLAYER_GRAVITY * dt;
+
 	//basic collision
 	Camera* camera = Camera::GetInstance();
 
@@ -25,11 +26,27 @@ void Player::Update(DWORD dt)
 
 	isOnGround = false;
 
+	if (untouchable && GetTickCount64() - untouchableStartTime > UNTOUCHABLE_TIME)
+	{
+		untouchable = false;
+		untouchableStartTime = -1;
+	}
+
 	vector<LPGAMEOBJECT> colliableObject = Game::GetInstance()->GetCurrentScene()->GetCollidableObject(this);
 	Collision::GetInstance()->Process(this, dt, colliableObject);
 
-	if (!isOnGround && vy < 0 && currentState != dynamic_cast<PlayerFallState*>(currentState))
-		SetCurrentState(new PlayerFallState(currentState->GetDirection()));
+	//Charge gun
+	if (isShooting)
+	{
+		float bulletX, bulletY;
+		int gunDir;
+		if (currentState->GetGunDirection(bulletX, bulletY, gunDir))
+			gun->Charge(bulletX, bulletY, gunDir);
+	}
+
+	//Gun Update
+	gun->Update(dt);
+
 }
 
 void Player::OnNoCollision(DWORD dt)
@@ -49,7 +66,17 @@ void Player::OnCollisionWith(LPCOLLISIONEVENT e)
 	if (e->nx != 0 && e->object->IsBlocking())
 		vx = 0;
 
+	if (e->object->GetBaseType() == ENEMY)
+		OnCollisionWithEnenmy(e);
+}
 
+void Player::OnCollisionWithEnenmy(LPCOLLISIONEVENT e)
+{
+	if (untouchable)
+		return;
+
+	if (currentState != dynamic_cast<PlayerDieState*>(currentState))
+		SetCurrentState(new PlayerDieState(e->nx));
 }
 
 
@@ -58,9 +85,11 @@ void Player::Render()
 	AnimationID = currentState->GetStateAnimation();
 
 	if (AnimationID == PLAYER_GUN_UP_RIGHT_ANIMATION || AnimationID == PLAYER_GUN_UP_LEFT_ANIMATION)
-		AniHandler.Render(AnimationID, x, y + GunUpHeightAdjust);
+		AniHandler->Render(AnimationID, x, y + GunUpHeightAdjust);
 	else
-		AniHandler.Render(AnimationID, x, y);
+		AniHandler->Render(AnimationID, x, y);
+
+	gun->Render();
 }		
 
 Player* Player::GetInstance() 
@@ -72,13 +101,27 @@ Player* Player::GetInstance()
 void Player:: OnKeyDown(int keyCode)
 {
 	PlayerState* newState = currentState->OnKeyDown(keyCode);
+
 	if (newState != NULL)
 		SetCurrentState(newState);
+
+	if (keyCode == DIK_S)
+		isShooting = true;
 }
 
 void Player::OnKeyUp(int keyCode)
 {
 	PlayerState* newState = currentState->OnKeyUp(keyCode);
+
 	if (newState != NULL)
 		SetCurrentState(newState);
+
+	if (keyCode == DIK_S)
+		isShooting = false;
+}
+
+void Player::UntouchableStart()
+{
+	untouchable = true;
+	untouchableStartTime = GetTickCount64();
 }

@@ -1,9 +1,10 @@
 #pragma once
 #include <Windows.h>
+
 //Define player status
 enum PlayerDirection {
-	LEFT,
-	RIGHT
+	LEFT = -1,
+	RIGHT = 1
 };
 
 class PlayerState
@@ -11,44 +12,50 @@ class PlayerState
 protected:
 	int direction;
 public:
+	PlayerState(int dir) { direction = dir; }
 	int GetDirection() { return direction; }
-	virtual PlayerState* OnKeyDown(int keyCode) = 0;
-	virtual PlayerState* OnKeyUp(int keyCode) = 0;
+	virtual PlayerState* OnKeyDown(int keyCode) { return NULL; }
+	virtual PlayerState* OnKeyUp(int keyCode) { return NULL; }
 	virtual void UpdateStatus() = 0;
 	virtual int GetStateAnimation() = 0;
+	virtual bool GetGunDirection(float& x, float& y, int& gunDir) { return false; }
 };
 
 class PlayerStandingState : public PlayerState
 {
 public:
-	PlayerStandingState(int dir) {direction = dir;}
+	PlayerStandingState(int dir) : PlayerState(dir) {}
 	PlayerState* OnKeyDown(int keyCode);
 	PlayerState* OnKeyUp(int keyCode);
 	int GetStateAnimation();
 	void UpdateStatus();
+	bool GetGunDirection(float& x, float& y, int& gunDir);
 };
 
 class PlayerRunningState : public PlayerState
 {
+private:
+	bool shooting;
 public:
-	PlayerRunningState(int dir) { direction = dir; }
+	PlayerRunningState(int dir) : PlayerState(dir){
+		shooting = false;
+	}
 	PlayerState* OnKeyDown(int keyCode);
 	PlayerState* OnKeyUp(int keyCode);
 	int GetStateAnimation();
 	void UpdateStatus();
+	bool GetGunDirection(float& x, float& y, int& gunDir);
 };
 
 class PlayerJumpingState : public PlayerState
 {
 private:
-	int maxJumpHeight = 100;
+	int maxJumpHeight = 70;
 public:
-	PlayerJumpingState(int dir, float currentY) { 
+	PlayerJumpingState(int dir, float currentY) : PlayerState(dir) {
 		direction = dir;
 		maxJumpHeight = currentY + maxJumpHeight;
 	}
-	PlayerState* OnKeyDown(int keyCode);
-	PlayerState* OnKeyUp(int keyCode);
 	int GetStateAnimation();
 	void UpdateStatus();
 };
@@ -56,60 +63,81 @@ public:
 class PlayerLayingState : public PlayerState
 {
 public:
-	PlayerLayingState(int dir) { direction = dir; }
+	PlayerLayingState(int dir) : PlayerState(dir) {}
 	PlayerState* OnKeyDown(int keyCode);
 	PlayerState* OnKeyUp(int keyCode);
 	int GetStateAnimation();
 	void UpdateStatus();
+	bool GetGunDirection(float& x, float& y, int& gunDir);
 };
 
 class PlayerGunOverHeadState : public PlayerState
 {
 public:
-	PlayerGunOverHeadState(int dir) { direction = dir; }
+	PlayerGunOverHeadState(int dir) : PlayerState(dir) {}
 	PlayerState* OnKeyDown(int keyCode);
 	PlayerState* OnKeyUp(int keyCode);
 	int GetStateAnimation();
 	void UpdateStatus();
+	bool GetGunDirection(float& x, float& y, int& gunDir);
 };
 
 class PlayerPointGunUpState : public PlayerState
 {
 public:
-	PlayerPointGunUpState(int dir) { direction = dir; }
+	PlayerPointGunUpState(int dir) : PlayerState(dir) {}
 	PlayerState* OnKeyDown(int keyCode);
 	PlayerState* OnKeyUp(int keyCode);
 	int GetStateAnimation();
 	void UpdateStatus();
+	bool GetGunDirection(float& x, float& y, int& gunDir);
 };
 
 class PlayerPointGunDownState : public PlayerState
 {
 public:
-	PlayerPointGunDownState(int dir) { direction = dir; }
+	PlayerPointGunDownState(int dir) : PlayerState(dir) {}
 	PlayerState* OnKeyDown(int keyCode);
 	PlayerState* OnKeyUp(int keyCode);
 	int GetStateAnimation();
 	void UpdateStatus();
+	bool GetGunDirection(float& x, float& y, int& gunDir);
 };
 
 class PlayerFallState : public PlayerState
 {
 public:
-	PlayerFallState(int dir) { direction = dir; }
-	PlayerState* OnKeyDown(int keyCode);
-	PlayerState* OnKeyUp(int keyCode);
+	PlayerFallState(int dir) : PlayerState(dir) {}
 	int GetStateAnimation();
 	void UpdateStatus();
 	PlayerState* ChangeStateAfterLanding();
 };
 
-#define PLAYER_START_VX 0.2f
+class PlayerDieState :public PlayerState
+{
+private:
+	int startTime;
+public:
+	PlayerDieState(int dir) : PlayerState(dir) {
+		startTime = GetTickCount64();
+	}
+	int GetStateAnimation();
+	void UpdateStatus();
+};
+
+#define PLAYER_START_VX 0.15f
 #define PLAYER_START_VY 0.2f
 #define PLAYER_GRAVITY 0.001f
-
 
 #define PLAYER_WIDTH 28
 #define PLAYER_HEIGHT 70
 #define PLAYER_JUMP_WIDTH 44
 #define PLAYER_JUMP_HEIGHT 40
+#define PLAYER_LAY_DOWN_WIDTH 40
+#define PLAYER_LAY_DOWN_HEIGHT 34
+#define GUN_UP_HEIGHT_ADJUST 8
+
+#define DIE_ANIMATION_DURATION 500
+#define DIE_ANIMATION_DEFLECT_SPEED_X 0.1f
+#define DIE_ANIMATION_DEFLECT_SPEED_Y 0.05f
+#define RESET_TIME 1000

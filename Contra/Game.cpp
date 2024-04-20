@@ -298,7 +298,7 @@ void Game::Draw(float x, float y, LPTEXTURE tex, float scaleX, float scaleY, int
 	D3DXMATRIX matTranslation;
 
 	// Create the translation matrix(ma tran dich chuyen)
-	D3DXMatrixTranslation(&matTranslation, onscreenX, (backbufferHeight - onscreenY), 0.2f);
+	D3DXMatrixTranslation(&matTranslation, onscreenX, (backbufferHeight - onscreenY), 0.1f);
 
 	// Scale the sprite to its correct width and height because by default, DirectX draws it with width = height = 1.0f 
 	D3DXMATRIX matScaling;	//ma tran ti le

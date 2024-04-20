@@ -1,10 +1,9 @@
 #pragma once
 #include "GameObject.h"
 #include "PlayerState.h"
+#include "Gun.h"
 
-#define PLAYER_WIDTH 28
-#define PLAYER_HEIGHT 70
-#define WATER 10
+#define UNTOUCHABLE_TIME 3000
 
 class Player : public GameObject
 {
@@ -12,24 +11,28 @@ private:
 
 	static Player* instance;
 	PlayerState* currentState;
+	Gun* gun;
 
 	int GunUpHeightAdjust = 8;
 	bool isOnGround = false;
+	bool isShooting = false;
+	bool untouchable = false;
+
+	int untouchableStartTime = -1;
 
 public:
 	Player()	
 	{
 		baseType = PLAYER;
-		width = PLAYER_WIDTH;
-		height = PLAYER_HEIGHT;
 		currentState = new PlayerFallState(RIGHT);
+		gun = new Gun();
 	};
 	static Player* GetInstance();
 	void OnKeyDown(int keyCode);
 	void OnKeyUp(int keyCode);
 
-	PlayerState* GetCurrentState() { return currentState; }
 	void SetCurrentState(PlayerState* newState);
+	PlayerState* GetCurrentState() { return currentState; }
 	bool IsOnGround() { return isOnGround; }
 
 	void Render();
@@ -37,5 +40,9 @@ public:
 
 	void OnNoCollision(DWORD dt);
 	void OnCollisionWith(LPCOLLISIONEVENT e);
+
+	void UntouchableStart();
+
+	void OnCollisionWithEnenmy(LPCOLLISIONEVENT e);
 };
 typedef Player* LPPLAYER;

@@ -36,6 +36,13 @@ public:
 	}
 
 
+	static int CalculateArea(RECT rect)
+	{
+		int width = rect.right - rect.left;
+		int height = rect.top - rect.bottom;
+		return width * height;
+	}
+
 	static bool IsMovingObject(int type)
 	{
 		if (type == RUNMAN_OBJECT)

@@ -8,13 +8,18 @@
 #define TEXURE_PATH_PLAYER_GUN_UP L"image\\Player\\bill_up.png"
 #define TEXURE_PATH_PLAYER_LAY_DOWN L"image\\Player\\bill_lay_down.png"
 #define TEXTURE_PATH_PLAYER_JUMP_UP L"image\\Player\\bill_jump.png"
+#define TEXTURE_PATH_PLAYER_DIE_RIGHT L"image\\Player\\bill_die.png"
+#define TEXTURE_PATH_PLAYER_LAY_DIE_RIGHT L"image\\Player\\bill_die_lay.png"
+#define TEXTURE_PATH_PLAYER_SHOOT_RUN_RIGHT L"image\\Player\\bill_shoot_run.png"
 
 #define PLAYER_SPRITE_WIDTH 28
 #define PLAYER_SPRITE_HEIGHT 40
 #define PLAYER_JUMP_SPRITE_WIDTH 22
 #define PLAYER_JUMP_SPRITE_HEIGHT 20
 #define PLAYER_GUN_UP_HEIGHT 46
-#define PLAYER_LAY_DOWN_WIDTH 34
+#define PLAYER_LAY_DOWN_SPRITE_WIDTH 34
+#define PLAYER_LAY_DOWN_SPRITE_HEIGHT 17
+#define PLAYER_DIE_SPRITE_WIDTH 34
 
 
 //Define player state animation ID
@@ -32,6 +37,12 @@
 #define PLAYER_GUN_DOWN_RIGHT_ANIMATION 310
 #define PLAYER_GUN_DOWN_LEFT_ANIMATION 311
 #define PLAYER_JUMP_UP_ANIMATION 312
+#define PLAYER_DIE_RIGHT_ANIMATION 313
+#define PLAYER_DIE_LEFT_ANIMATION 314
+#define PLAYER_LAY_DIE_RIGHT_ANIMATION 315
+#define PLAYER_LAY_DIE_LEFT_ANIMATION 316
+#define PLAYER_SHOOT_RUN_RIGHT_ANIMATION 317
+#define PLAYER_SHOOT_RUN_LEFT_ANIMATION 318
 
 //runman define
 
@@ -72,5 +83,31 @@
 #define TURRET_SPRITE_HEIGHT 32
 #define TURRET_SPRITE_WIDTH 32
 
+
+//bullet define
+#define TEXTURE_PATH_NORMAL_BULLET L"image\\Bullet\\bullet_b.png"
+
+#define NORMAL_BULLET 400
+
+
+//effect define
+#define TEXTURE_PATH_DIE_EFFECT L"image\\Effect\\die_effect.png"
+
+#define DIE_EFFECT_SPRITE_WIDTH 32
+#define DIE_EFFECT_SPRITE_HEIGHT 32
+
+#define DIE_EFFECT_ANIMATION 500
+
 // List of path scene
 #define PATH_SCENE_0 L"SceneInfo\\Scene0.txt"
+
+enum shootingDirection
+{
+	SHOOT_LEFT,
+	SHOOT_RIGHT,
+	SHOOT_TOP,
+	SHOOT_TOPLEFT,
+	SHOOT_TOPRIGHT,
+	SHOOT_DOWNLEFT,
+	SHOOT_DOWNRIGHT
+};

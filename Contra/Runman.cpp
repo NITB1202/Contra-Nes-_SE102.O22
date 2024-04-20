@@ -8,24 +8,56 @@
 
 void Runman::Update(DWORD dt)
 {
-	if (state == RUNMAN_RUN_RIGHT)
-		vx = RUNMAN_START_VX;
-	else
-		vx = -RUNMAN_START_VX;
+	if (dieAnimationStart != -1 && GetTickCount64() - dieAnimationStart > DIE_ANIMATION_DURATION)
+	{
+		Delete();
+		return;
+	}
 
 	x += vx * dt;
+	y += vy * dt;
+
+	if (inDieAnimation)
+		return;
+
+	distance -= abs(vx) * dt;
+
+	if (distance <= 0)
+	{
+		distance = destination;
+		vx = -vx;
+	}
 }
 
 void Runman::Render()
 {
-	if (vx >= 0)
-	{
-		AnimationID = RUNMAN_RUN_RIGHT_ANIMATION;
-	}
+	if (inDieAnimation)
+		AnimationID = DIE_EFFECT_ANIMATION;
 	else
 	{
-		AnimationID = RUNMAN_RUN_LEFT_ANIMATION;
+		if (vx >= 0)
+			AnimationID = RUNMAN_RUN_RIGHT_ANIMATION;
+		else
+			AnimationID = RUNMAN_RUN_LEFT_ANIMATION;
 	}
 
-	AniHandler.Render(AnimationID, x, y);
+	AniHandler->Render(AnimationID, x, y);
+}
+
+void Runman::OnCollisionWith(LPCOLLISIONEVENT e)
+{
+	if (e->object->GetBaseType() == BULLET)
+		OnColllisionWithBullet(e);
+}
+
+void Runman::OnColllisionWithBullet(LPCOLLISIONEVENT e)
+{
+	if (!inDieAnimation)
+	{
+		inDieAnimation = true;
+		AniHandler->Reset();
+		dieAnimationStart = GetTickCount64();
+		vx = e->nx * -RUNMAN_START_VX;
+		vy = RUNMAN_START_VY;
+	}
 }

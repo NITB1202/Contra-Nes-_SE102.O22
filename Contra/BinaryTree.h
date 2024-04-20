@@ -33,10 +33,7 @@ public:
 class BinaryTree
 {
 	int type;
-
 	RECT mapSize;
-	RECT screenSize;
-
 	TreeNode* root;
 
 public:
@@ -46,6 +43,7 @@ public:
 	void Insert(TreeNode* node, int ID, LPGAMEOBJECT object);
 	void Remove(TreeNode* node, int ID, LPGAMEOBJECT object);
 	void GetObjectInTree(TreeNode* node, RECT bound, map<int, LPGAMEOBJECT>& objectList);
+	void RemoveObjectInTree(int ID, LPGAMEOBJECT object);
 
 	map<int, LPGAMEOBJECT> GetObjectInBound(RECT bound);
 

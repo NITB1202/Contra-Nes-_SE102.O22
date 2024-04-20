@@ -59,14 +59,25 @@ void Scene :: Update(DWORD dt)
 	RECT cameraBound = Camera::GetInstance()->GetBound();
 	objectOnScreen = objectTree->GetObjectInBound(cameraBound);
 	for (auto it = objectOnScreen.begin(); it != objectOnScreen.end();)
+	{
 		if (!MyUtility::CheckIntersect(cameraBound, it->second->GetCollisionBound()))
+		{
 			it = objectOnScreen.erase(it);	//If not then remove it
+			continue;
+		}
+
+		if (it->second->IsDeleted())
+		{
+			objectTree->RemoveObjectInTree(it->first, it->second);
+			it = objectOnScreen.erase(it);
+		}
 		else
 		{
 			//Update object on screen
 			it->second->Update(dt);
 			it++;
 		}
+	}
 }
 
 void Scene :: Render()

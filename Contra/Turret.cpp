@@ -134,5 +134,5 @@ void Turret::Update(DWORD dt)
 
 void Turret::Render()
 {
-	AniHandler.Render(AnimationID, x, y);
+	AniHandler->Render(AnimationID, x, y);
 }
