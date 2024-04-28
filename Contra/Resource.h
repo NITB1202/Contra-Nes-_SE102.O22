@@ -2,56 +2,67 @@
 #include "AnimationLib.h"
 #include "Game.h"
 #include "objectConfig.h"
+#include <fstream>
+#include <sstream>
 
 vector<LPWSTR> scenelink;
 
 void LoadResource()
 {
 	Game* game = Game::GetInstance();
-	LPTEXTURE tex;
+	LPTEXTURE tex = NULL;
 	AnimationLib* aniLib = AnimationLib::GetInstance();
+	string resourcePath = "image\\load_resources.txt";
 
-	tex = game->LoadTexture(TEXTURE_PATH_PLAYER_IDLE_RIGHT);
-	aniLib->AddAnimation(PLAYER_IDLE_RIGHT_ANIMATION, Animation(tex, PLAYER_SPRITE_WIDTH, PLAYER_SPRITE_HEIGHT, 2, 2));
-	aniLib->AddAnimation(PLAYER_IDLE_LEFT_ANIMATION, Animation(tex, PLAYER_SPRITE_WIDTH, PLAYER_SPRITE_HEIGHT, 2, 2,true));
+	ifstream file(resourcePath);
+	if (!file.is_open())
+		return;
 
-	tex = game->LoadTexture(TEXTURE_PATH_PLAYER_RUN_RIGHT);
-	aniLib->AddAnimation(PLAYER_RUN_RIGHT_ANIMATION, Animation(tex, PLAYER_SPRITE_WIDTH, PLAYER_SPRITE_HEIGHT, 2, 2));
-	aniLib->AddAnimation(PLAYER_RUN_LEFT_ANIMATION, Animation(tex, PLAYER_SPRITE_WIDTH, PLAYER_SPRITE_HEIGHT, 2, 2, true));
+	vector<string> animationPath;
+	string line;
+	while (getline(file, line))
+		animationPath.push_back(line);
 
-	tex = game->LoadTexture(TEXURE_PATH_PLAYER_GUN_UP);
-	aniLib->AddAnimation(PLAYER_GUN_UP_RIGHT_ANIMATION, Animation(tex, PLAYER_SPRITE_WIDTH, PLAYER_GUN_UP_HEIGHT, 2, 2));
-	aniLib->AddAnimation(PLAYER_GUN_UP_LEFT_ANIMATION, Animation(tex, PLAYER_SPRITE_WIDTH, PLAYER_GUN_UP_HEIGHT, 2, 2,true));
+	file.close();
 
-	tex = game->LoadTexture(TEXURE_PATH_PLAYER_LAY_DOWN);
-	aniLib->AddAnimation(PLAYER_LAY_DOWN_RIGHT_ANIMATION, Animation(tex, PLAYER_LAY_DOWN_SPRITE_WIDTH, PLAYER_LAY_DOWN_SPRITE_HEIGHT, 2, 2));
-	aniLib->AddAnimation(PLAYER_LAY_DOWN_LEFT_ANIMATION, Animation(tex, PLAYER_LAY_DOWN_SPRITE_WIDTH, PLAYER_LAY_DOWN_SPRITE_HEIGHT, 2, 2,true));
+	for (int i = 0; i < animationPath.size(); i++)
+	{
+		ifstream animationFile(animationPath[i]);
+		if (!animationFile.is_open())
+			continue;
 
-	tex = game->LoadTexture(TEXTURE_PATH_PLAYER_GUN_TOP_RIGHT);
-	aniLib->AddAnimation(PLAYER_GUN_TOP_RIGHT_ANIMATION, Animation(tex, PLAYER_SPRITE_WIDTH, PLAYER_SPRITE_HEIGHT, 2, 2));
-	aniLib->AddAnimation(PLAYER_GUN_TOP_LEFT_ANIMATION, Animation(tex, PLAYER_SPRITE_WIDTH, PLAYER_SPRITE_HEIGHT, 2, 2,true));
+		string imagePath;
+		int id, spriteWidth, spriteHeight;
+		bool flip;
 
-	tex = game->LoadTexture(TEXTURE_PATH_PLAYER_GUN_DOWN_RIGHT);
-	aniLib->AddAnimation(PLAYER_GUN_DOWN_RIGHT_ANIMATION, Animation(tex, PLAYER_SPRITE_WIDTH, PLAYER_SPRITE_HEIGHT, 2, 2));
-	aniLib->AddAnimation(PLAYER_GUN_DOWN_LEFT_ANIMATION, Animation(tex, PLAYER_SPRITE_WIDTH, PLAYER_SPRITE_HEIGHT, 2, 2, true));
+		string line;
 
-	tex = game->LoadTexture(TEXTURE_PATH_PLAYER_JUMP_UP);
-	aniLib->AddAnimation(PLAYER_JUMP_UP_ANIMATION, Animation(tex, PLAYER_JUMP_SPRITE_WIDTH, PLAYER_JUMP_SPRITE_HEIGHT, 2, 2));
+		while (getline(animationFile, line))
+		{
+			if (isdigit(line[0]))
+			{
+				stringstream ss(line);
 
-	tex = game->LoadTexture(TEXTURE_PATH_PLAYER_DIE_RIGHT);
-	aniLib->AddAnimation(PLAYER_DIE_RIGHT_ANIMATION, Animation(tex, PLAYER_DIE_SPRITE_WIDTH, PLAYER_SPRITE_HEIGHT, 2, 2));
-	aniLib->AddAnimation(PLAYER_DIE_LEFT_ANIMATION, Animation(tex, PLAYER_DIE_SPRITE_WIDTH, PLAYER_SPRITE_HEIGHT, 2, 2, true));
+				ss >> id;
+				ss >> spriteWidth;
+				ss >> spriteHeight;
+				ss >> flip;
 
-	tex = game->LoadTexture(TEXTURE_PATH_PLAYER_LAY_DIE_RIGHT);
-	aniLib->AddAnimation(PLAYER_LAY_DIE_RIGHT_ANIMATION, Animation(tex, PLAYER_DIE_SPRITE_WIDTH, PLAYER_SPRITE_HEIGHT, 2, 2));
-	aniLib->AddAnimation(PLAYER_LAY_DIE_LEFT_ANIMATION, Animation(tex, PLAYER_DIE_SPRITE_WIDTH, PLAYER_SPRITE_HEIGHT, 2, 2, true));
+				aniLib->AddAnimation(id, Animation(tex, spriteWidth, spriteHeight, 2, 2,flip));
 
-	tex = game->LoadTexture(TEXTURE_PATH_PLAYER_SHOOT_RUN_RIGHT);
-	aniLib->AddAnimation(PLAYER_SHOOT_RUN_RIGHT_ANIMATION, Animation(tex, PLAYER_SPRITE_WIDTH, PLAYER_SPRITE_HEIGHT, 2, 2));
-	aniLib->AddAnimation(PLAYER_SHOOT_RUN_LEFT_ANIMATION, Animation(tex, PLAYER_SPRITE_WIDTH, PLAYER_SPRITE_HEIGHT, 2, 2, true));
+			}
+			else
+				tex = game->LoadTexture(MyUtility::ConvertStringToLPWSTR(line));
+		}
+
+		animationFile.close();
+	}
 
 	tex = game->LoadTexture(TEXTURE_PATH_NORMAL_BULLET);
 	aniLib->AddAnimation(NORMAL_BULLET, Animation(tex,8,8));
+
+	tex = game->LoadTexture(TEXTURE_PATH_LIFE);
+	aniLib->AddAnimation(PLAYER_LIFE, Animation(tex,14,21,2,2));
 
 	tex = game->LoadTexture(TEXTURE_PATH_RUNMAN_RIGHT);
 	aniLib->AddAnimation(RUNMAN_RUN_RIGHT_ANIMATION, Animation(tex, RUNMAN_SPRITE_WIDTH, RUNMAN_SPRITE_HEIGHT, 2, 2));
@@ -59,7 +70,6 @@ void LoadResource()
 
 	tex = game->LoadTexture(TEXTURE_PATH_DIE_EFFECT);
 	aniLib->AddAnimation(DIE_EFFECT_ANIMATION, Animation(tex, DIE_EFFECT_SPRITE_WIDTH, DIE_EFFECT_SPRITE_HEIGHT, 2, 2));
-	
 
 	tex = game->LoadTexture(TEXTURE_PATH_TURRET_CLOSE);
 	aniLib->AddAnimation(TURRET_CLOSE_ANIMATION, Animation(tex, TURRET_SPRITE_WIDTH, TURRET_SPRITE_HEIGHT, 1.5, 1.5));

@@ -3,6 +3,7 @@
 
 class AnimationHandler
 {
+	int preID = -1;
 	int currentFrame = -1;
 	ULONGLONG lastRendertime = 0;
 	int period = 100;
@@ -10,5 +11,5 @@ class AnimationHandler
 public:
 	void SetPeriod(int p) { period = p; }
 	void Render(int ID, float x, float y);
-	void Reset() { currentFrame = -1; }
+	void DrawAsset(int ID, float x, float y);
 };

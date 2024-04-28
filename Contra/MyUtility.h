@@ -3,6 +3,8 @@
 #include "Runman.h"
 #include "Turret.h"
 #include "Ground.h"
+#include <string>
+#include <Windows.h>
 
 #define RUNMAN_OBJECT 1000
 #define TURRET_OBJECT 1001
@@ -27,6 +29,9 @@ public:
 			break;
 		case TURRET_OBJECT:
 			obj = new Turret();
+			break;
+		case WATER_OBJECT:
+			obj = new Water();
 			break;
 		default:
 			obj = new Ground();
@@ -63,4 +68,12 @@ public:
 		return overlapX && overlapY;
 	}
 
+	static LPWSTR ConvertStringToLPWSTR(const string& str)
+	{
+		int size_needed = MultiByteToWideChar(CP_UTF8, 0, str.c_str(), -1, NULL, 0);
+		LPWSTR lpwstr = new WCHAR[size_needed];
+		MultiByteToWideChar(CP_UTF8, 0, str.c_str(), -1, lpwstr, size_needed);
+		return lpwstr;
+	}
 };
+

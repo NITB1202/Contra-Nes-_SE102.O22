@@ -9,7 +9,6 @@ void Player::SetCurrentState(PlayerState* newState)
 {
 	delete currentState;
 	currentState = newState;
-	AniHandler->Reset();
 }
 
 void Player::Update(DWORD dt)
@@ -24,7 +23,17 @@ void Player::Update(DWORD dt)
 	if (x < camera->getX())
 		x = camera->getX();
 
+	if (y < camera->getY() - camera->getHeight())
+	{
+		float xRespawn, yRespawn;
+		GetRespawnPoint(xRespawn, yRespawn);
+		x = xRespawn;
+		y = yRespawn;
+		UntouchableStart();
+	}
+
 	isOnGround = false;
+	isUnderWater = false;
 
 	if (untouchable && GetTickCount64() - untouchableStartTime > UNTOUCHABLE_TIME)
 	{
@@ -41,7 +50,10 @@ void Player::Update(DWORD dt)
 		float bulletX, bulletY;
 		int gunDir;
 		if (currentState->GetGunDirection(bulletX, bulletY, gunDir))
-			gun->Charge(bulletX, bulletY, gunDir);
+		{
+			if (currentState->CanShoot())
+				gun->Charge(bulletX, bulletY, gunDir);
+		}
 	}
 
 	//Gun Update
@@ -57,7 +69,7 @@ void Player::OnNoCollision(DWORD dt)
 
 void Player::OnCollisionWith(LPCOLLISIONEVENT e)
 {
-	if (e->ny != 0 && e->object->IsBlocking())
+	if (e->ny != 0 && e->object->IsBlocking() && e->object->GetBaseType() != ENEMY)
 	{
 		vy = 0;
 		if (e->ny < 0) isOnGround = true;
@@ -68,6 +80,9 @@ void Player::OnCollisionWith(LPCOLLISIONEVENT e)
 
 	if (e->object->GetBaseType() == ENEMY)
 		OnCollisionWithEnenmy(e);
+
+	if (e->object->GetBaseType() == WATER)
+		isUnderWater = true;
 }
 
 void Player::OnCollisionWithEnenmy(LPCOLLISIONEVENT e)
@@ -79,17 +94,23 @@ void Player::OnCollisionWithEnenmy(LPCOLLISIONEVENT e)
 		SetCurrentState(new PlayerDieState(e->nx));
 }
 
-
 void Player::Render()
 {
 	AnimationID = currentState->GetStateAnimation();
 
-	if (AnimationID == PLAYER_GUN_UP_RIGHT_ANIMATION || AnimationID == PLAYER_GUN_UP_LEFT_ANIMATION)
-		AniHandler->Render(AnimationID, x, y + GunUpHeightAdjust);
+	if (currentState == dynamic_cast<PlayerGunOverHeadState*>(currentState))
+	{
+		int gunUpYAdjust = y + 15;
+		int gunUpXAdjust = currentState->GetDirection() == RIGHT ? x : x + 15;
+		AniHandler->Render(AnimationID, gunUpXAdjust, gunUpYAdjust);
+	}
 	else
 		AniHandler->Render(AnimationID, x, y);
 
 	gun->Render();
+
+	for (int i = 0; i < hp; i++)
+		AniHandler->DrawAsset(PLAYER_LIFE, 10 + LIFE_ASSET_WIDTH * i, 12);
 }		
 
 Player* Player::GetInstance() 
@@ -122,6 +143,41 @@ void Player::OnKeyUp(int keyCode)
 
 void Player::UntouchableStart()
 {
+	hp--;
 	untouchable = true;
 	untouchableStartTime = GetTickCount64();
+}
+
+void Player::GetRespawnPoint(float& xRespawn, float& yRespawn)
+{
+	vector<LPGAMEOBJECT> objectOnScreen = Game::GetInstance()->GetCurrentScene()->GetOnScreenObject();
+	float minDistance = -1;
+
+	for (int i = 0; i < objectOnScreen.size(); i++)
+	{
+		if (objectOnScreen[i]->GetBaseType() == GROUND || objectOnScreen[i]->GetBaseType() == WATER)
+		{
+			if (currentState->GetDirection() == RIGHT)
+			{
+				float endPoint = objectOnScreen[i]->GetX() + objectOnScreen[i]->GetWidth();
+				float distance = x - endPoint;
+				if ((distance >= 0) && (minDistance == -1 || distance < minDistance))
+				{
+					minDistance = distance;
+					xRespawn = endPoint - PLAYER_WIDTH;
+					yRespawn = objectOnScreen[i]->GetY() + PLAYER_HEIGHT;
+				}
+			}
+			else
+			{
+				float distance = objectOnScreen[i]->GetX() - ( x + width);
+				if ((distance >= 0) && (minDistance == -1 || distance < minDistance))
+				{
+					minDistance = distance;
+					xRespawn = objectOnScreen[i]->GetX();
+					yRespawn = objectOnScreen[i]->GetY() + PLAYER_HEIGHT;
+				}
+			}
+		}
+	}
 }

@@ -13,10 +13,10 @@ private:
 	PlayerState* currentState;
 	Gun* gun;
 
-	int GunUpHeightAdjust = 8;
 	bool isOnGround = false;
 	bool isShooting = false;
 	bool untouchable = false;
+	bool isUnderWater = false;
 
 	int untouchableStartTime = -1;
 
@@ -24,16 +24,21 @@ public:
 	Player()	
 	{
 		baseType = PLAYER;
+		hp = 3;
 		currentState = new PlayerFallState(RIGHT);
 		gun = new Gun();
 	};
 	static Player* GetInstance();
+
 	void OnKeyDown(int keyCode);
 	void OnKeyUp(int keyCode);
 
 	void SetCurrentState(PlayerState* newState);
 	PlayerState* GetCurrentState() { return currentState; }
+
 	bool IsOnGround() { return isOnGround; }
+	bool IsShooting() { return isShooting; }
+	bool IsUnderWater() { return isUnderWater; }
 
 	void Render();
 	void Update(DWORD dt);
@@ -42,6 +47,7 @@ public:
 	void OnCollisionWith(LPCOLLISIONEVENT e);
 
 	void UntouchableStart();
+	void GetRespawnPoint(float& xRespawn, float& yRespawn);
 
 	void OnCollisionWithEnenmy(LPCOLLISIONEVENT e);
 };

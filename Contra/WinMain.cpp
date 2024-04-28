@@ -36,9 +36,7 @@ LRESULT CALLBACK WinProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 
 void Update(DWORD dt)
 {
-	game->GetCurrentScene()->Update(dt);
-	Camera::GetInstance()->UpdateByX(dt);
-	Player::GetInstance()->Update(dt);
+	game->Update(dt);
 }
 
 /*
@@ -53,17 +51,13 @@ void Render()
 
 	if (pD3DDevice != NULL)
 	{
-		// clear the background 
-		//pD3DDevice->ClearRenderTargetView(pRenderTargetView, BACKGROUND_COLOR);
-
 		spriteHandler->Begin(D3DX10_SPRITE_SORT_TEXTURE);
 
 		// Use Alpha blending for transparent sprites
 		FLOAT NewBlendFactor[4] = { 0,0,0,0 };
 		pD3DDevice->OMSetBlendState(game->GetAlphaBlending(), NewBlendFactor, 0xffffffff);
 
-		game->GetCurrentScene()->Render();
-		Player::GetInstance()->Render();
+		game->Render();
 		spriteHandler->End();
 		pSwapChain->Present(0, 0);
 	}

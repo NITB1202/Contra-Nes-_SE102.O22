@@ -7,7 +7,7 @@ void Gun::Charge(float bulletX, float bulletY, int direction, int bulletType)
 	if (lastShootTime == -1)
 		lastShootTime = GetTickCount64();
 	else
-		if (GetTickCount64() - lastShootTime < CHARGE_TIME)
+		if (GetTickCount64() - lastShootTime < chargeTime)
 			return;
 
 	lastShootTime = GetTickCount64();

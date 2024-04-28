@@ -6,7 +6,8 @@ enum objectClass {
 	PLAYER,
 	ENEMY,
 	GROUND,
-	BULLET
+	BULLET,
+	WATER,
 };
 
 class GameObject
@@ -15,6 +16,7 @@ class GameObject
 protected:
 
 	objectClass baseType;
+	int hp;
 
 	int width;
 	int height;
@@ -29,12 +31,16 @@ protected:
 
 	int state = -1;
 	int AnimationID = -1;
-	AnimationHandler* AniHandler = new AnimationHandler();
+	AnimationHandler* AniHandler;
 
 	bool isDeleted;
 		
 public:
-
+	GameObject()
+	{
+		hp = 1;
+		AniHandler = new AnimationHandler();
+	}
 	void SetPosition(float x, float y) { this->x = x, this->y = y; }
 	void SetSpeed(float vx, float vy) { this->vx = vx, this->vy = vy; }
 	void SetWidthHeight(int w, int h) { width = w; height = h; }
@@ -48,7 +54,7 @@ public:
 	int GetHeight() { return height; }
 	int GetBaseType() { return baseType; }
 	void GetSpeed(float& vx, float& vy) { vx = this->vx; vy = this->vy; }
-
+	int GetHp() { return hp; }
 
 	AnimationHandler* GetAnimationHandler() { return AniHandler; }
 	RECT GetCollisionBound() {
@@ -65,10 +71,15 @@ public:
 
 	void Delete() { isDeleted = true; }
 	bool IsDeleted() { return isDeleted; }
-	virtual bool IsCollidable() { return 1; };
+	virtual bool IsCollidable() { return true; };
 
 	virtual void OnNoCollision(DWORD dt) {};
 	virtual void OnCollisionWith(LPCOLLISIONEVENT e) {};
 	virtual bool IsBlocking() { return true; }
+
+	~GameObject()
+	{
+		delete AniHandler;
+	}
 };
 typedef GameObject* LPGAMEOBJECT;

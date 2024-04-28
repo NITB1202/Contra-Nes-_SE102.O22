@@ -8,8 +8,7 @@ private:
 
 	LPMAP background;
 	LPBINARYTREE objectTree;
-
-	map<int, LPGAMEOBJECT> objectOnScreen;
+	vector<LPGAMEOBJECT> objectOnScreen;
 
 public:
 
@@ -19,6 +18,7 @@ public:
 	void Render();
 
 	vector<LPGAMEOBJECT> GetCollidableObject(LPGAMEOBJECT obj);
+	vector<LPGAMEOBJECT> GetOnScreenObject() { return objectOnScreen; }
 
 	LPMAP GetMap() { return background; }
 	LPBINARYTREE GetObjectTree() { return objectTree; }

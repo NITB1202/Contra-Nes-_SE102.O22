@@ -1,0 +1,59 @@
+image\\Player\\bill_stand_right.png
+300 23 34 0
+301 23 34 1
+image\\Player\\bill_run_right.png
+302 20 35 0
+303 20 35 1
+image\\Player\\bill_gun_up.png
+304 14 45 0
+305 14 45 1
+image\\Player\\bill_lay_down.png
+306 32 16 0
+307 32 16 1
+image\\Player\\bill_topright.png
+308 20 34 0
+309 20 34 1
+image\\Player\\bill_downright.png
+310 21 36 0
+311 21 36 1
+image\\Player\\bill_jump.png
+312 19 20 0
+313 19 20 1
+image\\Player\\bill_die.png
+314 32 23 0
+315 32 23 1
+image\\Player\\bill_die_lay.png
+316 32 23 0
+317 32 23 1
+image\\Player\\bill_shoot_run.png
+318 25 34 0
+319 25 34 1
+image\\Player\\bill_stand_right_shoot.png
+320 23 34 0
+321 23 34 1
+image\\Player\\bill_gun_up_shoot.png
+322 15 45 0
+323 15 45 1
+image\\Player\\bill_lay_down_shoot.png
+324 32 17 0
+325 32 17 1
+image\\Player\\bill_lay_down_in_water.png
+326 16 7 0
+image\\Player\\bill_stand_right_in_water.png
+327 25 16 0
+328 25 16 1
+image\\Player\\bill_run_right_in_water.png
+329 16 16 0
+330 16 16 1
+image\\Player\\bill_shoot_in_water.png
+331 25 17 0
+332 25 17 1
+image\\Player\\bill_topright_in_water.png
+333 19 18 0
+334 19 18 1
+image\\Player\\bill_gun_up_in_water.png
+335 17 27 0
+336 17 27 1
+image\\Player\\bill_gun_up_shoot_in_water.png
+337 18 28 0
+338 18 28 1

@@ -13,6 +13,7 @@ void Game::InitDirect3D(HWND hwnd,HINSTANCE hInstance)
 
 	backbufferWidth = rect.right;
 	backbufferHeight = rect.bottom;
+	camera->Init(backbufferWidth, backbufferHeight);
 ;
 	// Create & clear the DXGI_SWAP_CHAIN_DESC structure
 	DXGI_SWAP_CHAIN_DESC swapChainDesc;
@@ -211,37 +212,14 @@ LPTEXTURE Game::LoadTexture(LPCWSTR texturePath)
 
 void Game :: InitScene(vector<LPWSTR> scenelink)
 {
-	LPCAMERA camera = Camera::GetInstance();
-	camera->Init(backbufferWidth, backbufferHeight);
-
 	for (int i = 0; i < scenelink.size(); i++)
 	{
 		LPSCENE temp = new Scene(scenelink[i]);
 		scenes.push_back(temp);
 	}
 }
-
-void Game::Draw(float x, float y, LPTEXTURE tex, float scaleX, float scaleY, int flipHorizontal, RECT* rect)
+void Game::DrawInScreenCoord(float x, float y, LPTEXTURE tex, float scaleX, float scaleY, int flipHorizontal, RECT* rect)
 {
-	LPCAMERA camera = Camera::GetInstance();
-
-	//x,y dang la toa do the gioi chuyen ve toa do ve thong thuong
-	int onscreenX = x - camera->getX();
-	int onscreenY = camera->getY() - y;
-
-
-	//dua tam ve top left
-	if (rect == NULL)
-	{
-		onscreenX += tex->getWidth() / 2;
-		onscreenY += tex->getHeight() / 2;
-	}
-	else
-	{
-		onscreenX += ((rect->right - rect->left) / 2);
-		onscreenY += ((rect->bottom - rect->top) / 2);
-	}
-
 	if (tex == NULL) return;
 
 	int spriteWidth = 0;
@@ -298,7 +276,7 @@ void Game::Draw(float x, float y, LPTEXTURE tex, float scaleX, float scaleY, int
 	D3DXMATRIX matTranslation;
 
 	// Create the translation matrix(ma tran dich chuyen)
-	D3DXMatrixTranslation(&matTranslation, onscreenX, (backbufferHeight - onscreenY), 0.1f);
+	D3DXMatrixTranslation(&matTranslation, x, (backbufferHeight - y), 0.1f);
 
 	// Scale the sprite to its correct width and height because by default, DirectX draws it with width = height = 1.0f 
 	D3DXMATRIX matScaling;	//ma tran ti le
@@ -308,6 +286,27 @@ void Game::Draw(float x, float y, LPTEXTURE tex, float scaleX, float scaleY, int
 	sprite.matWorld = (matScaling * matTranslation);
 
 	spriteHandler->DrawSpritesImmediate(&sprite, 1, 0, 0);
+}
+
+void Game::Draw(float x, float y, LPTEXTURE tex, float scaleX, float scaleY, int flipHorizontal, RECT* rect)
+{
+	//Change world coordination to screen coordination
+	int onscreenX = x - camera->getX();
+	int onscreenY = camera->getY() - y;
+
+	//Change draw start point to top-left
+	if (rect == NULL)
+	{
+		onscreenX += tex->getWidth() / 2;
+		onscreenY += tex->getHeight() / 2;
+	}
+	else
+	{
+		onscreenX += ((rect->right - rect->left) / 2);
+		onscreenY += ((rect->bottom - rect->top) / 2);
+	}
+
+	DrawInScreenCoord(onscreenX, onscreenY, tex, scaleX, scaleY, flipHorizontal, rect);
 }
 
 int Game::IsKeyDown(int KeyCode)
@@ -404,6 +403,20 @@ void Game::ProcessKeyboard()
 		else
 			keyHandler->OnKeyUp(KeyCode);
 	}
+}
+void Game::Update(DWORD dt)
+{
+	scenes[currentScene]->Update(dt);
+	if (player->GetHp() > 0)
+		player->Update(dt);
+	camera->UpdateByX(dt);
+}
+
+void Game::Render()
+{
+	scenes[currentScene]->Render();
+	if (player->GetHp() > 0)
+		player->Render();
 }
 
 Game* Game::GetInstance()

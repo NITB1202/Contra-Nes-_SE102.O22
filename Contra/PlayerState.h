@@ -19,6 +19,7 @@ public:
 	virtual void UpdateStatus() = 0;
 	virtual int GetStateAnimation() = 0;
 	virtual bool GetGunDirection(float& x, float& y, int& gunDir) { return false; }
+	virtual bool CanShoot() { return true; }
 };
 
 class PlayerStandingState : public PlayerState
@@ -34,12 +35,8 @@ public:
 
 class PlayerRunningState : public PlayerState
 {
-private:
-	bool shooting;
 public:
-	PlayerRunningState(int dir) : PlayerState(dir){
-		shooting = false;
-	}
+	PlayerRunningState(int dir) : PlayerState(dir) {}
 	PlayerState* OnKeyDown(int keyCode);
 	PlayerState* OnKeyUp(int keyCode);
 	int GetStateAnimation();
@@ -58,6 +55,7 @@ public:
 	}
 	int GetStateAnimation();
 	void UpdateStatus();
+	bool CanShoot() { return false; }
 };
 
 class PlayerLayingState : public PlayerState
@@ -69,6 +67,7 @@ public:
 	int GetStateAnimation();
 	void UpdateStatus();
 	bool GetGunDirection(float& x, float& y, int& gunDir);
+	bool CanShoot();
 };
 
 class PlayerGunOverHeadState : public PlayerState
@@ -102,6 +101,7 @@ public:
 	int GetStateAnimation();
 	void UpdateStatus();
 	bool GetGunDirection(float& x, float& y, int& gunDir);
+	bool CanShoot();
 };
 
 class PlayerFallState : public PlayerState
@@ -111,6 +111,7 @@ public:
 	int GetStateAnimation();
 	void UpdateStatus();
 	PlayerState* ChangeStateAfterLanding();
+	bool CanShoot() { return false; }
 };
 
 class PlayerDieState :public PlayerState
@@ -123,19 +124,22 @@ public:
 	}
 	int GetStateAnimation();
 	void UpdateStatus();
+	bool CanShoot() { return false;}
 };
 
 #define PLAYER_START_VX 0.15f
 #define PLAYER_START_VY 0.2f
 #define PLAYER_GRAVITY 0.001f
 
-#define PLAYER_WIDTH 28
-#define PLAYER_HEIGHT 70
-#define PLAYER_JUMP_WIDTH 44
+#define PLAYER_WIDTH 26
+#define PLAYER_HEIGHT 60
+#define PLAYER_JUMP_WIDTH 38
 #define PLAYER_JUMP_HEIGHT 40
-#define PLAYER_LAY_DOWN_WIDTH 40
+#define PLAYER_LAY_DOWN_WIDTH 30
 #define PLAYER_LAY_DOWN_HEIGHT 34
 #define GUN_UP_HEIGHT_ADJUST 8
+#define PLAYER_DIE_WIDTH 64
+#define PLAYER_DIE_HEIGHT 46
 
 #define DIE_ANIMATION_DURATION 500
 #define DIE_ANIMATION_DEFLECT_SPEED_X 0.1f

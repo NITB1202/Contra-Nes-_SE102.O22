@@ -55,7 +55,6 @@ void Runman::OnColllisionWithBullet(LPCOLLISIONEVENT e)
 	if (!inDieAnimation)
 	{
 		inDieAnimation = true;
-		AniHandler->Reset();
 		dieAnimationStart = GetTickCount64();
 		vx = e->nx * -RUNMAN_START_VX;
 		vy = RUNMAN_START_VY;
