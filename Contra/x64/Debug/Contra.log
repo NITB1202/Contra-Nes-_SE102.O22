@@ -1,0 +1,78 @@
+﻿  Cannon.cpp
+C:\Users\orewa\Desktop\New Con Cha\ContraNes_SE102.O22\Contra\GameObject.h(56,14): warning C4244: '=': conversion from 'float' to 'LONG', possible loss of data
+  (compiling source file 'Cannon.cpp')
+  
+C:\Users\orewa\Desktop\New Con Cha\ContraNes_SE102.O22\Contra\GameObject.h(57,15): warning C4244: '=': conversion from 'float' to 'LONG', possible loss of data
+  (compiling source file 'Cannon.cpp')
+  
+C:\Users\orewa\Desktop\New Con Cha\ContraNes_SE102.O22\Contra\GameObject.h(58,18): warning C4244: '=': conversion from 'float' to 'LONG', possible loss of data
+  (compiling source file 'Cannon.cpp')
+  
+C:\Users\orewa\Desktop\New Con Cha\ContraNes_SE102.O22\Contra\GameObject.h(59,19): warning C4244: '=': conversion from 'float' to 'LONG', possible loss of data
+  (compiling source file 'Cannon.cpp')
+  
+C:\Users\orewa\Desktop\New Con Cha\ContraNes_SE102.O22\Contra\PlayerState.h(57,28): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+  (compiling source file 'Cannon.cpp')
+  
+C:\Users\orewa\Desktop\New Con Cha\ContraNes_SE102.O22\Contra\PlayerState.h(122,29): warning C4244: '=': conversion from 'ULONGLONG' to 'int', possible loss of data
+  (compiling source file 'Cannon.cpp')
+  
+C:\Users\orewa\Desktop\New Con Cha\ContraNes_SE102.O22\Contra\PlayerState.h(140,1): warning C4005: 'DIE_ANIMATION_DURATION': macro redefinition
+  (compiling source file 'Cannon.cpp')
+  C:\Users\orewa\Desktop\New Con Cha\ContraNes_SE102.O22\Contra\Cannon.h(11,1):
+  see previous definition of 'DIE_ANIMATION_DURATION'
+  
+C:\Users\orewa\Desktop\New Con Cha\ContraNes_SE102.O22\Contra\Cannon.cpp(21,38): warning C4244: '=': conversion from 'ULONGLONG' to 'int', possible loss of data
+C:\Users\orewa\Desktop\New Con Cha\ContraNes_SE102.O22\Contra\Cannon.cpp(37,9): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+C:\Users\orewa\Desktop\New Con Cha\ContraNes_SE102.O22\Contra\Cannon.cpp(38,9): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+C:\Users\orewa\Desktop\New Con Cha\ContraNes_SE102.O22\Contra\Cannon.cpp(65,36): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\orewa\Desktop\New Con Cha\ContraNes_SE102.O22\Contra\Cannon.cpp(65,27): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+  WinMain.cpp
+  C:\Program Files (x86)\Windows Kits\10\Include\10.0.22621.0\um\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
+C:\Users\orewa\Desktop\New Con Cha\ContraNes_SE102.O22\Contra\Camera.h(10,13): warning C4305: 'initializing': truncation from 'double' to 'float'
+  (compiling source file 'WinMain.cpp')
+  
+C:\Users\orewa\Desktop\New Con Cha\ContraNes_SE102.O22\Contra\Camera.h(11,13): warning C4305: 'initializing': truncation from 'double' to 'float'
+  (compiling source file 'WinMain.cpp')
+  
+C:\Users\orewa\Desktop\New Con Cha\ContraNes_SE102.O22\Contra\GameObject.h(56,14): warning C4244: '=': conversion from 'float' to 'LONG', possible loss of data
+  (compiling source file 'WinMain.cpp')
+  
+C:\Users\orewa\Desktop\New Con Cha\ContraNes_SE102.O22\Contra\GameObject.h(57,15): warning C4244: '=': conversion from 'float' to 'LONG', possible loss of data
+  (compiling source file 'WinMain.cpp')
+  
+C:\Users\orewa\Desktop\New Con Cha\ContraNes_SE102.O22\Contra\GameObject.h(58,18): warning C4244: '=': conversion from 'float' to 'LONG', possible loss of data
+  (compiling source file 'WinMain.cpp')
+  
+C:\Users\orewa\Desktop\New Con Cha\ContraNes_SE102.O22\Contra\GameObject.h(59,19): warning C4244: '=': conversion from 'float' to 'LONG', possible loss of data
+  (compiling source file 'WinMain.cpp')
+  
+C:\Users\orewa\Desktop\New Con Cha\ContraNes_SE102.O22\Contra\MyUtility.h(12,1): warning C4005: 'TURRET_OBJECT': macro redefinition
+  (compiling source file 'WinMain.cpp')
+  C:\Users\orewa\Desktop\New Con Cha\ContraNes_SE102.O22\Contra\MyUtility.h(10,1):
+  see previous definition of 'TURRET_OBJECT'
+  
+C:\Users\orewa\Desktop\New Con Cha\ContraNes_SE102.O22\Contra\MyUtility.h(13,1): warning C4005: 'SNIPER_OBJECT': macro redefinition
+  (compiling source file 'WinMain.cpp')
+  C:\Users\orewa\Desktop\New Con Cha\ContraNes_SE102.O22\Contra\MyUtility.h(11,1):
+  see previous definition of 'SNIPER_OBJECT'
+  
+C:\Users\orewa\Desktop\New Con Cha\ContraNes_SE102.O22\Contra\Game.h(13,1): warning C4005: 'DIRECTINPUT_VERSION': macro redefinition
+  (compiling source file 'WinMain.cpp')
+  C:\Program Files (x86)\Windows Kits\10\Include\10.0.22621.0\um\dinput.h(48,1):
+  see previous definition of 'DIRECTINPUT_VERSION'
+  
+C:\Users\orewa\Desktop\New Con Cha\ContraNes_SE102.O22\Contra\PlayerState.h(57,28): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+  (compiling source file 'WinMain.cpp')
+  
+C:\Users\orewa\Desktop\New Con Cha\ContraNes_SE102.O22\Contra\PlayerState.h(122,29): warning C4244: '=': conversion from 'ULONGLONG' to 'int', possible loss of data
+  (compiling source file 'WinMain.cpp')
+  
+C:\Users\orewa\Desktop\New Con Cha\ContraNes_SE102.O22\Contra\PlayerState.h(140,1): warning C4005: 'DIE_ANIMATION_DURATION': macro redefinition
+  (compiling source file 'WinMain.cpp')
+  C:\Users\orewa\Desktop\New Con Cha\ContraNes_SE102.O22\Contra\Runman.h(9,1):
+  see previous definition of 'DIE_ANIMATION_DURATION'
+  
+C:\Users\orewa\Desktop\New Con Cha\ContraNes_SE102.O22\Contra\WinMain.cpp(169,6): warning C4101: 'msg': unreferenced local variable
+  Generating Code...
+  Contra.vcxproj -> C:\Users\orewa\Desktop\New Con Cha\ContraNes_SE102.O22\x64\Debug\Contra.exe

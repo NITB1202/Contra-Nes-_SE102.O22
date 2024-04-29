@@ -1,0 +1,2 @@
+dong dau tien la kich thuoc tile va ma tran: tilew tileh column row
+moi dong la 1 hang cua ma tran
