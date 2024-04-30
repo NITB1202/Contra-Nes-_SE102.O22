@@ -54,6 +54,7 @@ void NormalBullet::Update(DWORD dt)
 			vy = -0.5 * BULLET_SPEED;
 			break;
 		}
+		
 	}
 
 	x += vx * dt;
@@ -96,46 +97,58 @@ void TurretBullet::Update(DWORD dt)
 	case SHOOT_TOPLEFT:
 	{
 		vx = -BULLET_SPEED;
-		vy = sqrt(4 / 3 * vx * vx);
+		vy = (float)4/9 * -vx;
 		break;
 	}
 	case SHOOT_TOPLEFT2:
 	{
 		vx = -BULLET_SPEED;
-		vy = sqrt(4 / 3 * vx * vx);
+		vy = -9 / 4 * vx;
 		break;
 	}
 	case SHOOT_TOPRIGHT:
 	{
 		vx = BULLET_SPEED;
-		vy = sqrt(4 / 3 * vx * vx);
+		vy = 9 / 4 * vx;
 		break;
 	}
 	case SHOOT_TOPRIGHT2:
 	{
 		vx = BULLET_SPEED;
-		vy = sqrt(4 / 3 * vx * vx);
+		vy = (float)4 / 9 * vx;
 		break;
 	}
 	case SHOOT_DOWNRIGHT:
 	{
 		vx = BULLET_SPEED;
-		vy = -sqrt(4 / 3 * vx * vx);
+		vy = -(float)4 / 9 * vx;
 		break;
 	}
 	case SHOOT_DOWNRIGHT2:
 	{
 		vx = BULLET_SPEED;
-		vy = -sqrt(4 / 3 * vx * vx);
+		vy = -9 / 4 * vx;
 		break;
 	}
 	case SHOOT_DOWNLEFT:
 	{
 		vx = -BULLET_SPEED;
-		vy = -sqrt(4 / 3 * vx * vx);
+		vy = 9 / 4 * vx;
 		break;
 	}
 	case SHOOT_DOWNLEFT2:
+	{
+		vx = -BULLET_SPEED;
+		vy = (float)4 / 9 * vx;
+		break;
+	}
+	case SHOOT_SNIPER_UP:
+	{
+		vx = -BULLET_SPEED;
+		vy = sqrt(4 / 3 * vx * vx);
+		break;
+	}
+	case SHOOT_SNIPER_DOWN:
 	{
 		vx = -BULLET_SPEED;
 		vy = -sqrt(4 / 3 * vx * vx);

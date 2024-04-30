@@ -47,7 +47,7 @@ void Sniper::Update(DWORD dt)
 
 	if (getState() == HIDDENOFF || getState() == HIDDENON) // Hidden Sniper
 	{
-		if (abs(px - this->x) <= 200)
+		if (this->x -px <= 200 && this->x - px > 0)
 		{
 			if (getState() == HIDDENOFF)
 			{
@@ -73,6 +73,11 @@ void Sniper::Update(DWORD dt)
 		this->AnimationID = SNIPER_LEFT_LOW_ANIMATION;
 		int angle = Angle(this->x, this->y, px, py);
 
+		if (this->x - px < 0)
+		{
+			setState(NOHIDDENOFF);
+			return;
+		}
 		switch (angle)
 		{
 		case 180:
@@ -81,11 +86,11 @@ void Sniper::Update(DWORD dt)
 			break;
 		case 150:
 			this->AnimationID = SNIPER_LEFT_HIGH_ANIMATION;
-			Sgun->Charge(GetX()+10, GetY(), SHOOT_TOPLEFT, 2);
+			Sgun->Charge(GetX()+10, GetY(), SHOOT_SNIPER_UP, 2);
 			break;
 		case -150:
 			this->AnimationID = SNIPER_LEFT_LOW_ANIMATION;
-			Sgun->Charge(GetX(), GetY()-30, SHOOT_DOWNLEFT2, 2);
+			Sgun->Charge(GetX(), GetY()-30, SHOOT_SNIPER_DOWN, 2);
 			break;
 		}
 		Sgun->Update(dt);

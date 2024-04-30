@@ -42,7 +42,7 @@ void Cannon::Update(DWORD dt)
 		return;
 	}
 	else
-		if (abs(px - this->x) <= 250)
+		if (this->x - px <= 250 && this->x - px > 0)
 		{
 			if (this->state == C_CLOSE)
 			{
