@@ -94,7 +94,7 @@ int Cannon::Angle(int x1, int y1, int x2, int y2)
 {
 	int angle = 180;
 	double MinDistance = (x1 + 15 - x2) * (x1 + 15 - x2) + (y1 - 15 - y2) * (y1 - 15 - y2);
-	if (abs(y1 - y2) < 20 && x1 > x2)
+	if (abs(y1 - y2) < 50 && x1 > x2)
 		return angle;
 	if ((x1 - x2) * (x1 - x2) + (y1 - 5 - y2) * (y1 - 5 - y2) < MinDistance)
 	{
