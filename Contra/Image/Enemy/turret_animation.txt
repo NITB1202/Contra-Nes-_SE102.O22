@@ -1,0 +1,28 @@
+image\\Enemy\\Turret\\Turret_Close.png
+3000 32 32 0
+image\\Enemy\\Turret\\Turret_Opening.png
+3001 32 32 0
+image\\Enemy\\Turret\\Turret_0.png
+3002 32 32 0
+image\\Enemy\\Turret\\Turret_30.png
+3003 32 32 0
+image\\Enemy\\Turret\\Turret_-30.png
+3004 32 32 0
+image\\Enemy\\Turret\\Turret_60.png
+3005 32 32 0
+image\\Enemy\\Turret\\Turret_-60.png
+3006 32 32 0
+image\\Enemy\\Turret\\Turret_90.png
+3007 32 32 0
+image\\Enemy\\Turret\\Turret_-90.png
+3008 32 32 0
+image\\Enemy\\Turret\\Turret_120.png
+3009 32 32 0
+image\\Enemy\\Turret\\Turret_-120.png
+3010 32 32 0
+image\\Enemy\\Turret\\Turret_150.png
+3011 32 32 0
+image\\Enemy\\Turret\\Turret_-150.png
+3012 32 32 0
+image\\Enemy\\Turret\\Turret_-180.png
+3013 32 32 0

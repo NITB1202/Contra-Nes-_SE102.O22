@@ -12,6 +12,18 @@ void Player::SetCurrentState(PlayerState* newState)
 
 void Player::Update(DWORD dt)
 {
+	if (hp <= 0)
+	{
+		Game* game = Game::GetInstance();
+		if (!game->showMenu)
+		{
+			game->showMenu = true;
+			game->ClearBackGround();
+			game->SetCurrentMenu(GAMEOVER_MENU);
+		}
+		return;
+	}
+
 	currentState->UpdateStatus();
 
 	vy += -0.5*PLAYER_GRAVITY * dt;
@@ -24,10 +36,7 @@ void Player::Update(DWORD dt)
 
 	if (y < camera->getY() - camera->getHeight())
 	{
-		float xRespawn, yRespawn;
-		GetRespawnPoint(xRespawn, yRespawn);
-		x = xRespawn;
-		y = yRespawn;
+		GetRespawnPoint(x, y);
 		UntouchableStart();
 	}
 
@@ -94,6 +103,8 @@ void Player::OnCollisionWithEnenmy(LPCOLLISIONEVENT e)
 
 void Player::Render()
 {
+	if (hp <= 0) return;
+
 	AnimationID = currentState->GetStateAnimation();
 
 	if (currentState == dynamic_cast<PlayerGunOverHeadState*>(currentState))
@@ -178,4 +189,11 @@ void Player::GetRespawnPoint(float& xRespawn, float& yRespawn)
 			}
 		}
 	}
+}
+
+void Player::Reset()
+{
+	hp = MAX_HP + 1;
+	GetRespawnPoint(x, y);
+	UntouchableStart();
 }

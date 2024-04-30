@@ -173,6 +173,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	LoadResource();
 
 	game->InitScene(scenelink);
+	game->InitMenu();
 	
 	GameRun();
 

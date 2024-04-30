@@ -628,7 +628,10 @@ void PlayerDieState::UpdateStatus()
 		if (GetTickCount64() - startTime > DIE_ANIMATION_DURATION + RESET_TIME)
 		{
 			player->UntouchableStart();
-			player->SetPosition(player->GetX(), player->GetY() + (PLAYER_HEIGHT+4-PLAYER_DIE_HEIGHT));
+			if(!player->IsUnderWater())
+				player->SetPosition(player->GetX(), player->GetY() + (PLAYER_HEIGHT + 4-PLAYER_DIE_HEIGHT));
+			else
+				player->SetPosition(player->GetX(), player->GetY() + (PLAYER_DIE_HEIGHT-PLAYER_HEIGHT/2 + 4));
 			player->SetCurrentState(new PlayerStandingState(direction));
 		}
 	}

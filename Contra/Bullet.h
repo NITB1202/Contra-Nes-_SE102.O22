@@ -32,4 +32,17 @@ public:
 	void Render();
 };
 
+class TurretBullet : public Bullet
+{
+public:
+	TurretBullet(float x, float y, int direction) : Bullet(x, y, direction)
+	{
+		baseType = ENEMY;
+		width = 6;
+		height = 6;
+	}
+	void Update(DWORD dt);
+	void Render();
+};
+
 #define BULLET_SPEED 0.3f

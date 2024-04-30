@@ -5,6 +5,7 @@
 #include "Gun.h"
 
 #define UNTOUCHABLE_TIME 3000
+#define MAX_HP 3
 
 class Player : public GameObject
 {
@@ -25,7 +26,7 @@ public:
 	Player()	
 	{
 		baseType = PLAYER;
-		hp = 3;
+		hp = MAX_HP;
 		currentState = new PlayerFallState(RIGHT);
 		gun = new Gun();
 	};
@@ -40,16 +41,17 @@ public:
 	bool IsOnGround() { return isOnGround; }
 	bool IsShooting() { return isShooting; }
 	bool IsUnderWater() { return isUnderWater; }
+	bool IsUntouchable() { return untouchable; }
 
 	void Render();
 	void Update(DWORD dt);
 
 	void OnNoCollision(DWORD dt);
 	void OnCollisionWith(LPCOLLISIONEVENT e);
+	void OnCollisionWithEnenmy(LPCOLLISIONEVENT e);
 
 	void UntouchableStart();
 	void GetRespawnPoint(float& xRespawn, float& yRespawn);
-
-	void OnCollisionWithEnenmy(LPCOLLISIONEVENT e);
+	void Reset();
 };
 typedef Player* LPPLAYER;

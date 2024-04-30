@@ -16,6 +16,8 @@ using namespace std;
 #define KEYBOARD_BUFFER_SIZE 1024
 #define KEYBOARD_STATE_SIZE 256
 
+#define BACKGROUND_COLOR D3DXCOLOR(0.5f, 0.5f, 0.5f, 0.0f)
+
 class Game
 {
 private:
@@ -46,12 +48,16 @@ private:
 	vector<LPMENU> menus;
 
 	int currentScene = 0;
+	int currentMenu = 0;
 
 	LPPLAYER player;
 	LPCAMERA camera;
 	LPKEYEVENTHANDLER keyHandler;
 
 public:
+
+	bool showMenu = false;
+
 	Game()
 	{
 		player = Player::GetInstance();
@@ -60,6 +66,7 @@ public:
 	}
 	void InitDirect3D(HWND hwnd,HINSTANCE hInstance);
 	void InitScene(vector<LPWSTR> scenelink);
+	void InitMenu();
 
 	// Keyboard related functions 
 	void InitKeyboard();
@@ -68,7 +75,10 @@ public:
 
 	LPTEXTURE LoadTexture(LPCWSTR texturePath);
 	LPSCENE GetCurrentScene() { return scenes[currentScene]; }
+	void SetCurrentMenu(int id) { currentMenu = id;}
+	LPMENU GetCurrentMenu() { return menus[currentMenu]; }
 
+	void ClearBackGround() { pD3DDevice->ClearRenderTargetView(pRenderTargetView, BACKGROUND_COLOR); }
 	void Draw(float x, float y, LPTEXTURE tex, float scaleX = 1, float scaleY = 1, int flipHorizontal = 0, RECT* rect = NULL);
 	void DrawInScreenCoord(float x, float y, LPTEXTURE tex, float scaleX = 1, float scaleY = 1, int flipHorizontal = 0, RECT* rect = NULL);
 

@@ -50,16 +50,6 @@
 #define RUNMAN_IN_WATER_ANIMATION 104
 
 //turret define
-
-#define TEXTURE_PATH_TURRET_CLOSE L"image\\Enemy\\Turret\\Turret_Close.png"
-#define TEXTURE_PATH_TURRET_OPENING L"image\\Enemy\\Turret\\Turret_Opening.png"
-#define TEXTURE_PATH_TURRET_0 L"image\\Enemy\\Turret\\Turret_0.png"
-#define TEXTURE_PATH_TURRET_30 L"image\\Enemy\\Turret\\Turret_30.png"
-#define TEXTURE_PATH_TURRET_60 L"image\\Enemy\\Turret\\Turret_60.png"
-#define TEXTURE_PATH_TURRET_90 L"image\\Enemy\\Turret\\Turret_90.png"
-#define TEXTURE_PATH_TURRET_120 L"image\\Enemy\\Turret\\Turret_120.png"
-#define TEXTURE_PATH_TURRET_150 L"image\\Enemy\\Turret\\Turret_150.png"
-
 #define TURRET_CLOSE_ANIMATION 3000
 #define TURRET_OPENING_ANIMATION 3001
 #define TURRET_0_ANIMATION 3002
@@ -75,25 +65,25 @@
 #define TURRET_n150_ANIMATION 3012
 #define TURRET_180_ANIMATION 3013
 
-#define TURRET_SPRITE_HEIGHT 32
-#define TURRET_SPRITE_WIDTH 32
-
-
 //bullet define
 #define TEXTURE_PATH_NORMAL_BULLET L"image\\Bullet\\bullet_b.png"
+#define TEXTURE_PATH_TURRET_BULLET L"image\\Bullet\\TBullet.png"
 
 #define NORMAL_BULLET 400
+#define TURRET_BULLET 401
 
 //asset define
 #define TEXTURE_PATH_LIFE L"image\\Asset\\life.png"
 #define TEXTURE_PATH_GAMEOVER_BACKGROUND L"image\\Asset\\GameOver.png"
 #define TEXTURE_PATH_CURSOR L"image\\Asset\\cursor.png"
+#define TEXTURE_PATH_INTRO_BACKGROUND L"image\\Asset\\intro.png"
 
 #define LIFE_ASSET_WIDTH 28
 
 #define PLAYER_LIFE 450
 #define GAMEOVER_BACKGROUND 451
 #define CURSOR 452
+#define INTRO_BACKGROUND 453
 
 
 //effect define
@@ -108,6 +98,8 @@
 #define MENU_PATH L"SceneInfo\\Menu.txt"
 #define PATH_SCENE_0 L"SceneInfo\\Scene0.txt"
 
+#define GAMEOVER_MENU 0
+#define INTRO_MENU 1
 
 
 
@@ -121,8 +113,15 @@ enum shootingDirection
 	SHOOT_LEFT,
 	SHOOT_RIGHT,
 	SHOOT_TOP,
+	SHOOT_DOWN,
 	SHOOT_TOPLEFT,
+	SHOOT_TOPLEFT2,
 	SHOOT_TOPRIGHT,
+	SHOOT_TOPRIGHT2,
 	SHOOT_DOWNLEFT,
-	SHOOT_DOWNRIGHT
+	SHOOT_DOWNLEFT2,
+	SHOOT_DOWNRIGHT,
+	SHOOT_DOWNRIGHT2,
+	SHOOT_SNIPER_UP,
+	SHOOT_SNIPER_DOWN,
 };

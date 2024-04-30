@@ -1,4 +1,6 @@
 #include "game.h"
+#include <fstream>
+#include <sstream>
 
 Game* Game::instance = NULL;
 
@@ -210,6 +212,33 @@ LPTEXTURE Game::LoadTexture(LPCWSTR texturePath)
 	return new Texture(tex, gSpriteTextureRV);
 }
 
+void Game::InitMenu()
+{
+	ifstream menuFile(MENU_PATH);
+
+	if (!menuFile.is_open())
+		return;
+
+	string line;
+
+	while (getline(menuFile, line))
+	{
+		stringstream ss(line);
+		
+		float menuX, menuY;
+		int option, optionHeight, backgroundID;
+
+		ss >> menuX;
+		ss >> menuY;
+		ss >> option;
+		ss >> optionHeight;
+		ss >> backgroundID;
+
+		LPMENU menu = new Menu(menuX, menuY, option, optionHeight,backgroundID);
+		menus.push_back(menu);
+	}
+}
+
 void Game :: InitScene(vector<LPWSTR> scenelink)
 {
 	for (int i = 0; i < scenelink.size(); i++)
@@ -220,6 +249,19 @@ void Game :: InitScene(vector<LPWSTR> scenelink)
 }
 void Game::DrawInScreenCoord(float x, float y, LPTEXTURE tex, float scaleX, float scaleY, int flipHorizontal, RECT* rect)
 {
+
+	//Change draw start point to top-left
+	if (rect == NULL)
+	{
+		x += tex->getWidth() / 2;
+		y += tex->getHeight() / 2;
+	}
+	else
+	{
+		x += ((rect->right - rect->left) / 2);
+		y += ((rect->bottom - rect->top) / 2);
+	}
+
 	if (tex == NULL) return;
 
 	int spriteWidth = 0;
@@ -294,18 +336,6 @@ void Game::Draw(float x, float y, LPTEXTURE tex, float scaleX, float scaleY, int
 	int onscreenX = x - camera->getX();
 	int onscreenY = camera->getY() - y;
 
-	//Change draw start point to top-left
-	if (rect == NULL)
-	{
-		onscreenX += tex->getWidth() / 2;
-		onscreenY += tex->getHeight() / 2;
-	}
-	else
-	{
-		onscreenX += ((rect->right - rect->left) / 2);
-		onscreenY += ((rect->bottom - rect->top) / 2);
-	}
-
 	DrawInScreenCoord(onscreenX, onscreenY, tex, scaleX, scaleY, flipHorizontal, rect);
 }
 
@@ -360,7 +390,7 @@ void Game::InitKeyboard()
 	if (hr != DI_OK)
 		return;
 
-	this->keyHandler = new PlaySceneKeyEventHandler();
+	keyHandler = new KeyEventHandler();
 }
 
 void Game::ProcessKeyboard()
@@ -404,17 +434,22 @@ void Game::ProcessKeyboard()
 }
 void Game::Update(DWORD dt)
 {
-	scenes[currentScene]->Update(dt);
-	if (player->GetHp() > 0)
-		player->Update(dt);
+	if (!showMenu)
+		scenes[currentScene]->Update(dt);
+	else
+		menus[currentMenu]->Update(dt);
+	player->Update(dt);
 	camera->UpdateByX(dt);
 }
 
 void Game::Render()
 {
-	scenes[currentScene]->Render();
-	if (player->GetHp() > 0)
-		player->Render();
+	if (!showMenu)
+		scenes[currentScene]->Render();
+	else
+		menus[currentMenu]->Render();
+
+	if (player->GetHp() > 0) player->Render();
 }
 
 Game* Game::GetInstance()
