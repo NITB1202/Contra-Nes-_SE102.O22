@@ -151,6 +151,7 @@
     <ClCompile Include="BinaryTree.cpp" />
     <ClCompile Include="Bullet.cpp" />
     <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="Cannon.cpp" />
     <ClCompile Include="Collision.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="Ground.cpp" />
@@ -163,6 +164,7 @@
     <ClCompile Include="Runman.cpp" />
     <ClCompile Include="RunmanState.cpp" />
     <ClCompile Include="Scene.cpp" />
+    <ClCompile Include="Sniper.cpp" />
     <ClCompile Include="Turret.cpp" />
     <ClCompile Include="WinMain.cpp" />
   </ItemGroup>
@@ -171,6 +173,7 @@
     <ClInclude Include="AnimationLib.h" />
     <ClInclude Include="BinaryTree.h" />
     <ClInclude Include="Bullet.h" />
+    <ClInclude Include="Cannon.h" />
     <ClInclude Include="Collision.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameObject.h" />
@@ -189,6 +192,7 @@
     <ClInclude Include="Runman.h" />
     <ClInclude Include="RunmanState.h" />
     <ClInclude Include="Scene.h" />
+    <ClInclude Include="Sniper.h" />
     <ClInclude Include="Texture.h" />
     <ClInclude Include="Turret.h" />
   </ItemGroup>

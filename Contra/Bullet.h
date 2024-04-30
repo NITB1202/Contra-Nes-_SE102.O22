@@ -5,12 +5,14 @@ class Bullet : public GameObject
 {
 protected:
 	int shootingDirection;
+	float spd;
 public:
-	Bullet(float x, float y, int direction)
+	Bullet(float x, float y, int direction,float spd)
 	{
 		baseType = BULLET;
 		this->x = x;
 		this->y = y;
+		this->spd = spd;
 		shootingDirection = direction;
 		width = 0;
 		height = 0;
@@ -23,7 +25,7 @@ public:
 class NormalBullet : public Bullet
 {
 public:
-	NormalBullet(float x, float y, int direction) : Bullet(x,y,direction)
+	NormalBullet(float x, float y, int direction, float spd) : Bullet(x,y,direction,spd)
 	{
 		width = 8;
 		height = 8;
@@ -35,7 +37,7 @@ public:
 class TurretBullet : public Bullet
 {
 public:
-	TurretBullet(float x, float y, int direction) : Bullet(x, y, direction)
+	TurretBullet(float x, float y, int direction,float spd) : Bullet(x, y, direction,spd)
 	{
 		baseType = ENEMY;
 		width = 6;
@@ -44,5 +46,3 @@ public:
 	void Update(DWORD dt);
 	void Render();
 };
-
-#define BULLET_SPEED 0.3f

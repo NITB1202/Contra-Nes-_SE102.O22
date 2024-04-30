@@ -54,7 +54,11 @@ void Menu::HandlerOption()
 			break;
 		}
 		case 2:
+		{
+			game->ClearBackGround();
+			game->SetCurrentMenu(INTRO_MENU);
 			break;
+		}
 		}
 		break;
 	}
@@ -63,7 +67,13 @@ void Menu::HandlerOption()
 		switch (select)
 		{
 		case 1:
+		{
+			game->showMenu = false;
+			game->GetCurrentScene()->BeginScene();
+			game->GetCurrentScene()->ClearSpawnEnemy();
+			player->Reset();
 			break;
+		}
 		}
 		break;
 	}

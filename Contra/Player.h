@@ -27,14 +27,15 @@ public:
 	{
 		baseType = PLAYER;
 		hp = MAX_HP;
-		currentState = new PlayerFallState(RIGHT);
-		gun = new Gun();
+		currentState = new PlayerStandingState(RIGHT);
+		gun = new Gun(0.3);
 	};
 	static Player* GetInstance();
 
 	void OnKeyDown(int keyCode);
 	void OnKeyUp(int keyCode);
 
+	void SetBeginState(int stage);
 	void SetCurrentState(PlayerState* newState);
 	PlayerState* GetCurrentState() { return currentState; }
 
@@ -42,6 +43,7 @@ public:
 	bool IsShooting() { return isShooting; }
 	bool IsUnderWater() { return isUnderWater; }
 	bool IsUntouchable() { return untouchable; }
+	bool IsDying() { return currentState == dynamic_cast<PlayerDieState*>(currentState); }
 
 	void Render();
 	void Update(DWORD dt);

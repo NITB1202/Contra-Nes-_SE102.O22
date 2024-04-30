@@ -18,9 +18,9 @@ class Map
 
 	vector<vector<int>> matrix;
 
-	int rowBegin = -1;
+	int rowBegin = 0;
 	int rowEnd = -1;
-	int colBegin = -1;
+	int colBegin = 0;
 	int colEnd = -1;
 
 public:

@@ -34,8 +34,8 @@ void Camera::UpdateByX(DWORD dt)
 	if (player->GetX() > camx+width / 2)
 		camx +=  vx * dt;
 	
-	if (player->GetX() < camx + width / 3 && player->GetCurrentState()->GetDirection() == LEFT)
-		camx += -vx * dt;
+	//if (player->GetX() < camx + width / 3 && player->GetCurrentState()->GetDirection() == LEFT)
+		//camx += -vx * dt;
 
 	int mapwidth = game->GetCurrentScene()->GetMap()->GetWidth();
 

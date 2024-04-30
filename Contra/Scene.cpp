@@ -31,19 +31,23 @@ Scene::Scene(LPWSTR path)
 	getline(file, pos);
 	stringstream ss(pos);
 
-	float playerBeginX, playerBeginY, camBeginX, camBeginY, state;
-
-	ss >> playerBeginX;
-	ss >> playerBeginY;
-	ss >> state;
-	ss >> camBeginX;
-	ss >> camBeginY;
-
-	Player::GetInstance()->SetPosition(playerBeginX, playerBeginY);
-
-	Camera::GetInstance()->setPosCamera(camBeginX, camBeginY);
+	ss >> playerStartX;
+	ss >> playerStartY;
+	ss >> playerState;
+	ss >> cameraStartX;
+	ss >> cameraStartY;
 
 	file.close();
+
+	//BeginScene();
+}
+
+void Scene::BeginScene()
+{
+	Player::GetInstance()->SetPosition(playerStartX, playerStartY);
+	Player::GetInstance()->SetBeginState(playerState);
+	Camera::GetInstance()->setPosCamera(cameraStartX, cameraStartY);
+
 }
 
 void Scene :: Update(DWORD dt)
@@ -88,6 +92,9 @@ void Scene :: Update(DWORD dt)
 		object->Update(dt);
 		objectOnScreen.push_back(object);
 	}
+
+	if (cameraBound.right == background->GetWidth())
+		return;
 
 	if (GetTickCount64() - lastSpawnTime > SPAWN_SEPARATION && randomSpawnEnemy.size() < MAX_SPAWN_ENEMY)
 	{

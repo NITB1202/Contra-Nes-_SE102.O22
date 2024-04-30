@@ -48,7 +48,7 @@ private:
 	vector<LPMENU> menus;
 
 	int currentScene = 0;
-	int currentMenu = 0;
+	int currentMenu = INTRO_MENU;
 
 	LPPLAYER player;
 	LPCAMERA camera;
@@ -56,7 +56,7 @@ private:
 
 public:
 
-	bool showMenu = false;
+	bool showMenu = true;
 
 	Game()
 	{

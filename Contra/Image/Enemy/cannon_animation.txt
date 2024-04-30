@@ -1,0 +1,10 @@
+image\\Enemy\\Cannon\\Cannon_Close.png
+3300 32 32 0
+image\\Enemy\\Cannon\\Cannon_Init.png
+3301 32 32 0
+image\\Enemy\\Cannon\\Cannon_120.png
+3302 32 32 0
+image\\Enemy\\Cannon\\Cannon_150.png
+3303 32 32 0
+image\\Enemy\\Cannon\\Cannon_180.png
+3304 32 32 0

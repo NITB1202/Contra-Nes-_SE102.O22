@@ -16,11 +16,21 @@ private:
 
 	DWORD lastSpawnTime = -1;
 
-	//float bossAreaX, bossAreaY;
+	int playerState;
+	float playerStartX, playerStartY;
+	float cameraStartX, cameraStartY;
+
+	float bossAreaX, bossAreaY;
 
 public:
 
 	Scene(LPWSTR path);
+
+	void BeginScene();
+	void ClearSpawnEnemy() {
+		lastSpawnTime = -1;
+		randomSpawnEnemy.clear();
+	}
 
 	void Update(DWORD dt);
 	void Render();

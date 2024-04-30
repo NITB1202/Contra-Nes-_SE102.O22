@@ -1,3 +1,5 @@
 image\\Player\\player_animation.txt
 image\\Enemy\\runman_animation.txt
 image\\Enemy\\turret_animation.txt
+image\\Enemy\\cannon_animation.txt
+image\\Enemy\\sniper_animation.txt

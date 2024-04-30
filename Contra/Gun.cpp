@@ -17,10 +17,10 @@ void Gun::Charge(float bulletX, float bulletY, int direction, int bulletType)
 	switch (bulletType)
 	{
 	case 1:
-		bullet = new NormalBullet(bulletX, bulletY, direction);
+		bullet = new NormalBullet(bulletX, bulletY, direction,spd);
 		break;
 	case 2:
-		bullet = new TurretBullet(bulletX, bulletY, direction);
+		bullet = new TurretBullet(bulletX, bulletY, direction,spd);
 		break;
 	}
 
@@ -45,7 +45,7 @@ void Gun::Update(DWORD dt)
 				if (e != NULL)
 				{
 					player->OnCollisionWith(e);
-					if(!player->IsUntouchable())
+					if (!player->IsUntouchable() && !player->IsDying())
 						bullets[i]->Delete();
 					break;
 				}

@@ -59,15 +59,19 @@ int Turret::Angle(int x1, int y1, int x2, int y2)
 }
 void Turret::Update(DWORD dt)
 {
+	Tgun->Update(dt);
+
 	Player* player = Player::GetInstance();
 	int px = player->GetX();
 	int py = player->GetY();
+
 	if (dieAnimationStart != -1 && GetTickCount64() - dieAnimationStart > DIE_ANIMATION_DURATION)
 	{
 		Delete();
 		return;
 	}
 	else
+	{
 		if (abs(px - this->x) <= 250)
 		{
 			if (this->state == T_CLOSE)
@@ -88,6 +92,7 @@ void Turret::Update(DWORD dt)
 						this->preState = T_CLOSE;
 					}
 				}
+
 				int angle = Angle(this->x, this->y, px, py);
 
 				switch (angle)
@@ -150,17 +155,17 @@ void Turret::Update(DWORD dt)
 			openDelay = 0;
 			this->AnimationID = TURRET_CLOSE_ANIMATION;
 		}
-
-	Tgun->Update(dt);
+	}
 }
 
 void Turret::Render()
 {
+	Tgun->Render();
+
 	if (isDeleted) return;
 	if (inDieAnimation)
 		AnimationID = DIE_EFFECT_ANIMATION;
 	AniHandler->Render(AnimationID, x, y);
-	Tgun->Render();
 }
 
 void Turret::OnCollisionWith(LPCOLLISIONEVENT e)

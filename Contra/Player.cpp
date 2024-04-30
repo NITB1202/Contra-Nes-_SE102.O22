@@ -197,3 +197,15 @@ void Player::Reset()
 	GetRespawnPoint(x, y);
 	UntouchableStart();
 }
+
+void Player::SetBeginState(int stage)
+{
+	switch (stage)
+	{
+	case 1:
+	{
+		SetCurrentState(new PlayerFallState(RIGHT));
+		break;
+	}
+	}
+}

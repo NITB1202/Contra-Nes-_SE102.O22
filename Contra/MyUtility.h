@@ -3,12 +3,16 @@
 #include "Runman.h"
 #include "Turret.h"
 #include "Ground.h"
+#include "Cannon.h"
+#include "Sniper.h"
 #include <string>
 #include <Windows.h>
 
 #define TURRET_OBJECT 1001
 #define SNIPER_OBJECT 1002
 #define TURRET_OBJECT 1003
+#define SNIPER_OBJECT 1004
+#define CANNON_OBJECT 1005
 #define GROUND_OBJECT 0
 #define WATER_OBJECT 1
 
@@ -28,6 +32,12 @@ public:
 			break;
 		case WATER_OBJECT:
 			obj = new Water();
+			break;
+		case SNIPER_OBJECT:
+			obj = new Sniper();
+			break;
+		case CANNON_OBJECT:
+			obj = new Cannon();
 			break;
 		default:
 			obj = new Ground();

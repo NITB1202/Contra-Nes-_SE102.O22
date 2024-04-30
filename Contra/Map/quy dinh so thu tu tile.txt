@@ -1,1 +1,0 @@
-so thu tu tile(tile ID) duoc danh so theo thu tu trai sang phai, tu tren xuong duoi, bat dau tu chi so 0

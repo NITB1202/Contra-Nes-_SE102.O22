@@ -434,22 +434,25 @@ void Game::ProcessKeyboard()
 }
 void Game::Update(DWORD dt)
 {
-	if (!showMenu)
-		scenes[currentScene]->Update(dt);
-	else
+	if (showMenu)
 		menus[currentMenu]->Update(dt);
-	player->Update(dt);
-	camera->UpdateByX(dt);
+	else
+	{
+		scenes[currentScene]->Update(dt);
+		player->Update(dt);
+		camera->UpdateByX(dt);
+	}
 }
 
 void Game::Render()
 {
-	if (!showMenu)
-		scenes[currentScene]->Render();
-	else
+	if (showMenu)
 		menus[currentMenu]->Render();
-
-	if (player->GetHp() > 0) player->Render();
+	else
+	{
+		scenes[currentScene]->Render();
+		if (player->GetHp() > 0) player->Render();
+	}
 }
 
 Game* Game::GetInstance()
