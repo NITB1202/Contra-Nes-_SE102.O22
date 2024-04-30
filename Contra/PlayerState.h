@@ -1,12 +1,6 @@
 #pragma once
 #include <Windows.h>
 
-//Define player status
-enum PlayerDirection {
-	LEFT = -1,
-	RIGHT = 1
-};
-
 class PlayerState
 {
 protected:

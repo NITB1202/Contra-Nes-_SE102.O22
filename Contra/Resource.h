@@ -49,7 +49,6 @@ void LoadResource()
 				ss >> flip;
 
 				aniLib->AddAnimation(id, Animation(tex, spriteWidth, spriteHeight, 2, 2,flip));
-
 			}
 			else
 				tex = game->LoadTexture(MyUtility::ConvertStringToLPWSTR(line));
@@ -59,14 +58,16 @@ void LoadResource()
 	}
 
 	tex = game->LoadTexture(TEXTURE_PATH_NORMAL_BULLET);
-	aniLib->AddAnimation(NORMAL_BULLET, Animation(tex,8,8));
+	aniLib->AddAnimation(NORMAL_BULLET, Animation(tex,tex->getWidth(), tex->getHeight()));
 
 	tex = game->LoadTexture(TEXTURE_PATH_LIFE);
-	aniLib->AddAnimation(PLAYER_LIFE, Animation(tex,14,21,2,2));
+	aniLib->AddAnimation(PLAYER_LIFE, Animation(tex,tex->getWidth(), tex->getHeight(), 2, 2));
 
-	tex = game->LoadTexture(TEXTURE_PATH_RUNMAN_RIGHT);
-	aniLib->AddAnimation(RUNMAN_RUN_RIGHT_ANIMATION, Animation(tex, RUNMAN_SPRITE_WIDTH, RUNMAN_SPRITE_HEIGHT, 2, 2));
-	aniLib->AddAnimation(RUNMAN_RUN_LEFT_ANIMATION, Animation(tex, RUNMAN_SPRITE_WIDTH, RUNMAN_SPRITE_HEIGHT, 2, 2,true));
+	tex = game->LoadTexture(TEXTURE_PATH_GAMEOVER_BACKGROUND);
+	aniLib->AddAnimation(GAMEOVER_BACKGROUND, Animation(tex, tex->getWidth(), tex->getHeight(), tex->getWidth() / game->GetBackBufferWidth(), tex->getHeight() / game->GetBackBufferHeight()));
+
+	tex = game->LoadTexture(TEXTURE_PATH_CURSOR);
+	aniLib->AddAnimation(CURSOR, Animation(tex, tex->getWidth(), tex->getHeight(), 2, 2));
 
 	tex = game->LoadTexture(TEXTURE_PATH_DIE_EFFECT);
 	aniLib->AddAnimation(DIE_EFFECT_ANIMATION, Animation(tex, DIE_EFFECT_SPRITE_WIDTH, DIE_EFFECT_SPRITE_HEIGHT, 2, 2));

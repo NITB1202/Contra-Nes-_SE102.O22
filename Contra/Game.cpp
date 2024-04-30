@@ -360,7 +360,7 @@ void Game::InitKeyboard()
 	if (hr != DI_OK)
 		return;
 
-	this->keyHandler = new KeyEventHandler();
+	this->keyHandler = new PlaySceneKeyEventHandler();
 }
 
 void Game::ProcessKeyboard()
@@ -384,8 +384,6 @@ void Game::ProcessKeyboard()
 			return;
 		}
 	}
-
-	keyHandler->KeyState((BYTE*)&keyStates);
 
 	// Collect all buffered events
 	DWORD dwElements = KEYBOARD_BUFFER_SIZE;

@@ -8,8 +8,8 @@
 #define WINDOW_CLASS_NAME L"MainWindow"
 #define WINDOW_ICON_PATH L"contra_icon.ico"
 
-#define SCREEN_WIDTH 640
-#define SCREEN_HEIGHT 440
+#define SCREEN_WIDTH 600
+#define SCREEN_HEIGHT 420
 #define MAX_FRAME_RATE 60
 
 HWND CreateGameWindow(HINSTANCE hInstance, int screenWidth, int screenHeight, int nCmdShow);

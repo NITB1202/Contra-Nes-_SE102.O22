@@ -43,14 +43,11 @@
 #define PLAYER_GUN_UP_SHOOT_LEFT_IN_WATER_ANIMATION 338
 
 //runman define
-
-#define TEXTURE_PATH_RUNMAN_RIGHT L"image\\Enemy\\run_man_right.png"
-
-#define RUNMAN_SPRITE_WIDTH 24
-#define RUNMAN_SPRITE_HEIGHT 36
-
-#define RUNMAN_RUN_LEFT_ANIMATION 100
-#define RUNMAN_RUN_RIGHT_ANIMATION 101
+#define RUNMAN_RUN_RIGHT_ANIMATION 100
+#define RUNMAN_RUN_LEFT_ANIMATION 101
+#define RUNMAN_JUMP_RIGHT_ANIMATION 102
+#define RUNMAN_JUMP_LEFT_ANIMATION 103
+#define RUNMAN_IN_WATER_ANIMATION 104
 
 //turret define
 
@@ -89,9 +86,14 @@
 
 //asset define
 #define TEXTURE_PATH_LIFE L"image\\Asset\\life.png"
+#define TEXTURE_PATH_GAMEOVER_BACKGROUND L"image\\Asset\\GameOver.png"
+#define TEXTURE_PATH_CURSOR L"image\\Asset\\cursor.png"
 
 #define LIFE_ASSET_WIDTH 28
+
 #define PLAYER_LIFE 450
+#define GAMEOVER_BACKGROUND 451
+#define CURSOR 452
 
 
 //effect define
@@ -103,7 +105,16 @@
 #define DIE_EFFECT_ANIMATION 500
 
 // List of path scene
+#define MENU_PATH L"SceneInfo\\Menu.txt"
 #define PATH_SCENE_0 L"SceneInfo\\Scene0.txt"
+
+
+
+
+enum Direction {
+	LEFT = -1,
+	RIGHT = 1
+};
 
 enum shootingDirection
 {

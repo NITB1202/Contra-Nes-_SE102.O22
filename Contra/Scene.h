@@ -2,6 +2,9 @@
 #include "Map.h"
 #include "BinaryTree.h"
 
+#define MAX_SPAWN_ENEMY 3
+#define SPAWN_SEPARATION 3000
+
 class Scene
 {
 private:
@@ -9,6 +12,11 @@ private:
 	LPMAP background;
 	LPBINARYTREE objectTree;
 	vector<LPGAMEOBJECT> objectOnScreen;
+	vector<LPGAMEOBJECT> randomSpawnEnemy;
+
+	DWORD lastSpawnTime = -1;
+
+	//float bossAreaX, bossAreaY;
 
 public:
 

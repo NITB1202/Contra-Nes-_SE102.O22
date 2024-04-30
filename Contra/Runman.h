@@ -1,31 +1,37 @@
 #pragma once
 #include "GameObject.h"
+#include "RunmanState.h"
 
-#define RUNMAN_WIDTH 48
-#define RUNMAN_HEIGHT 72
-
-#define RUNMAN_START_VX 0.1f
-#define RUNMAN_START_VY 0.1f
-#define DIE_ANIMATION_DURATION 300
+#define RUNMAN_WIDTH 32
+#define RUNMAN_HEIGHT 56
 
 class Runman :public GameObject
 {
 private:
-	int destination = 200;
-	int distance;
-	int dieAnimationStart = -1;
+
 	bool inDieAnimation = false;
+	bool isOnGround = false;
+	bool isUnderWater = false;
+
+	RunmanState* currentState;
+
 public:
-	Runman()
+	Runman(int direction)
 	{
-		vx = RUNMAN_START_VX;
-		vy = 0;
+		width = RUNMAN_WIDTH;
+		height = RUNMAN_HEIGHT;
 		baseType = ENEMY;
-		distance = destination;
+		currentState = new RunmanRunning(direction);
 	}
-	void Render() override;
-	void Update(DWORD dt) override;
+	void Render();
+	void Update(DWORD dt);
+
 	bool IsCollidable() { return !inDieAnimation; }
+
+	void OnNoCollision(DWORD dt);
 	void OnCollisionWith(LPCOLLISIONEVENT e);
+
 	void OnColllisionWithBullet(LPCOLLISIONEVENT e);
+
+	void SetCurrentState(RunmanState* runmanState);
 };

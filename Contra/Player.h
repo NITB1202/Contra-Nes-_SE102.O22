@@ -1,6 +1,7 @@
 #pragma once
 #include "GameObject.h"
 #include "PlayerState.h"
+#include "ObjectConfig.h"
 #include "Gun.h"
 
 #define UNTOUCHABLE_TIME 3000

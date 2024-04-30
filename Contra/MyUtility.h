@@ -6,7 +6,6 @@
 #include <string>
 #include <Windows.h>
 
-#define RUNMAN_OBJECT 1000
 #define TURRET_OBJECT 1001
 #define SNIPER_OBJECT 1002
 #define TURRET_OBJECT 1003
@@ -24,9 +23,6 @@ public:
 
 		switch (type)
 		{
-		case RUNMAN_OBJECT:
-			obj = new Runman();
-			break;
 		case TURRET_OBJECT:
 			obj = new Turret();
 			break;
@@ -46,14 +42,6 @@ public:
 		int width = rect.right - rect.left;
 		int height = rect.top - rect.bottom;
 		return width * height;
-	}
-
-	static bool IsMovingObject(int type)
-	{
-		if (type == RUNMAN_OBJECT)
-			return true;
-
-		return false;
 	}
 
 	static bool IsInterger(double num) {

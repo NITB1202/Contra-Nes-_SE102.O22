@@ -8,6 +8,7 @@
 #include "Camera.h"
 #include "Scene.h"
 #include "Player.h"
+#include "Menu.h"
 
 using namespace std;
 
@@ -42,6 +43,8 @@ private:
 	DIDEVICEOBJECTDATA keyEvents[KEYBOARD_BUFFER_SIZE];		// Buffered keyboard data
 
 	vector<LPSCENE> scenes;
+	vector<LPMENU> menus;
+
 	int currentScene = 0;
 
 	LPPLAYER player;

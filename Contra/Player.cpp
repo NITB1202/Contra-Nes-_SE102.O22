@@ -1,7 +1,6 @@
 #include "Player.h"
 #include "Camera.h"
 #include "Game.h"
-#include "ObjectConfig.h"
 
 Player* Player::instance = NULL;
 
@@ -58,7 +57,6 @@ void Player::Update(DWORD dt)
 
 	//Gun Update
 	gun->Update(dt);
-
 }
 
 void Player::OnNoCollision(DWORD dt)
@@ -69,19 +67,19 @@ void Player::OnNoCollision(DWORD dt)
 
 void Player::OnCollisionWith(LPCOLLISIONEVENT e)
 {
-	if (e->ny != 0 && e->object->IsBlocking() && e->object->GetBaseType() != ENEMY)
+	if (e->ny != 0 && e->desObject->IsBlocking() && e->desObject->GetBaseType() != ENEMY)
 	{
 		vy = 0;
 		if (e->ny < 0) isOnGround = true;
 	}
 
-	if (e->nx != 0 && e->object->IsBlocking())
+	if (e->nx != 0 && e->desObject->IsBlocking())
 		vx = 0;
 
-	if (e->object->GetBaseType() == ENEMY)
+	if (e->desObject->GetBaseType() == ENEMY)
 		OnCollisionWithEnenmy(e);
 
-	if (e->object->GetBaseType() == WATER)
+	if (e->desObject->GetBaseType() == WATER)
 		isUnderWater = true;
 }
 

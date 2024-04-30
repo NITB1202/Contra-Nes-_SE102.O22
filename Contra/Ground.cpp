@@ -3,8 +3,13 @@
 
 bool Ground::IsBlocking()
 {
-	Player* player = Player::GetInstance();
-	if (player->GetY() - player->GetHeight() < y)
-		return false;
-	return true;
+	bool isBlocking = blocking;
+	blocking = true;
+	return isBlocking;
+}
+
+void Ground::OnCollisionWith(LPCOLLISIONEVENT e)
+{
+	if (e->srcObject->GetY() - e->srcObject->GetHeight() < y)
+		blocking = false;
 }

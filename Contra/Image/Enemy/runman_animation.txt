@@ -1,0 +1,8 @@
+image\\Enemy\\Runman\\runman_runright.png
+100 18 32 0
+101 18 32 1
+image\\Enemy\\Runman\\runman_jumping.png
+102 18 32 0
+103 18 32 1
+image\\Enemy\\Runman\\runman_fall_in_water.png
+104 16 15 0

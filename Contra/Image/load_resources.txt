@@ -1,1 +1,2 @@
 image\\Player\\player_animation.txt
+image\\Enemy\\runman_animation.txt

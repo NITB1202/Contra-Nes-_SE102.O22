@@ -10,15 +10,17 @@ class CollisionEvent
 {
 public:
 
-	LPGAMEOBJECT object;
+	LPGAMEOBJECT srcObject;
+	LPGAMEOBJECT desObject;
 
 	float entryTime;
 	float nx, ny;
 	bool deleted;
 
-	CollisionEvent(LPGAMEOBJECT obj, float t, float nx, float ny)
+	CollisionEvent(LPGAMEOBJECT srcObject, LPGAMEOBJECT desObject, float t, float nx, float ny)
 	{
-		object = obj;
+		this->srcObject = srcObject;
+		this->desObject = desObject;
 		entryTime = t;
 		this->nx = nx;
 		this->ny = ny;
