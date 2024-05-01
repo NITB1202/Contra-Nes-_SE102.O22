@@ -140,4 +140,17 @@ map<int, LPGAMEOBJECT> BinaryTree::GetObjectInBound(RECT bound)
 	return objectList;
 }
 
+void BinaryTree::ClearTree(TreeNode* root)
+{
+	if (root != NULL)
+	{
+		ClearTree(root->left);
+		ClearTree(root->right);
+		delete root;
+	}
+}
 
+BinaryTree::~BinaryTree()
+{
+	ClearTree(root);
+}

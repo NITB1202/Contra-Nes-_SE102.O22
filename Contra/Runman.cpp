@@ -29,7 +29,7 @@ void Runman::Update(DWORD dt)
 		{
 			LPGAMEOBJECT object = it->second;
 
-			if (object->GetBaseType() == GROUND || object->GetBaseType() == WATER)
+			if (object->GetBaseType() != ENEMY)
 				collidableObject.push_back(object);
 		}
 
@@ -79,11 +79,10 @@ void Runman::OnCollisionWith(LPCOLLISIONEVENT e)
 	if (e->desObject->GetBaseType() == BULLET)
 		OnColllisionWithBullet(e);
 
-	if (e->desObject->GetBaseType() == GROUND)
-		isOnGround = true;
-
 	if (e->desObject->GetBaseType() == WATER)
 		isUnderWater = true;
+	else
+		isOnGround = true;
 }
 
 void Runman::OnColllisionWithBullet(LPCOLLISIONEVENT e)

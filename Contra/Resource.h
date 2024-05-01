@@ -48,7 +48,7 @@ void LoadResource()
 				ss >> spriteHeight;
 				ss >> flip;
 
-				aniLib->AddAnimation(id, Animation(tex, spriteWidth, spriteHeight, 2, 2,flip));
+				aniLib->AddAnimation(id, Animation(tex, spriteWidth, spriteHeight, 2, 2, flip));
 			}
 			else
 				tex = game->LoadTexture(MyUtility::ConvertStringToLPWSTR(line));
@@ -74,9 +74,6 @@ void LoadResource()
 
 	tex = game->LoadTexture(TEXTURE_PATH_CURSOR);
 	aniLib->AddAnimation(CURSOR, Animation(tex, tex->getWidth(), tex->getHeight(), 2, 2));
-
-	tex = game->LoadTexture(TEXTURE_PATH_DIE_EFFECT);
-	aniLib->AddAnimation(DIE_EFFECT_ANIMATION, Animation(tex, DIE_EFFECT_SPRITE_WIDTH, DIE_EFFECT_SPRITE_HEIGHT, 2, 2));
 
 	scenelink.push_back((LPWSTR)PATH_SCENE_0);
 }

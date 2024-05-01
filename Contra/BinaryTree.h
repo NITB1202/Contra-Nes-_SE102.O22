@@ -44,8 +44,9 @@ public:
 	void Remove(TreeNode* node, int ID, LPGAMEOBJECT object);
 	void GetObjectInTree(TreeNode* node, RECT bound, map<int, LPGAMEOBJECT>& objectList);
 	void RemoveObjectInTree(int ID, LPGAMEOBJECT object);
+	void ClearTree(TreeNode* root);
 
 	map<int, LPGAMEOBJECT> GetObjectInBound(RECT bound);
-
+	~BinaryTree();
 };
 typedef BinaryTree* LPBINARYTREE;

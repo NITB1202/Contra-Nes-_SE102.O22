@@ -141,18 +141,31 @@ void TurretBullet::Update(DWORD dt)
 		vy = (float)4 / 9 * vx;
 		break;
 	}
-	case SHOOT_SNIPER_UP:
+	case SHOOT_SNIPER_UP_LEFT:
 	{
 		vx = -spd;
 		vy = sqrt(4 / 3 * vx * vx);
 		break;
 	}
-	case SHOOT_SNIPER_DOWN:
+	case SHOOT_SNIPER_DOWN_LEFT:
 	{
 		vx = -spd;
 		vy = -sqrt(4 / 3 * vx * vx);
 		break;
 	}
+	case SHOOT_SNIPER_UP_RIGHT:
+	{
+		vx = spd;
+		vy = sqrt(4 / 3 * vx * vx);
+		break;
+	}
+	case SHOOT_SNIPER_DOWN_RIGHT:
+	{
+		vx = spd;
+		vy = -sqrt(4 / 3 * vx * vx);
+		break;
+	}
+
 	}
 	x += vx * dt;
 	y += vy * dt;

@@ -1,9 +1,9 @@
 image\\Enemy\\Sniper\\HiddenSniper.png
-4000 24 43 0
+4000 24 43 1
 image\\Enemy\\Sniper\\HiddenSniper_Start.png
-4001 24 43 0
+4001 24 43 1
 image\\Enemy\\Sniper\\HiddenSniper_End.png
-4002 24 43 0
+4002 24 43 1
 image\\Enemy\\Sniper\\Sniper_Left_Base.png
 4003 24 43 0
 4006 24 43 1

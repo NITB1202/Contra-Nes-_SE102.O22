@@ -148,6 +148,7 @@
     <ClCompile Include="Animation.cpp" />
     <ClCompile Include="AnimationHandler.cpp" />
     <ClCompile Include="AnimationLib.cpp" />
+    <ClCompile Include="AutoDestroyBridge.cpp" />
     <ClCompile Include="BinaryTree.cpp" />
     <ClCompile Include="Bullet.cpp" />
     <ClCompile Include="Camera.cpp" />
@@ -171,6 +172,7 @@
   <ItemGroup>
     <ClInclude Include="AnimationHandler.h" />
     <ClInclude Include="AnimationLib.h" />
+    <ClInclude Include="AutoDestroyBridge.h" />
     <ClInclude Include="BinaryTree.h" />
     <ClInclude Include="Bullet.h" />
     <ClInclude Include="Cannon.h" />

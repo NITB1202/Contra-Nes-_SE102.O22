@@ -16,6 +16,7 @@ private:
 
 	DWORD lastSpawnTime = -1;
 
+	string objectPath;
 	int playerState;
 	float playerStartX, playerStartY;
 	float cameraStartX, cameraStartY;

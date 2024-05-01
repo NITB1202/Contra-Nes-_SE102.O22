@@ -194,7 +194,6 @@ void Player::GetRespawnPoint(float& xRespawn, float& yRespawn)
 void Player::Reset()
 {
 	hp = MAX_HP + 1;
-	GetRespawnPoint(x, y);
 	UntouchableStart();
 }
 

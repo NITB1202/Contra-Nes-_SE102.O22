@@ -22,10 +22,9 @@ Scene::Scene(LPWSTR path)
 
 	background = new Map(MyUtility::ConvertStringToLPWSTR(mapPath), matrixPath);
 
-	string objPath;
-	getline(file, objPath);
+	getline(file, objectPath);
 
-	objectTree = new BinaryTree(objPath, background->GetWidth(), background->GetHeight());
+	objectTree = new BinaryTree(objectPath, background->GetWidth(), background->GetHeight());
 
 	string pos;
 	getline(file, pos);
@@ -38,8 +37,6 @@ Scene::Scene(LPWSTR path)
 	ss >> cameraStartY;
 
 	file.close();
-
-	//BeginScene();
 }
 
 void Scene::BeginScene()
@@ -47,6 +44,8 @@ void Scene::BeginScene()
 	Player::GetInstance()->SetPosition(playerStartX, playerStartY);
 	Player::GetInstance()->SetBeginState(playerState);
 	Camera::GetInstance()->setPosCamera(cameraStartX, cameraStartY);
+	delete objectTree;
+	objectTree = new BinaryTree(objectPath, background->GetWidth(), background->GetHeight());
 
 }
 
@@ -93,24 +92,24 @@ void Scene :: Update(DWORD dt)
 		objectOnScreen.push_back(object);
 	}
 
-	if (cameraBound.right == background->GetWidth())
-		return;
-
-	if (GetTickCount64() - lastSpawnTime > SPAWN_SEPARATION && randomSpawnEnemy.size() < MAX_SPAWN_ENEMY)
+	if (cameraBound.right != background->GetWidth())
 	{
-		if (spawnPoint.size() > 0)
+		if (GetTickCount64() - lastSpawnTime > SPAWN_SEPARATION && randomSpawnEnemy.size() < MAX_SPAWN_ENEMY)
 		{
-			int numOfEnemy = rand() % 2;
-			pair<float, float> spawnSpot = spawnPoint[rand() % spawnPoint.size()];
-			int direction = spawnSpot.first < cameraBound.left ? 1 : -1;
-
-			if (numOfEnemy > 0)
+			if (spawnPoint.size() > 0)
 			{
-				Runman* runman = new Runman(direction);
-				runman->SetSpeed(direction * RUNMAN_START_VX, 0);
-				runman->SetPosition(spawnSpot.first, spawnSpot.second);
-				randomSpawnEnemy.push_back(runman);
-				lastSpawnTime = GetTickCount64();
+				int numOfEnemy = rand() % 2;
+				pair<float, float> spawnSpot = spawnPoint[rand() % spawnPoint.size()];
+				int direction = spawnSpot.first < cameraBound.left ? 1 : -1;
+
+				if (numOfEnemy > 0)
+				{
+					Runman* runman = new Runman(direction);
+					runman->SetSpeed(direction * RUNMAN_START_VX, 0);
+					runman->SetPosition(spawnSpot.first, spawnSpot.second);
+					randomSpawnEnemy.push_back(runman);
+					lastSpawnTime = GetTickCount64();
+				}
 			}
 		}
 	}

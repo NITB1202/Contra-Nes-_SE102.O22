@@ -8,6 +8,7 @@ enum objectClass {
 	GROUND,
 	BULLET,
 	WATER,
+	OTHER
 };
 
 class GameObject
@@ -57,7 +58,7 @@ public:
 	int GetHp() { return hp; }
 
 	AnimationHandler* GetAnimationHandler() { return AniHandler; }
-	RECT GetCollisionBound() {
+	virtual RECT GetCollisionBound() {
 		RECT rect;
 		rect.top = y;
 		rect.left = x;

@@ -65,7 +65,7 @@ void Turret::Update(DWORD dt)
 	int px = player->GetX();
 	int py = player->GetY();
 
-	if (dieAnimationStart != -1 && GetTickCount64() - dieAnimationStart > DIE_ANIMATION_DURATION)
+	if (dieAnimationStart != -1 && GetTickCount64() - dieAnimationStart > EXPLODE_EFFECT_DURATION)
 	{
 		Delete();
 		return;
@@ -164,7 +164,7 @@ void Turret::Render()
 
 	if (isDeleted) return;
 	if (inDieAnimation)
-		AnimationID = DIE_EFFECT_ANIMATION;
+		AnimationID = EXPLODE_EFFECT_ANIMATION;
 	AniHandler->Render(AnimationID, x, y);
 }
 

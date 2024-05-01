@@ -24,7 +24,7 @@ void Cannon::Render()
 	Cgun->Render();
 
 	if (inDieAnimation)
-		AnimationID = DIE_EFFECT_ANIMATION;
+		AnimationID = EXPLODE_EFFECT_ANIMATION;
 	AniHandler->Render(AnimationID, x, y);
 }
 
@@ -36,7 +36,7 @@ void Cannon::Update(DWORD dt)
 	int px = player->GetX();
 	int py = player->GetY();
 
-	if (dieAnimationStart != -1 && GetTickCount64() - dieAnimationStart > DIE_ANIMATION_DURATION)
+	if (dieAnimationStart != -1 && GetTickCount64() - dieAnimationStart > EXPLODE_EFFECT_DURATION)
 	{
 		Delete();
 		return;
@@ -92,15 +92,15 @@ int Cannon::Angle(int x1, int y1, int x2, int y2)
 {
 	int angle = 180;
 	double MinDistance = (x1 + 15 - x2) * (x1 + 15 - x2) + (y1 - 15 - y2) * (y1 - 15 - y2);
-	if (abs(y1 - y2) < 50 && x1 > x2)
+	if ((abs(y1 - y2) < 50 || (y1 > y2)) && x1 > x2)
 		return angle;
 	if ((x1 - x2) * (x1 - x2) + (y1 - 5 - y2) * (y1 - 5 - y2) < MinDistance)
 	{
-		angle = 150; MinDistance = (x1 - x2) * (x1  - x2) + (y1 - 5 - y2) * (y1 - 5 - y2);
+		angle = 150; MinDistance = (x1 - x2) * (x1 - x2) + (y1 - 5 - y2) * (y1 - 5 - y2);
 	}
-	if ((x1 +5 - x2) * (x1 +5 - x2) + (y1  - y2) * (y1 - y2) < MinDistance)
+	if ((x1 + 5 - x2) * (x1 + 5 - x2) + (y1 - y2) * (y1 - y2) < MinDistance)
 	{
-		angle = 120; MinDistance = (x1 +5 - x2) * (x1 +5 - x2) + (y1 - y2) * (y1 - y2);
+		angle = 120; MinDistance = (x1 + 5 - x2) * (x1 + 5 - x2) + (y1 - y2) * (y1 - y2);
 	}
 	return angle;
 }

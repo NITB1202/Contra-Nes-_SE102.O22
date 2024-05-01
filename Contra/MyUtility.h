@@ -5,6 +5,7 @@
 #include "Ground.h"
 #include "Cannon.h"
 #include "Sniper.h"
+#include "AutoDestroyBridge.h"
 #include <string>
 #include <Windows.h>
 
@@ -15,6 +16,7 @@
 #define CANNON_OBJECT 1005
 #define GROUND_OBJECT 0
 #define WATER_OBJECT 1
+#define AUTO_DESTROY_BRIDGE_OBJECT 2
 
 class MyUtility
 {
@@ -35,6 +37,9 @@ public:
 			break;
 		case SNIPER_OBJECT:
 			obj = new Sniper();
+			break;
+		case AUTO_DESTROY_BRIDGE_OBJECT:
+			obj = new AutoDestroyBridge();
 			break;
 		case CANNON_OBJECT:
 			obj = new Cannon();
