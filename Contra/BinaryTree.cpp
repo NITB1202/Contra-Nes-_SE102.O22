@@ -128,7 +128,12 @@ void BinaryTree::Remove(TreeNode* node, int ID, LPGAMEOBJECT object)
 		Remove(node->right, ID, object);
 }
 
-void BinaryTree::RemoveObjectInTree(int ID, LPGAMEOBJECT object)
+void BinaryTree::InsertObject(int ID, LPGAMEOBJECT object)
+{
+	Insert(root, ID, object);
+}
+
+void BinaryTree::RemoveObject(int ID, LPGAMEOBJECT object)
 {
 	Remove(root, ID, object);
 }

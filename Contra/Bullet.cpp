@@ -175,3 +175,33 @@ void TurretBullet::Render()
 {
 	AniHandler->Render(TURRET_BULLET, x, y);
 }
+
+void BossBullet::Update(DWORD dt)
+{
+	if (inExplodeAnimation && GetTickCount64() - explodeStart > EXPLODE_EFFECT_DURATION)
+	{
+		Delete();
+		return;
+	}
+
+	if (inExplodeAnimation) return;
+
+	vy += -0.5 * GRAVITY * dt;
+
+	x += vx * dt;
+	y += vy * dt;
+
+	if (!inExplodeAnimation && y < 80)
+	{
+		inExplodeAnimation = true;
+		explodeStart = GetTickCount64();
+	}
+}
+
+void BossBullet::Render()
+{
+	if (inExplodeAnimation)
+		AniHandler->Render(EXPLODE_EFFECT_ANIMATION, x, y);
+	else
+		AniHandler->Render(BOSS_BULLET, x, y);
+}

@@ -26,7 +26,7 @@ void Player::Update(DWORD dt)
 
 	currentState->UpdateStatus();
 
-	vy += -0.5*PLAYER_GRAVITY * dt;
+	vy += -0.5*GRAVITY * dt;
 
 	//basic collision
 	Camera* camera = Camera::GetInstance();

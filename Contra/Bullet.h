@@ -46,3 +46,21 @@ public:
 	void Update(DWORD dt);
 	void Render();
 };
+
+class BossBullet : public Bullet
+{
+private:
+	bool inExplodeAnimation = false;
+	DWORD explodeStart = -1;
+public:
+	BossBullet(float x, float y, int direction, float spd) : Bullet(x, y, direction, spd)
+	{
+		baseType = ENEMY;
+		width = 16;
+		height = 16;
+		vx = -spd;
+		vy = 0.2;
+	}
+	void Update(DWORD dt);
+	void Render();
+};

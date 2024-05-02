@@ -6,6 +6,7 @@
 #include "Cannon.h"
 #include "Sniper.h"
 #include "AutoDestroyBridge.h"
+#include "BossStage1.h"
 #include <string>
 #include <Windows.h>
 
@@ -14,9 +15,12 @@
 #define TURRET_OBJECT 1003
 #define SNIPER_OBJECT 1004
 #define CANNON_OBJECT 1005
+
 #define GROUND_OBJECT 0
 #define WATER_OBJECT 1
 #define AUTO_DESTROY_BRIDGE_OBJECT 2
+
+#define BOSS_STAGE1_OBJECT 10
 
 class MyUtility
 {
@@ -43,6 +47,9 @@ public:
 			break;
 		case CANNON_OBJECT:
 			obj = new Cannon();
+			break;
+		case BOSS_STAGE1_OBJECT:
+			obj = new BossStage1();
 			break;
 		default:
 			obj = new Ground();

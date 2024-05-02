@@ -17,8 +17,8 @@ image\\Player\\bill_downright.png
 310 21 36 0
 311 21 36 1
 image\\Player\\bill_jump.png
-312 19 20 0
-313 19 20 1
+312 21 20 0
+313 21 20 1
 image\\Player\\bill_die.png
 314 32 23 0
 315 32 23 1

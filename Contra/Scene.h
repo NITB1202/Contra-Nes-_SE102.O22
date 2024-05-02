@@ -21,7 +21,7 @@ private:
 	float playerStartX, playerStartY;
 	float cameraStartX, cameraStartY;
 
-	float bossAreaX, bossAreaY;
+	RECT bossArea;
 
 public:
 

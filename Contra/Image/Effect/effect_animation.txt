@@ -1,4 +1,4 @@
 image\\Effect\\die_effect.png
 500 32 32 0
-image\\Effect\\explosion_effect.png
-501 30 30 0
+image\\Effect\\explode_effect.png
+501 32 30 0

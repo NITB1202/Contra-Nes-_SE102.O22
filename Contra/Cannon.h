@@ -15,7 +15,7 @@ class Cannon : public GameObject
 public:
 	bool inDieAnimation = false;
 	int dieAnimationStart = -1;
-	int preState = 0, openDelay = 0, hp = 20;
+	int preState = 0, openDelay = 0, hp = 10;
 	bool IsCollidable() { return !inDieAnimation; }
 	Gun* Cgun;
 	void OnCollisionWith(LPCOLLISIONEVENT e);

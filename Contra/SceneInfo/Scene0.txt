@@ -1,4 +1,5 @@
 Map\\Map1\\Map1TileSet.png
 Map\\Map1\\Map1Matrix.txt
 Map\\Map1\\Map1ObjList.txt
-100 400 1 0 401
+100 400 1 0 401 5820 6720 448 0
+playerStartX playerStartY playerState cameraX cameraY bossL bossR boss T bossB

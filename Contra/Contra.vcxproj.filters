@@ -84,6 +84,9 @@
     <ClCompile Include="AutoDestroyBridge.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="BossStage1.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h">
@@ -165,6 +168,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="AutoDestroyBridge.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="BossStage1.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

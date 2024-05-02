@@ -71,6 +71,7 @@ void Runman::Render()
 
 void Runman::OnNoCollision(DWORD dt)
 {
+	x += vx * dt;
 	y += vy * dt;
 }
 

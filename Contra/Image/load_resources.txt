@@ -5,3 +5,4 @@ image\\Enemy\\cannon_animation.txt
 image\\Enemy\\sniper_animation.txt
 image\\Asset\\bridge_animation.txt
 image\\Effect\\effect_animation.txt
+image\\Enemy\\boss1_animation.txt

@@ -96,6 +96,7 @@
 
 #define NORMAL_BULLET 400
 #define TURRET_BULLET 401
+#define BOSS_BULLET 402
 
 //asset define
 #define TEXTURE_PATH_LIFE L"image\\Asset\\life.png"
@@ -119,6 +120,13 @@
 #define DIE_EFFECT_DURATION 300
 #define EXPLODE_EFFECT_DURATION 300
 
+//boss define
+#define BOSS_GUN_LEFT_NORMAL_ANIMATION 601
+#define BOSS_GUN_RIGHT_NORMAL_ANIMATION 602
+#define BOSS_GUN_LEFT_DESTROY_ANIMATION 603
+#define BOSS_GUN_RIGHT_DESTROY_ANIMATION 604
+#define BOSS_DOOR_NORMAL_ANIMATION 605
+#define BOSS_DOOR_DESTROY_ANIMATION 606
 
 // List of path scene
 #define MENU_PATH L"SceneInfo\\Menu.txt"
@@ -127,6 +135,8 @@
 #define GAMEOVER_MENU 0
 #define INTRO_MENU 1
 
+
+#define GRAVITY 0.001f
 
 
 enum Direction {

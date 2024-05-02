@@ -30,20 +30,6 @@ int RunmanFalling::GetAnimationID()
 	return RUNMAN_JUMP_LEFT_ANIMATION;
 }
 
-void RunmanJumping::UpdateStatus(float& vx, float &vy, bool& isDeleted)
-{
-	vx = RUNMAN_START_VX * direction;
-	vy = RUNMAN_START_VY;
-}
-
-int RunmanJumping::GetAnimationID()
-{
-	if (direction == RIGHT)
-		return RUNMAN_JUMP_RIGHT_ANIMATION;
-
-	return RUNMAN_JUMP_LEFT_ANIMATION;
-}
-
 void RunmanDieByShooting::UpdateStatus(float& vx, float& vy, bool& isDeleted)
 {
 	if (GetTickCount64() - dieAnimationStart > RUNMAN_DIE_BY_GUN_DURATION)

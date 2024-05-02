@@ -14,6 +14,7 @@ public:
 	Gun(float spd) { this->spd = spd; }
 	void Charge(float bulletX, float bulletY, int direction, int bulletType = 1);
 	void SetChargeTime(int chargeTime) { this->chargeTime = chargeTime; }
+	void SetSpeed(float spd) { this->spd = spd;}
 	void Update(DWORD dt);
 	void Render();
 };

@@ -36,14 +36,6 @@ public:
 	int GetAnimationID();
 };
 
-class RunmanJumping : public RunmanState
-{
-public:
-	RunmanJumping(int direction) : RunmanState(direction) {}
-	void UpdateStatus(float& vx, float& vy, bool& isDeleted);
-	int GetAnimationID();
-};
-
 class RunmanDieByShooting : public RunmanState
 {
 private:

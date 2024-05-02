@@ -123,7 +123,6 @@ public:
 
 #define PLAYER_START_VX 0.15f
 #define PLAYER_START_VY 0.2f
-#define PLAYER_GRAVITY 0.001f
 
 #define PLAYER_WIDTH 26
 #define PLAYER_HEIGHT 60

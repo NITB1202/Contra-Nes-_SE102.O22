@@ -36,6 +36,11 @@ Scene::Scene(LPWSTR path)
 	ss >> cameraStartX;
 	ss >> cameraStartY;
 
+	ss >> bossArea.left;
+	ss >> bossArea.right;
+	ss >> bossArea.top;
+	ss >> bossArea.bottom;
+
 	file.close();
 }
 
@@ -67,7 +72,7 @@ void Scene :: Update(DWORD dt)
 		if (!MyUtility::CheckIntersect(cameraBound, objectCollisionBound) || object->IsDeleted())
 		{
 			if(object->IsDeleted())
-				objectTree->RemoveObjectInTree(it->first, it->second);
+				objectTree->RemoveObject(it->first, it->second);
 
 			continue;
 		}
@@ -92,7 +97,7 @@ void Scene :: Update(DWORD dt)
 		objectOnScreen.push_back(object);
 	}
 
-	if (cameraBound.right != background->GetWidth())
+	if (!MyUtility::CheckIntersect(cameraBound,bossArea)) // Boss area -> don't spawn enemy
 	{
 		if (GetTickCount64() - lastSpawnTime > SPAWN_SEPARATION && randomSpawnEnemy.size() < MAX_SPAWN_ENEMY)
 		{

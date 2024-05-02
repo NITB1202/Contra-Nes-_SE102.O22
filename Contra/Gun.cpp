@@ -22,6 +22,9 @@ void Gun::Charge(float bulletX, float bulletY, int direction, int bulletType)
 	case 2:
 		bullet = new TurretBullet(bulletX, bulletY, direction,spd);
 		break;
+	case 3:
+		bullet = new BossBullet(bulletX, bulletY, direction, spd);
+		break;
 	}
 
 	bullets.push_back(bullet);
@@ -33,34 +36,37 @@ void Gun::Update(DWORD dt)
 	{
 		bullets[i]->Update(dt);
 
-		if (bullets[i]->OutOfScreen())
-			bullets[i]->Delete();
-		else
+		if (!bullets[i]->IsDeleted())
 		{
-			if (bullets[i]->GetBaseType() == ENEMY)
-			{
-				Player* player = Player::GetInstance();
-
-				LPCOLLISIONEVENT e = Collision::GetInstance()->SweptAABB(player, bullets[i], dt);
-				if (e != NULL)
-				{
-					player->OnCollisionWith(e);
-					if (!player->IsUntouchable() && !player->IsDying())
-						bullets[i]->Delete();
-					break;
-				}
-			}
+			if (bullets[i]->OutOfScreen())
+				bullets[i]->Delete();
 			else
 			{
-				vector<LPGAMEOBJECT> collidableObjects = Game::GetInstance()->GetCurrentScene()->GetCollidableObject(bullets[i]);
-				for (int j = 0; j < collidableObjects.size(); j++)
+				if (bullets[i]->GetBaseType() == ENEMY)
 				{
-					LPCOLLISIONEVENT e = Collision::GetInstance()->SweptAABB(collidableObjects[j], bullets[i], dt);
-					if (e != NULL && collidableObjects[j]->GetBaseType() == ENEMY)
+					Player* player = Player::GetInstance();
+
+					LPCOLLISIONEVENT e = Collision::GetInstance()->SweptAABB(player, bullets[i], dt);
+					if (e != NULL)
 					{
-						bullets[i]->Delete();
-						collidableObjects[j]->OnCollisionWith(e);
+						player->OnCollisionWith(e);
+						if (!player->IsUntouchable() && !player->IsDying())
+							bullets[i]->Delete();
 						break;
+					}
+				}
+				else
+				{
+					vector<LPGAMEOBJECT> collidableObjects = Game::GetInstance()->GetCurrentScene()->GetCollidableObject(bullets[i]);
+					for (int j = 0; j < collidableObjects.size(); j++)
+					{
+						LPCOLLISIONEVENT e = Collision::GetInstance()->SweptAABB(collidableObjects[j], bullets[i], dt);
+						if (e != NULL && (collidableObjects[j]->GetBaseType() == ENEMY || collidableObjects[j]->GetBaseType() == OTHER))
+						{
+							bullets[i]->Delete();
+							collidableObjects[j]->OnCollisionWith(e);
+							if (bullets[i]->IsDeleted()) break;
+						}
 					}
 				}
 			}
