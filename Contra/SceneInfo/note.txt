@@ -1,0 +1,1 @@
+playerStartX playerStartY playerState cameraX cameraY cameraUpateType bossAreaLeft bossAreaRight bossAreaTop bossAreaBottom portalX portalY

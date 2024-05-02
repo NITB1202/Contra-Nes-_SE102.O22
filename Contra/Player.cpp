@@ -34,9 +34,15 @@ void Player::Update(DWORD dt)
 	if (x < camera->getX())
 		x = camera->getX();
 
+	if (x > camera->getX() + camera->getWidth() - width)
+		x = camera->getX() + camera->getWidth() - width;
+
 	if (y < camera->getY() - camera->getHeight())
 	{
-		GetRespawnPoint(x, y);
+		float xRespawn, yRespawn;
+		GetRespawnPoint(xRespawn, yRespawn);
+		x = xRespawn;
+		y = yRespawn;
 		UntouchableStart();
 	}
 
@@ -94,6 +100,9 @@ void Player::OnCollisionWith(LPCOLLISIONEVENT e)
 
 void Player::OnCollisionWithEnenmy(LPCOLLISIONEVENT e)
 {
+	if (currentState == dynamic_cast<PlayerJumpingState*>(currentState))
+		SetCurrentState(new PlayerFallState(currentState->GetDirection()));
+
 	if (untouchable)
 		return;
 
@@ -160,33 +169,49 @@ void Player::UntouchableStart()
 void Player::GetRespawnPoint(float& xRespawn, float& yRespawn)
 {
 	vector<LPGAMEOBJECT> objectOnScreen = Game::GetInstance()->GetCurrentScene()->GetOnScreenObject();
-	float minDistance = -1;
+	vector<LPGAMEOBJECT> canRespawnObject;
 
 	for (int i = 0; i < objectOnScreen.size(); i++)
 	{
-		if (objectOnScreen[i]->GetBaseType() == GROUND || objectOnScreen[i]->GetBaseType() == WATER)
+		if (objectOnScreen[i]->GetBaseType() == GROUND || objectOnScreen[i]->GetBaseType() == OTHER)
 		{
-			if (currentState->GetDirection() == RIGHT)
+			if (objectOnScreen[i]->GetX() <= x && x + width <= objectOnScreen[i]->GetX() + objectOnScreen[i]->GetWidth())
 			{
-				float endPoint = objectOnScreen[i]->GetX() + objectOnScreen[i]->GetWidth();
-				float distance = x - endPoint;
-				if ((distance >= 0) && (minDistance == -1 || distance < minDistance))
-				{
-					minDistance = distance;
-					xRespawn = endPoint - PLAYER_WIDTH;
-					yRespawn = objectOnScreen[i]->GetY() + PLAYER_HEIGHT;
-				}
+				xRespawn = x;
+				yRespawn = objectOnScreen[i]->GetY() + PLAYER_HEIGHT;
+				return;
 			}
-			else
-			{
-				float distance = objectOnScreen[i]->GetX() - ( x + width);
-				if ((distance >= 0) && (minDistance == -1 || distance < minDistance))
-				{
-					minDistance = distance;
-					xRespawn = objectOnScreen[i]->GetX();
-					yRespawn = objectOnScreen[i]->GetY() + PLAYER_HEIGHT;
-				}
-			}
+			canRespawnObject.push_back(objectOnScreen[i]);
+		}
+	}
+
+	float minDistance = -1;
+
+	for (int i = 0; i < canRespawnObject.size(); i++)
+	{
+		float headDistance = abs(x - canRespawnObject[i]->GetX());
+		float tailDistance = abs(x - (canRespawnObject[i]->GetX() + canRespawnObject[i]->GetWidth()));
+
+		float canRespawnX, canRespawnY, distance;
+
+		if (headDistance <= tailDistance)
+		{
+			canRespawnX = canRespawnObject[i]->GetX();
+			distance = headDistance;
+		}
+		else
+		{
+			canRespawnX = canRespawnObject[i]->GetX() + canRespawnObject[i]->GetWidth() - PLAYER_WIDTH;
+			distance = tailDistance;
+		}
+
+		canRespawnY = canRespawnObject[i]->GetY() + PLAYER_HEIGHT;
+		
+		if (minDistance == -1 || distance < minDistance)
+		{
+			minDistance = distance;
+			xRespawn = canRespawnX;
+			yRespawn = canRespawnY;
 		}
 	}
 }

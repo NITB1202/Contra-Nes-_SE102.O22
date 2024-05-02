@@ -32,6 +32,7 @@ public:
 	void Update(DWORD dt);
 	void Render();
 	void HandlerOption();
+	void Reset() { select = 1; }
 
 	~Menu() { delete animationHandler; }
 };

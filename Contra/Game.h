@@ -16,7 +16,7 @@ using namespace std;
 #define KEYBOARD_BUFFER_SIZE 1024
 #define KEYBOARD_STATE_SIZE 256
 
-#define BACKGROUND_COLOR D3DXCOLOR(0.5f, 0.5f, 0.5f, 0.0f)
+#define BACKGROUND_COLOR D3DXCOLOR(0, 0, 0, 1)
 
 class Game
 {
@@ -65,7 +65,7 @@ public:
 		keyHandler = NULL;
 	}
 	void InitDirect3D(HWND hwnd,HINSTANCE hInstance);
-	void InitScene(vector<LPWSTR> scenelink);
+	void InitScene();
 	void InitMenu();
 
 	// Keyboard related functions 
@@ -75,7 +75,11 @@ public:
 
 	LPTEXTURE LoadTexture(LPCWSTR texturePath);
 	LPSCENE GetCurrentScene() { return scenes[currentScene]; }
-	void SetCurrentMenu(int id) { currentMenu = id;}
+	void SetCurrentMenu(int id) { 
+		currentMenu = id;
+		menus[currentMenu]->Reset();
+	}
+	void SwitchScene(int sceneID) { currentScene = sceneID; }
 	LPMENU GetCurrentMenu() { return menus[currentMenu]; }
 
 	void ClearBackGround() { pD3DDevice->ClearRenderTargetView(pRenderTargetView, BACKGROUND_COLOR); }

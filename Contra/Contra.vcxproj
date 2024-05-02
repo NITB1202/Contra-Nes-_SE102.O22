@@ -163,6 +163,7 @@
     <ClCompile Include="Menu.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="PlayerState.cpp" />
+    <ClCompile Include="Portal.cpp" />
     <ClCompile Include="Runman.cpp" />
     <ClCompile Include="RunmanState.cpp" />
     <ClCompile Include="Scene.cpp" />
@@ -192,6 +193,7 @@
     <ClInclude Include="MyUtility.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="PlayerState.h" />
+    <ClInclude Include="Portal.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="Runman.h" />
     <ClInclude Include="RunmanState.h" />

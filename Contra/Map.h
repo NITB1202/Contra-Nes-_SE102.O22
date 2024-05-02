@@ -30,5 +30,6 @@ public:
 	int GetHeight() { return height; }
 	void Render();
 	void Update();
+	~Map() { delete tilesetImage; }
 };
 typedef Map* LPMAP;

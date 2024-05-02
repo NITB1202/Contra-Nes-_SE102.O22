@@ -5,8 +5,6 @@
 #include <fstream>
 #include <sstream>
 
-vector<LPWSTR> scenelink;
-
 void LoadResource()
 {
 	Game* game = Game::GetInstance();
@@ -76,6 +74,7 @@ void LoadResource()
 	tex = game->LoadTexture(TEXTURE_PATH_CURSOR);
 	aniLib->AddAnimation(CURSOR, Animation(tex, tex->getWidth(), tex->getHeight(), 2, 2));
 
-	scenelink.push_back((LPWSTR)PATH_SCENE_0);
+	tex = game->LoadTexture(TEXTURE_PATH_TEST);
+	aniLib->AddAnimation(TEST, Animation(tex, tex->getWidth(), tex->getHeight()));
 }
 

@@ -1,0 +1,4 @@
+Map\\Map3\\Map3Tileset.png
+Map\\Map3\\Map3Matrix.txt
+Map\\Map3\\Map3ObjList.txt
+112 100 300 1 0 405 2 0 500 4310 4030 6670 120 0

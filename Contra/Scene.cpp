@@ -24,34 +24,52 @@ Scene::Scene(LPWSTR path)
 
 	getline(file, objectPath);
 
-	objectTree = new BinaryTree(objectPath, background->GetWidth(), background->GetHeight());
+	string line;
 
-	string pos;
-	getline(file, pos);
-	stringstream ss(pos);
+	getline(file, line);
+	stringstream ss(line);
+
+	ss >> binaryTreeType;
 
 	ss >> playerStartX;
 	ss >> playerStartY;
 	ss >> playerState;
+
 	ss >> cameraStartX;
 	ss >> cameraStartY;
+	ss >> cameraUpdateType;
 
 	ss >> bossArea.left;
 	ss >> bossArea.right;
 	ss >> bossArea.top;
 	ss >> bossArea.bottom;
 
+	float portalX, portalY, sceneID;
+
+	ss >> portalX;
+	ss >> portalY;
+	ss >> sceneID;
+
+	portal = new Portal();
+	portal->SetPosition(portalX, portalY);
+	portal->SetSceneID(sceneID);
+
 	file.close();
 }
 
 void Scene::BeginScene()
 {
-	Player::GetInstance()->SetPosition(playerStartX, playerStartY);
-	Player::GetInstance()->SetBeginState(playerState);
-	Camera::GetInstance()->setPosCamera(cameraStartX, cameraStartY);
-	delete objectTree;
-	objectTree = new BinaryTree(objectPath, background->GetWidth(), background->GetHeight());
+	Camera* camera = Camera::GetInstance();
+	camera->SetPosCamera(cameraStartX, cameraStartY);
+	camera->SetCameraUpdateType(cameraUpdateType);
 
+	Player* player = Player::GetInstance();
+	player->SetPosition(playerStartX, playerStartY);
+	player->SetBeginState(playerState);
+
+	delete objectTree;
+	objectTree = new BinaryTree(objectPath, background->GetWidth(), background->GetHeight(),binaryTreeType);
+	objectTree->InsertObject(11111, portal);
 }
 
 void Scene :: Update(DWORD dt)
@@ -158,4 +176,17 @@ vector<LPGAMEOBJECT> Scene::GetCollidableObject(LPGAMEOBJECT obj)
 		collidableObject.push_back(randomSpawnEnemy[i]);
 
 	return collidableObject;
+}
+
+Scene::~Scene()
+{
+	delete background;
+	delete objectTree;
+	delete portal;
+
+	for (int i = 0; i < objectOnScreen.size(); i++)
+		delete objectOnScreen[i];
+	
+	for (int i = 0; i < randomSpawnEnemy.size(); i++)
+		delete randomSpawnEnemy[i];
 }

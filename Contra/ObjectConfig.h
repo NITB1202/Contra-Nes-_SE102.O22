@@ -130,14 +130,16 @@
 
 // List of path scene
 #define MENU_PATH L"SceneInfo\\Menu.txt"
-#define PATH_SCENE_0 L"SceneInfo\\Scene0.txt"
+#define SCENE_PATH L"SceneInfo\\Scene.txt"
 
 #define GAMEOVER_MENU 0
 #define INTRO_MENU 1
 
-
 #define GRAVITY 0.001f
 
+#define TEXTURE_PATH_TEST L"image\\Asset\\test.png"
+
+#define TEST 1111
 
 enum Direction {
 	LEFT = -1,

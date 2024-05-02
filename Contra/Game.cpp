@@ -1,4 +1,6 @@
 #include "game.h"
+#include "MyUtility.h"
+
 #include <fstream>
 #include <sstream>
 
@@ -237,16 +239,28 @@ void Game::InitMenu()
 		LPMENU menu = new Menu(menuX, menuY, option, optionHeight,backgroundID);
 		menus.push_back(menu);
 	}
+
+	menuFile.close();
 }
 
-void Game :: InitScene(vector<LPWSTR> scenelink)
+void Game :: InitScene()
 {
-	for (int i = 0; i < scenelink.size(); i++)
+	ifstream sceneFile(SCENE_PATH);
+
+	if (!sceneFile.is_open())
+		return;
+
+	string line;
+
+	while (getline(sceneFile, line))
 	{
-		LPSCENE temp = new Scene(scenelink[i]);
-		scenes.push_back(temp);
+		LPSCENE scene = new Scene(MyUtility::ConvertStringToLPWSTR(line));
+		scenes.push_back(scene);
 	}
+
+	sceneFile.close();
 }
+
 void Game::DrawInScreenCoord(float x, float y, LPTEXTURE tex, float scaleX, float scaleY, int flipHorizontal, RECT* rect)
 {
 
@@ -440,7 +454,7 @@ void Game::Update(DWORD dt)
 	{
 		scenes[currentScene]->Update(dt);
 		player->Update(dt);
-		camera->UpdateByX(dt);
+		camera->Update(dt);
 	}
 }
 
