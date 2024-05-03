@@ -79,6 +79,7 @@ void Sniper::Update(DWORD dt)
 					Sgun->Charge(GetX(), GetY() - 8, SHOOT_LEFT, 2);
 					Sgun->Update(dt);
 				}
+				
 			}
 		}
 		else
@@ -87,7 +88,7 @@ void Sniper::Update(DWORD dt)
 
 		}
 	}
-	else { // Non-hidden Sniper *TODO: code cho con sniper xoay huong khac
+	else if (getState() == NOHIDDENOFF) { // Non-hidden Sniper *TODO: code cho con sniper xoay huong khac
 
 		this->AnimationID = SNIPER_LEFT_LOW_ANIMATION;
 		int angle = Angle(this->x, this->y, px, py);
@@ -125,6 +126,15 @@ void Sniper::Update(DWORD dt)
 			break;
 		}
 	}
+	else { // Water ambush
+		this->AnimationID = SNIPER_WATER_OFF;
+		if ((this->y > py && this->y - py < 300) || abs(this->x - py) < 32)
+		{
+			return;
+		}
+		this->AnimationID = SNIPER_WATER_ON;
+		Sgun->Charge(GetX() + 16, GetY(), SHOOT_TOP, 2);
+	}
 }
 
 void Sniper::OnCollisionWith(LPCOLLISIONEVENT e)
@@ -135,7 +145,9 @@ void Sniper::OnCollisionWith(LPCOLLISIONEVENT e)
 
 void Sniper::OnColllisionWithBullet(LPCOLLISIONEVENT e)
 {
-	hp--;
+	Player* player = Player::GetInstance();
+	int dmg = player->GetGunDMG();
+	hp = hp - dmg;
 	if (hp <= 0 && !inDieAnimation)
 	{
 		inDieAnimation = true;

@@ -65,6 +65,63 @@ void NormalBullet::Render()
 	AniHandler->Render(NORMAL_BULLET, x, y);
 }
 
+void BigBullet::Update(DWORD dt)
+{
+	switch (shootingDirection)
+	{
+	case SHOOT_RIGHT:
+	{
+		vx = spd;
+		vy = 0;
+		break;
+	}
+	case SHOOT_LEFT:
+	{
+		vx = -spd;
+		vy = 0;
+		break;
+	}
+	case SHOOT_TOP:
+	{
+		vx = 0;
+		vy = spd;
+		break;
+	}
+	case SHOOT_TOPRIGHT:
+	{
+		vx = spd;
+		vy = 0.5 * spd;
+		break;
+	}
+	case SHOOT_TOPLEFT:
+	{
+		vx = -spd;
+		vy = 0.5 * spd;
+		break;
+	}
+	case SHOOT_DOWNRIGHT:
+	{
+		vx = spd;
+		vy = -0.5 * spd;
+		break;
+	}
+	case SHOOT_DOWNLEFT:
+	{
+		vx = -spd;
+		vy = -0.5 * spd;
+		break;
+	}
+	}
+
+	x += vx * dt;
+	y += vy * dt;
+}
+
+void BigBullet::Render()
+{
+	AniHandler->Render(BIG_BULLET, x, y);
+}
+
 void TurretBullet::Update(DWORD dt)
 {
 	switch (shootingDirection)

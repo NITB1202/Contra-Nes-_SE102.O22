@@ -8,6 +8,7 @@ enum objectClass {
 	GROUND,
 	BULLET,
 	WATER,
+	ITEM,
 	OTHER
 };
 
@@ -54,6 +55,7 @@ public:
 	int GetWidth() { return width; }
 	int GetHeight() { return height; }
 	int GetBaseType() { return baseType; }
+	int GetState() { return state; }
 	void GetSpeed(float& vx, float& vy) { vx = this->vx; vy = this->vy; }
 	int GetHp() { return hp; }
 

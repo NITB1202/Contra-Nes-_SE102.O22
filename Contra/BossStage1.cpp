@@ -45,7 +45,9 @@ void BossGun::OnCollisionWith(LPCOLLISIONEVENT e)
 {
 	if (e->desObject->GetBaseType() == BULLET)
 	{
-		hp--;
+		Player* player = Player::GetInstance();
+		int dmg = player->GetGunDMG();
+		hp = hp - dmg;
 		if (hp <= 0 && !inExplodeAnimation && !isDestroy)
 		{
 			inExplodeAnimation = true;
@@ -91,7 +93,9 @@ void BossDoor::OnCollisionWith(LPCOLLISIONEVENT e)
 {
 	if (e->desObject->GetBaseType() == BULLET)
 	{
-		hp--;
+		Player* player = Player::GetInstance();
+		int dmg = player->GetGunDMG();
+		hp = hp - dmg;
 		if (hp <= 0 && !inExplodeAnimation)
 		{
 			inExplodeAnimation = true;

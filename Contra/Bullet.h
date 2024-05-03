@@ -34,6 +34,18 @@ public:
 	void Render();
 };
 
+class BigBullet : public Bullet
+{
+public:
+	BigBullet(float x, float y, int direction, float spd) : Bullet(x, y, direction, spd)
+	{
+		width = 16;
+		height = 16;
+	}
+	void Update(DWORD dt);
+	void Render();
+};
+
 class TurretBullet : public Bullet
 {
 public:

@@ -58,6 +58,7 @@ void LoadResource()
 	tex = game->LoadTexture(TEXTURE_PATH_NORMAL_BULLET);
 	aniLib->AddAnimation(NORMAL_BULLET, Animation(tex,tex->getWidth(), tex->getHeight()));
 	aniLib->AddAnimation(BOSS_BULLET, Animation(tex, tex->getWidth(), tex->getHeight(), 2, 2));
+	aniLib->AddAnimation(BIG_BULLET, Animation(tex, tex->getWidth(), tex->getHeight(), 2, 2));
 
 	tex = game->LoadTexture(TEXTURE_PATH_TURRET_BULLET);
 	aniLib->AddAnimation(TURRET_BULLET, Animation(tex, tex->getWidth(), tex->getHeight()));

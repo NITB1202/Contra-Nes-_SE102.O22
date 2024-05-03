@@ -35,6 +35,11 @@ public:
 	void OnKeyDown(int keyCode);
 	void OnKeyUp(int keyCode);
 
+	void SetGunDMG(int dmg);
+	int GetGunDMG();
+	void SetBulletType(int bulletType);
+	void GainHP() { hp=hp+3; }
+
 	void SetBeginState(int stage);
 	void SetCurrentState(PlayerState* newState);
 	PlayerState* GetCurrentState() { return currentState; }
@@ -51,6 +56,7 @@ public:
 	void OnNoCollision(DWORD dt);
 	void OnCollisionWith(LPCOLLISIONEVENT e);
 	void OnCollisionWithEnenmy(LPCOLLISIONEVENT e);
+	void OnCollisionWithItem(LPCOLLISIONEVENT e);
 
 	void UntouchableStart();
 	void GetRespawnPoint(float& xRespawn, float& yRespawn);

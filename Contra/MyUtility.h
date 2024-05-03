@@ -7,6 +7,7 @@
 #include "Sniper.h"
 #include "AutoDestroyBridge.h"
 #include "BossStage1.h"
+#include "Buff.h"
 #include <string>
 #include <Windows.h>
 
@@ -15,6 +16,7 @@
 #define TURRET_OBJECT 1003
 #define SNIPER_OBJECT 1004
 #define CANNON_OBJECT 1005
+#define BUFF_OBJECT 1006
 
 #define GROUND_OBJECT 0
 #define WATER_OBJECT 1
@@ -50,6 +52,9 @@ public:
 			break;
 		case BOSS_STAGE1_OBJECT:
 			obj = new BossStage1();
+			break;
+		case BUFF_OBJECT:
+			obj = new Buff();
 			break;
 		default:
 			obj = new Ground();
