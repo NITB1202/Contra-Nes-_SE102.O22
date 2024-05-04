@@ -11,7 +11,10 @@ void Cannon::OnCollisionWith(LPCOLLISIONEVENT e)
 
 void Cannon::OnColllisionWithBullet(LPCOLLISIONEVENT e)
 {
-	hp--;
+	Player* player = Player::GetInstance();
+	int dmg = player->GetGunDMG();
+	hp = hp - dmg;
+
 	if (hp <= 0 && !inDieAnimation)
 	{
 		inDieAnimation = true;

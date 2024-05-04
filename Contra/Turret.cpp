@@ -176,7 +176,10 @@ void Turret::OnCollisionWith(LPCOLLISIONEVENT e)
 
 void Turret::OnColllisionWithBullet(LPCOLLISIONEVENT e)
 {
-	hp--;
+	Player* player = Player::GetInstance();
+	int dmg = player->GetGunDMG();
+	hp = hp - dmg;
+
 	if (hp <= 0 && !inDieAnimation)
 	{
 		inDieAnimation = true;

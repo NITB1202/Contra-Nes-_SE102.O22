@@ -1,0 +1,10 @@
+image\\Buff\\Buff_Close.png
+5000 32 32 0
+image\\Buff\\Buff_Init.png
+5001 32 32 0
+image\\Buff\\Buff_Open.png
+5002 32 32 0
+image\\Buff\\Buff_Big.png
+5003 24 15 0
+image\\Buff\\Buff_Regen.png
+5004 24 15 0

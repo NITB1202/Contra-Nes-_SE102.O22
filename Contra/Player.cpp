@@ -10,6 +10,12 @@ void Player::SetCurrentState(PlayerState* newState)
 	currentState = newState;
 }
 
+void Player::GainHP()
+{
+	if (hp < MAX_HP)
+		hp++;
+}
+
 void Player::Update(DWORD dt)
 {
 	if (hp <= 0)
@@ -66,7 +72,7 @@ void Player::Update(DWORD dt)
 		if (currentState->GetGunDirection(bulletX, bulletY, gunDir))
 		{
 			if (currentState->CanShoot())
-				gun->Charge(bulletX, bulletY, gunDir);
+				gun->Charge(bulletX, bulletY, gunDir, gun->GetBulletType());
 		}
 	}
 
@@ -82,7 +88,7 @@ void Player::OnNoCollision(DWORD dt)
 
 void Player::OnCollisionWith(LPCOLLISIONEVENT e)
 {
-	if (e->ny != 0 && e->desObject->IsBlocking() && e->desObject->GetBaseType() != ENEMY)
+	if (e->ny != 0 && e->desObject->IsBlocking() && e->desObject->GetBaseType() != ENEMY && e->desObject->GetBaseType() != ITEM)
 	{
 		vy = 0;
 		if (e->ny < 0) isOnGround = true;
@@ -90,6 +96,9 @@ void Player::OnCollisionWith(LPCOLLISIONEVENT e)
 
 	if (e->nx != 0 && e->desObject->IsBlocking())
 		vx = 0;
+
+	if (e->desObject->GetBaseType() == ITEM)
+		OnCollisionWithItem(e);
 
 	if (e->desObject->GetBaseType() == ENEMY)
 		OnCollisionWithEnenmy(e);
@@ -112,6 +121,24 @@ void Player::OnCollisionWithEnenmy(LPCOLLISIONEVENT e)
 	if (currentState != dynamic_cast<PlayerDieState*>(currentState))
 		SetCurrentState(new PlayerDieState(e->nx));
 }
+
+void Player::OnCollisionWithItem(LPCOLLISIONEVENT e)
+{
+	int temp = e->desObject->GetState();
+	Player* player = Player::GetInstance();
+	switch (temp)
+	{
+	case B_BIG:
+		player->SetGunDMG(5);
+		player->SetBulletType(4);
+		break;
+	case B_REGEN:
+		player->GainHP();
+		break;
+	}
+	e->desObject->SetState(B_EATEN);
+}
+
 
 void Player::Render()
 {

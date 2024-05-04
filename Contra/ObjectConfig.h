@@ -82,6 +82,9 @@
 #define SNIPER_RIGHT_BASE_ANIMATION 4006
 #define SNIPER_RIGHT_HIGH_ANIMATION 4007
 #define SNIPER_RIGHT_LOW_ANIMATION 4008
+#define SNIPER_WATER_OFF 4009
+#define SNIPER_WATER_ON 4010
+
 
 //auto-destroy bridge define
 #define BRIDGE_NORMAL_ANIMATION 200
@@ -97,6 +100,33 @@
 #define NORMAL_BULLET 400
 #define TURRET_BULLET 401
 #define BOSS_BULLET 402
+#define BIG_BULLET 403
+
+//buff define
+#define BUFF_BIG 0
+#define BUFF_REGEN 1
+
+#define BUFF_CLOSE_ANIMATION 5000
+#define BUFF_INIT_ANIMATION 5001
+#define BUFF_OPEN_ANIMATION 5002
+#define BUFF_BIG_ANIMATION 5003
+#define BUFF_REGEN_ANIMATION 5004
+#define BUFF_SUPER_ANIMATION 5005
+
+#define B_EATEN -2
+
+#define B_CLOSE -1
+#define B_INIT 0
+#define B_OPEN 1
+
+#define B_EATABLE 2
+#define B_BIG 3
+#define B_REGEN 4
+
+#define BUFF_HEIGHT 64
+#define BUFF_WIDTH 64
+#define ITEM_HEIGHT 30
+#define ITEM_WIDTH 48
 
 //asset define
 #define TEXTURE_PATH_GAMEOVER_BACKGROUND L"image\\Asset\\GameOver.png"

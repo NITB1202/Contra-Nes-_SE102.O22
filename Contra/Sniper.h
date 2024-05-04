@@ -14,6 +14,8 @@
 #define NOHIDDENOFF 2
 #define NOHIDDENON 3
 #define NOHIDDENACT 4
+#define WHIDDENOFF 5
+#define WHIDDENON 6
 
 class Sniper:public GameObject
 {

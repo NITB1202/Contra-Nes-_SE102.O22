@@ -23,7 +23,7 @@ private:
 	int untouchableStart = -1;
 
 public:
-	Player()	
+	Player()
 	{
 		baseType = PLAYER;
 		hp = MAX_HP;
@@ -34,6 +34,12 @@ public:
 
 	void OnKeyDown(int keyCode);
 	void OnKeyUp(int keyCode);
+
+	void SetGunDMG(int dmg) { gun->SetDMG(dmg); }
+	int GetGunDMG(){ return gun->GetDMG(); }
+	void SetBulletType(int bulletType){ gun->SetBulletType(bulletType); }
+	void GainHP();
+
 
 	void SetBeginState(int stage);
 	void SetCurrentState(PlayerState* newState);
@@ -51,6 +57,7 @@ public:
 	void OnNoCollision(DWORD dt);
 	void OnCollisionWith(LPCOLLISIONEVENT e);
 	void OnCollisionWithEnenmy(LPCOLLISIONEVENT e);
+	void OnCollisionWithItem(LPCOLLISIONEVENT e);
 
 	void UntouchableStart();
 	void GetRespawnPoint(float& xRespawn, float& yRespawn);

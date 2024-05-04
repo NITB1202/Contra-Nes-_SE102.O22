@@ -11,6 +11,7 @@
 #include "BossStage1.h"
 #include "FallRock.h"
 #include "BossStage3.h"
+#include "Buff.h"
 
 #include <string>
 #include <Windows.h>
@@ -22,6 +23,7 @@
 #define FALLROCK_OBJECT 1006
 #define FLYROCK_OBJECT 1007
 #define FIRE_OBJECT 1008
+#define BUFF_OBJECT 1009
 
 #define GROUND_OBJECT 0
 #define WATER_OBJECT 1
@@ -64,6 +66,9 @@ public:
 			break;
 		case FIRE_OBJECT:
 			obj = new Fire();
+			break;
+		case BUFF_OBJECT:
+			obj = new Buff();
 			break;
 		case BOSS_STAGE1_OBJECT:
 			obj = new BossStage1();

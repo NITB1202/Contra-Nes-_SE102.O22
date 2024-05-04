@@ -9,3 +9,4 @@ image\\Effect\\effect_animation.txt
 image\\Enemy\\boss1_animation.txt
 image\\Enemy\\boss2_animation.txt
 image\\Enemy\\environment_animation.txt
+image\\Buff\\buff_animation.txt

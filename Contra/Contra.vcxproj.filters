@@ -105,6 +105,9 @@
     <ClCompile Include="BossState.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Buff.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h">
@@ -207,6 +210,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="BossState.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Buff.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

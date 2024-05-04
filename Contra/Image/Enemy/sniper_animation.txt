@@ -13,3 +13,7 @@ image\\Enemy\\Sniper\\Sniper_Left_High.png
 image\\Enemy\\Sniper\\Sniper_Left_Low.png
 4005 24 43 0
 4008 24 43 1
+image\\Enemy\\Sniper\\WaterSniper_Off.png
+4009 24 43 0
+image\\Enemy\\Sniper\\WaterSniper_On.png
+4010 24 43 0

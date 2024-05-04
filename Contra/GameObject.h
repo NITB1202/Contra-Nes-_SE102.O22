@@ -8,7 +8,8 @@ enum objectClass {
 	GROUND,
 	BULLET,
 	WATER,
-	OTHER
+	OTHER,
+	ITEM
 };
 
 class GameObject
@@ -56,6 +57,7 @@ public:
 	int GetBaseType() { return baseType; }
 	void GetSpeed(float& vx, float& vy) { vx = this->vx; vy = this->vy; }
 	int GetHp() { return hp; }
+	int GetState() { return state; }
 
 	AnimationHandler* GetAnimationHandler() { return AniHandler; }
 	virtual RECT GetCollisionBound() {

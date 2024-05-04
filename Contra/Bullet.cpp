@@ -176,7 +176,7 @@ void TurretBullet::Render()
 	AniHandler->Render(TURRET_BULLET, x, y);
 }
 
-void BossBullet::Update(DWORD dt)
+void BossStage1Bullet::Update(DWORD dt)
 {
 	if (inExplodeAnimation && GetTickCount64() - explodeStart > EXPLODE_EFFECT_DURATION)
 	{
@@ -198,10 +198,67 @@ void BossBullet::Update(DWORD dt)
 	}
 }
 
-void BossBullet::Render()
+void BossStage1Bullet::Render()
 {
 	if (inExplodeAnimation)
 		AniHandler->Render(EXPLODE_EFFECT_ANIMATION, x, y);
 	else
 		AniHandler->Render(BOSS_BULLET, x, y);
+}
+
+void BigBullet::Update(DWORD dt)
+{
+	switch (shootingDirection)
+	{
+	case SHOOT_RIGHT:
+	{
+		vx = spd;
+		vy = 0;
+		break;
+	}
+	case SHOOT_LEFT:
+	{
+		vx = -spd;
+		vy = 0;
+		break;
+	}
+	case SHOOT_TOP:
+	{
+		vx = 0;
+		vy = spd;
+		break;
+	}
+	case SHOOT_TOPRIGHT:
+	{
+		vx = spd;
+		vy = 0.5 * spd;
+		break;
+	}
+	case SHOOT_TOPLEFT:
+	{
+		vx = -spd;
+		vy = 0.5 * spd;
+		break;
+	}
+	case SHOOT_DOWNRIGHT:
+	{
+		vx = spd;
+		vy = -0.5 * spd;
+		break;
+	}
+	case SHOOT_DOWNLEFT:
+	{
+		vx = -spd;
+		vy = -0.5 * spd;
+		break;
+	}
+	}
+
+	x += vx * dt;
+	y += vy * dt;
+}
+
+void BigBullet::Render()
+{
+	AniHandler->Render(BIG_BULLET, x, y);
 }
