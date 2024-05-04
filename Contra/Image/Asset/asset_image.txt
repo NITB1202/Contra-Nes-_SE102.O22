@@ -1,0 +1,6 @@
+image\\Asset\\cursor.png
+452 18 14 0
+image\\Asset\\life.png
+450 14 21 0
+image\\Asset\\flying_rock.png
+454 32 31 0

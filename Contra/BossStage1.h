@@ -29,6 +29,7 @@ public:
 	void Render();
 
 	void OnCollisionWith(LPCOLLISIONEVENT e);
+	~BossGun() { delete gun; }
 };
 
 class BossDoor :public GameObject

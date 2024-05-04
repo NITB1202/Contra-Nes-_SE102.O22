@@ -1,10 +1,10 @@
-image\\Asset\\bridge_normal.png
+image\\Asset\\bridge\\bridge_normal.png
 200 128 32 0
-image\\Asset\\bridge_destroy1.png
+image\\Asset\\bridge\\bridge_destroy1.png
 201 128 32 0
-image\\Asset\\bridge_destroy2.png
+image\\Asset\\bridge\\bridge_destroy2.png
 202 128 32 0
-image\\Asset\\bridge_destroy3.png
+image\\Asset\\bridge\\bridge_destroy3.png
 203 128 32 0
-image\\Asset\\bridge_destroy4.png
+image\\Asset\\bridge\\bridge_destroy4.png
 204 128 32 0

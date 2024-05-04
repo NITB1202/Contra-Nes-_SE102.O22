@@ -20,7 +20,7 @@ private:
 	bool untouchable = false;
 	bool isUnderWater = false;
 
-	int untouchableStartTime = -1;
+	int untouchableStart = -1;
 
 public:
 	Player()	

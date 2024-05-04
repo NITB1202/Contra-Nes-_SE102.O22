@@ -1,3 +1,4 @@
+image\\Asset\\asset_image.txt
 image\\Player\\player_animation.txt
 image\\Enemy\\runman_animation.txt
 image\\Enemy\\turret_animation.txt
@@ -6,3 +7,5 @@ image\\Enemy\\sniper_animation.txt
 image\\Asset\\bridge_animation.txt
 image\\Effect\\effect_animation.txt
 image\\Enemy\\boss1_animation.txt
+image\\Enemy\\boss2_animation.txt
+image\\Enemy\\environment_animation.txt

@@ -1,0 +1,14 @@
+image\\Enemy\\Boss2\\boss2_appear.png
+607 256 208 0
+image\\Enemy\\Boss2\\boss2_close.png
+608 256 208 0
+image\\Enemy\\Boss2\\boss2_die.png
+609 256 208 0
+image\\Enemy\\Boss2\\boss2_open.png
+610 256 208 0
+image\\Enemy\\Boss2\\boss2_hand.png
+611 16 16 0
+image\\Enemy\\Boss2\\boss2_hand_top.png
+612 16 16 0
+image\\Enemy\\Boss2\\boss2_open_stop.png
+613 256 208 0

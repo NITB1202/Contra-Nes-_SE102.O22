@@ -1,0 +1,4 @@
+image\\Enemy\\Environment\\rock.png
+650 29 27 0
+image\\Enemy\\Environment\\fire.png
+651 16 16 0

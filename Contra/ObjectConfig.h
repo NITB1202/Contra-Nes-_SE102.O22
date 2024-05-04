@@ -99,9 +99,7 @@
 #define BOSS_BULLET 402
 
 //asset define
-#define TEXTURE_PATH_LIFE L"image\\Asset\\life.png"
 #define TEXTURE_PATH_GAMEOVER_BACKGROUND L"image\\Asset\\GameOver.png"
-#define TEXTURE_PATH_CURSOR L"image\\Asset\\cursor.png"
 #define TEXTURE_PATH_INTRO_BACKGROUND L"image\\Asset\\intro.png"
 
 #define LIFE_ASSET_WIDTH 28
@@ -110,7 +108,7 @@
 #define GAMEOVER_BACKGROUND 451
 #define CURSOR 452
 #define INTRO_BACKGROUND 453
-
+#define FLYING_ROCK 454
 
 //effect define
 #define DIE_EFFECT_ANIMATION 500
@@ -128,7 +126,19 @@
 #define BOSS_DOOR_NORMAL_ANIMATION 605
 #define BOSS_DOOR_DESTROY_ANIMATION 606
 
-// List of path scene
+#define BOSS_APPEAR_ANIMATION 607
+#define BOSS_CLOSE_ANIMATION 608
+#define BOOS_DIE_ANIMATION 609
+#define BOSS_OPEN_ANIMATION 610
+#define BOSS_HAND 611
+#define BOSS_HAND_TOP 612
+#define BOSS_OPEN_STOP_ANIMATION 613
+
+//environment define
+#define ROCK_ANIMATION 650
+#define FIRE_ANIMATION 651
+
+// List of scene & menu
 #define MENU_PATH L"SceneInfo\\Menu.txt"
 #define SCENE_PATH L"SceneInfo\\Scene.txt"
 

@@ -5,22 +5,30 @@
 #include "Ground.h"
 #include "Cannon.h"
 #include "Sniper.h"
+#include "FlyRock.h"
 #include "AutoDestroyBridge.h"
+#include "Fire.h"
 #include "BossStage1.h"
+#include "FallRock.h"
+#include "BossStage3.h"
+
 #include <string>
 #include <Windows.h>
 
-#define TURRET_OBJECT 1001
 #define SNIPER_OBJECT 1002
 #define TURRET_OBJECT 1003
 #define SNIPER_OBJECT 1004
 #define CANNON_OBJECT 1005
+#define FALLROCK_OBJECT 1006
+#define FLYROCK_OBJECT 1007
+#define FIRE_OBJECT 1008
 
 #define GROUND_OBJECT 0
 #define WATER_OBJECT 1
 #define AUTO_DESTROY_BRIDGE_OBJECT 2
 
 #define BOSS_STAGE1_OBJECT 10
+#define BOSS_STAGE3_OBJECT 11
 
 class MyUtility
 {
@@ -48,8 +56,20 @@ public:
 		case CANNON_OBJECT:
 			obj = new Cannon();
 			break;
+		case FALLROCK_OBJECT:
+			obj = new FallRock();
+			break;
+		case FLYROCK_OBJECT:
+			obj = new FlyRock();
+			break;
+		case FIRE_OBJECT:
+			obj = new Fire();
+			break;
 		case BOSS_STAGE1_OBJECT:
 			obj = new BossStage1();
+			break;
+		case BOSS_STAGE3_OBJECT:
+			obj = new BossStage3();
 			break;
 		default:
 			obj = new Ground();

@@ -26,7 +26,7 @@ void Player::Update(DWORD dt)
 
 	currentState->UpdateStatus();
 
-	vy += -0.5*GRAVITY * dt;
+	vy += -0.5* GRAVITY * dt;
 
 	//basic collision
 	Camera* camera = Camera::GetInstance();
@@ -49,10 +49,10 @@ void Player::Update(DWORD dt)
 	isOnGround = false;
 	isUnderWater = false;
 
-	if (untouchable && GetTickCount64() - untouchableStartTime > UNTOUCHABLE_TIME)
+	if (untouchable && GetTickCount64() - untouchableStart > UNTOUCHABLE_TIME)
 	{
 		untouchable = false;
-		untouchableStartTime = -1;
+		untouchableStart = -1;
 	}
 
 	vector<LPGAMEOBJECT> colliableObject = Game::GetInstance()->GetCurrentScene()->GetCollidableObject(this);
@@ -93,6 +93,9 @@ void Player::OnCollisionWith(LPCOLLISIONEVENT e)
 
 	if (e->desObject->GetBaseType() == ENEMY)
 		OnCollisionWithEnenmy(e);
+
+	if (e->desObject->GetBaseType() == OTHER)
+		e->desObject->OnCollisionWith(e);
 
 	if (e->desObject->GetBaseType() == WATER)
 		isUnderWater = true;
@@ -163,7 +166,7 @@ void Player::UntouchableStart()
 {
 	hp--;
 	untouchable = true;
-	untouchableStartTime = GetTickCount64();
+	untouchableStart = GetTickCount64();
 }
 
 void Player::GetRespawnPoint(float& xRespawn, float& yRespawn)

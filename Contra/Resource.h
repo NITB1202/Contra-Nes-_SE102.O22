@@ -62,17 +62,11 @@ void LoadResource()
 	tex = game->LoadTexture(TEXTURE_PATH_TURRET_BULLET);
 	aniLib->AddAnimation(TURRET_BULLET, Animation(tex, tex->getWidth(), tex->getHeight()));
 
-	tex = game->LoadTexture(TEXTURE_PATH_LIFE);
-	aniLib->AddAnimation(PLAYER_LIFE, Animation(tex,tex->getWidth(), tex->getHeight(), 2, 2));
-
 	tex = game->LoadTexture(TEXTURE_PATH_GAMEOVER_BACKGROUND);
 	aniLib->AddAnimation(GAMEOVER_BACKGROUND, Animation(tex, tex->getWidth(), tex->getHeight()));
 
 	tex = game->LoadTexture(TEXTURE_PATH_INTRO_BACKGROUND);
 	aniLib->AddAnimation(INTRO_BACKGROUND, Animation(tex, tex->getWidth(), tex->getHeight()));
-
-	tex = game->LoadTexture(TEXTURE_PATH_CURSOR);
-	aniLib->AddAnimation(CURSOR, Animation(tex, tex->getWidth(), tex->getHeight(), 2, 2));
 
 	tex = game->LoadTexture(TEXTURE_PATH_TEST);
 	aniLib->AddAnimation(TEST, Animation(tex, tex->getWidth(), tex->getHeight()));
