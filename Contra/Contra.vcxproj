@@ -212,6 +212,7 @@
     <ClInclude Include="Scene.h" />
     <ClInclude Include="Sniper.h" />
     <ClInclude Include="Texture.h" />
+    <ClInclude Include="Timer.h" />
     <ClInclude Include="Turret.h" />
   </ItemGroup>
   <ItemGroup>

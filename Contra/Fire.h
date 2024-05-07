@@ -13,6 +13,7 @@ public:
 		vx = 0.15f;
 		distance = desDistance;
 	}
+	void SetState(int state);
 	bool IsBlocking() { return false; }
 	void Update(DWORD dt);
 	void Render();

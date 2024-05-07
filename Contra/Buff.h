@@ -6,20 +6,24 @@ class Buff : public GameObject
 {
 public:
 	bool inDieAnimation = false, afterBreak = false;
-	int dieAnimationStart = -1;
+	ULONGLONG dieAnimationStart = -1;
 	int preState = 0, openDelay = 0, hp = 10, buffStat;
-	bool IsCollidable() { return !inDieAnimation; }
-	void OnCollisionWith(LPCOLLISIONEVENT e);
-	void OnColllisionWithBullet(LPCOLLISIONEVENT e);
 
 	Buff()
 	{
-		baseType = ENEMY;
+		baseType = OTHER;
 		width = BUFF_WIDTH;
 		height = BUFF_HEIGHT;
 		buffStat = rand() % 2;
 	};
-	void Render() override;
-	void Update(DWORD dt) override;
+	void Render();
+	void Update(DWORD dt);
+
+	bool IsCollidable() { return !inDieAnimation; }
+	bool IsBlocking() { return baseType !=ITEM; }
+
+	void OnCollisionWith(LPCOLLISIONEVENT e);
+	void OnNoCollision(DWORD dt);
+	void OnColllisionWithBullet(LPCOLLISIONEVENT e);
 };
 

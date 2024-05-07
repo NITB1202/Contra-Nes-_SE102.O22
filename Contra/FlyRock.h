@@ -1,7 +1,7 @@
 #pragma once
-#include "GameObject.h"
+#include "Ground.h"
 
-class FlyRock : public GameObject
+class FlyRock : public Ground
 {
 private:
 	float desDistance = 192;

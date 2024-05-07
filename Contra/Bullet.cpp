@@ -8,64 +8,62 @@ bool Bullet::OutOfScreen()
 	return !MyUtility::CheckIntersect(Camera::GetInstance()->GetBound(), this->GetCollisionBound());
 }
 
-void NormalBullet::Update(DWORD dt)
+void Bullet::SetUp()
 {
 	switch (shootingDirection)
 	{
-		case SHOOT_RIGHT:
-		{
-			vx = spd;
-			vy = 0;
-			break;
-		}
-		case SHOOT_LEFT:
-		{
-			vx = -spd;
-			vy = 0;
-			break;
-		}
-		case SHOOT_TOP:
-		{
-			vx = 0;
-			vy = spd;
-			break;
-		}
-		case SHOOT_TOPRIGHT:
-		{
-			vx = spd;
-			vy = 0.5*spd;
-			break;
-		}
-		case SHOOT_TOPLEFT:
-		{
-			vx = -spd;
-			vy = 0.5*spd;
-			break;
-		}
-		case SHOOT_DOWNRIGHT:
-		{
-			vx = spd;
-			vy = -0.5 * spd;
-			break;
-		}
-		case SHOOT_DOWNLEFT:
-		{
-			vx = -spd;
-			vy = -0.5 * spd;
-			break;
-		}
+	case SHOOT_RIGHT:
+	{
+		vx = spd;
+		vy = 0;
+		break;
 	}
-
-	x += vx * dt;
-	y += vy * dt;
+	case SHOOT_LEFT:
+	{
+		vx = -spd;
+		vy = 0;
+		break;
+	}
+	case SHOOT_TOP:
+	{
+		vx = 0;
+		vy = spd;
+		break;
+	}
+	case SHOOT_TOPRIGHT:
+	{
+		vx = spd;
+		vy = 0.5 * spd;
+		break;
+	}
+	case SHOOT_TOPLEFT:
+	{
+		vx = -spd;
+		vy = 0.5 * spd;
+		break;
+	}
+	case SHOOT_DOWNRIGHT:
+	{
+		vx = spd;
+		vy = -0.5 * spd;
+		break;
+	}
+	case SHOOT_DOWNLEFT:
+	{
+		vx = -spd;
+		vy = -0.5 * spd;
+		break;
+	}
+	case SHOOT_DOWN:
+	{
+		vx = 0;
+		vy = -spd;
+		break;
+	}
+	}
 }
 
-void NormalBullet::Render()
-{
-	AniHandler->Render(NORMAL_BULLET, x, y);
-}
-
-void TurretBullet::Update(DWORD dt)
+void TurretBullet::SetUp()
 {
 	switch (shootingDirection)
 	{
@@ -167,13 +165,28 @@ void TurretBullet::Update(DWORD dt)
 	}
 
 	}
+}
+
+void NormalBullet::Update(DWORD dt)
+{
+	x += vx * dt;
+	y += vy * dt;
+}
+
+void NormalBullet::Render()
+{
+	AniHandler->Render(NORMAL_BULLET, x, y);
+}
+
+void TurretBullet::Update(DWORD dt)
+{
 	x += vx * dt;
 	y += vy * dt;
 }
 
 void TurretBullet::Render()
 {
-	AniHandler->Render(TURRET_BULLET, x, y);
+	AniHandler->Render(NORMAL_BULLET, x, y);
 }
 
 void BossStage1Bullet::Update(DWORD dt)
@@ -208,52 +221,6 @@ void BossStage1Bullet::Render()
 
 void BigBullet::Update(DWORD dt)
 {
-	switch (shootingDirection)
-	{
-	case SHOOT_RIGHT:
-	{
-		vx = spd;
-		vy = 0;
-		break;
-	}
-	case SHOOT_LEFT:
-	{
-		vx = -spd;
-		vy = 0;
-		break;
-	}
-	case SHOOT_TOP:
-	{
-		vx = 0;
-		vy = spd;
-		break;
-	}
-	case SHOOT_TOPRIGHT:
-	{
-		vx = spd;
-		vy = 0.5 * spd;
-		break;
-	}
-	case SHOOT_TOPLEFT:
-	{
-		vx = -spd;
-		vy = 0.5 * spd;
-		break;
-	}
-	case SHOOT_DOWNRIGHT:
-	{
-		vx = spd;
-		vy = -0.5 * spd;
-		break;
-	}
-	case SHOOT_DOWNLEFT:
-	{
-		vx = -spd;
-		vy = -0.5 * spd;
-		break;
-	}
-	}
-
 	x += vx * dt;
 	y += vy * dt;
 }
@@ -261,4 +228,34 @@ void BigBullet::Update(DWORD dt)
 void BigBullet::Render()
 {
 	AniHandler->Render(BIG_BULLET, x, y);
+}
+
+void MoonBullet::SetUp()
+{
+	switch (shootingDirection)
+	{
+	case SHOOT_DOWN:
+		vx = 0;
+		vy = -spd;
+		break;
+	case SHOOT_DOWNLEFT:
+		vx = -spd/2;
+		vy = -spd;
+		break;
+	case SHOOT_DOWNRIGHT:
+		vx = spd/2;
+		vy = -spd;
+		break;
+	}
+}
+
+void MoonBullet::Update(DWORD dt)
+{
+	x += vx * dt;
+	y += vy * dt;
+}
+
+void MoonBullet::Render()
+{
+	AniHandler->Render(MOON_BULLET, x, y);
 }

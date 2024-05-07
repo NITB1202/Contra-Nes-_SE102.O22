@@ -21,7 +21,7 @@ BossState* BossAppear::ChangeState()
 
 BossOpen::BossOpen()
 {
-	duration = 3000;
+	duration = 2000;
 }
 
 int BossOpen::GetAnimationID()
@@ -66,4 +66,15 @@ int BossDie::GetAnimationID()
 BossState* BossDie::ChangeState()
 {
 	return NULL;
+}
+
+BallState* BallAppear::ChangeState()
+{
+	return NULL;
+}
+
+void BallAppear::UpdateStatus(float& vx, float& vy, int direction)
+{
+	vx = direction * 0.1;
+	vy = 0.1;
 }

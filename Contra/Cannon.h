@@ -14,7 +14,7 @@ class Cannon : public GameObject
 {
 public:
 	bool inDieAnimation = false;
-	int dieAnimationStart = -1;
+	ULONGLONG dieAnimationStart = -1;
 	int preState = 0, openDelay = 0, hp = 10;
 	bool IsCollidable() { return !inDieAnimation; }
 	Gun* Cgun;
@@ -22,11 +22,12 @@ public:
 	void OnColllisionWithBullet(LPCOLLISIONEVENT e);
 	Cannon()
 	{
-		baseType = ENEMY;
+		baseType = OTHER;
 		width = CANNON_WIDTH;
 		height = CANNON_HEIGHT;
-		Cgun = new Gun(0.2);
-		Cgun->SetChargeTime(1000);
+		Cgun = new Gun();
+		Cgun->SetSpeed(0.2);
+		Cgun->SetChargeTime(2000);
 	};
 	void Render() override;
 	void Update(DWORD dt) override;

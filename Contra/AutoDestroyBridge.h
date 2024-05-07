@@ -6,7 +6,7 @@ class AutoDestroyBridge : public GameObject
 private:
 	bool explode = false;
 	int destroyState = 0;
-	DWORD explodeStart = -1;
+	ULONGLONG explodeStart = -1;
 	AnimationHandler* effectHandler;
 public:
 	AutoDestroyBridge()

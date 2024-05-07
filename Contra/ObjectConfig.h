@@ -94,13 +94,14 @@
 #define BRIDGE_DESTROY4_ANIMATION 204
 
 //bullet define
-#define TEXTURE_PATH_NORMAL_BULLET L"image\\Bullet\\bullet_b.png"
-#define TEXTURE_PATH_TURRET_BULLET L"image\\Bullet\\TBullet.png"
+#define TEXTURE_PATH_BIG_BULLET L"image\\Bullet\\bullet_b.png"
+#define TEXTURE_PATH_NORMAL_BULLET L"image\\Bullet\\TBullet.png"
+#define TEXTURE_PATH_MOON_BULLET L"image\\Bullet\\boss2Bullet.png"
 
 #define NORMAL_BULLET 400
-#define TURRET_BULLET 401
+#define BIG_BULLET 401
 #define BOSS_BULLET 402
-#define BIG_BULLET 403
+#define MOON_BULLET 403
 
 //buff define
 #define BUFF_BIG 0

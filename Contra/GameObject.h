@@ -46,7 +46,7 @@ public:
 	virtual void SetPosition(float x, float y) { this->x = x, this->y = y; }
 	void SetSpeed(float vx, float vy) { this->vx = vx, this->vy = vy; }
 	void SetWidthHeight(int w, int h) { width = w; height = h; }
-	void SetState(int state) { this->state = state; }
+	virtual void SetState(int state) { this->state = state; }
 
 	float GetX() { return x; }
 	float GetY() { return y; }

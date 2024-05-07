@@ -7,13 +7,12 @@ class Gun
 {
 private:
 	vector<Bullet*> bullets;
-	DWORD lastShootTime = -1;
+	ULONGLONG lastShootTime = -1;
 	int chargeTime = 80;
 	int bulletType = 1;
-	float spd;
+	float spd = 0.1;
 	int dmg = 1;
 public:
-	Gun(float spd) { this->spd = spd; }
 	void Charge(float bulletX, float bulletY, int direction, int bulletType = 1);
 	void SetChargeTime(int chargeTime) { this->chargeTime = chargeTime; }
 	void SetSpeed(float spd) { this->spd = spd;}

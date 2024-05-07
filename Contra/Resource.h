@@ -57,11 +57,13 @@ void LoadResource()
 
 	tex = game->LoadTexture(TEXTURE_PATH_NORMAL_BULLET);
 	aniLib->AddAnimation(NORMAL_BULLET, Animation(tex,tex->getWidth(), tex->getHeight()));
-	aniLib->AddAnimation(BOSS_BULLET, Animation(tex, tex->getWidth(), tex->getHeight(), 2, 2));
-	aniLib->AddAnimation(BIG_BULLET, Animation(tex, tex->getWidth(), tex->getHeight(), 2, 2));
 
-	tex = game->LoadTexture(TEXTURE_PATH_TURRET_BULLET);
-	aniLib->AddAnimation(TURRET_BULLET, Animation(tex, tex->getWidth(), tex->getHeight()));
+	tex = game->LoadTexture(TEXTURE_PATH_BIG_BULLET);
+	aniLib->AddAnimation(BIG_BULLET, Animation(tex, tex->getWidth(), tex->getHeight()));
+	aniLib->AddAnimation(BOSS_BULLET, Animation(tex, tex->getWidth(), tex->getHeight(), 2, 2));
+
+	tex = game->LoadTexture(TEXTURE_PATH_MOON_BULLET);
+	aniLib->AddAnimation(MOON_BULLET, Animation(tex, 18, 16, 2, 2));
 
 	tex = game->LoadTexture(TEXTURE_PATH_GAMEOVER_BACKGROUND);
 	aniLib->AddAnimation(GAMEOVER_BACKGROUND, Animation(tex, tex->getWidth(), tex->getHeight()));

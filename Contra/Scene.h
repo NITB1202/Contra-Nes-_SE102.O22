@@ -1,7 +1,6 @@
 #pragma once
 #include "Map.h"
 #include "BinaryTree.h"
-#include "Portal.h"
 
 #define MAX_SPAWN_ENEMY 3
 #define SPAWN_SEPARATION 3000
@@ -16,7 +15,7 @@ private:
 	vector<LPGAMEOBJECT> objectOnScreen;
 	vector<LPGAMEOBJECT> randomSpawnEnemy;
 
-	DWORD lastSpawnTime = -1;
+	ULONGLONG lastSpawnTime = -1;
 
 	string objectPath;
 	int playerState, cameraUpdateType, binaryTreeType;
@@ -24,8 +23,6 @@ private:
 	float cameraStartX, cameraStartY;
 
 	RECT bossArea;
-
-	LPPORTAL portal;
 
 public:
 

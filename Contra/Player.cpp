@@ -97,11 +97,14 @@ void Player::OnCollisionWith(LPCOLLISIONEVENT e)
 	if (e->nx != 0 && e->desObject->IsBlocking())
 		vx = 0;
 
-	if (e->desObject->GetBaseType() == ITEM)
-		OnCollisionWithItem(e);
+	if (currentState == dynamic_cast<PlayerJumpingState*>(currentState))
+		SetCurrentState(new PlayerFallState(currentState->GetDirection()));
 
 	if (e->desObject->GetBaseType() == ENEMY)
 		OnCollisionWithEnenmy(e);
+
+	if (e->desObject->GetBaseType() == ITEM)
+		OnCollisionWithItem(e);
 
 	if (e->desObject->GetBaseType() == OTHER)
 		e->desObject->OnCollisionWith(e);
@@ -112,9 +115,6 @@ void Player::OnCollisionWith(LPCOLLISIONEVENT e)
 
 void Player::OnCollisionWithEnenmy(LPCOLLISIONEVENT e)
 {
-	if (currentState == dynamic_cast<PlayerJumpingState*>(currentState))
-		SetCurrentState(new PlayerFallState(currentState->GetDirection()));
-
 	if (untouchable)
 		return;
 
@@ -124,16 +124,15 @@ void Player::OnCollisionWithEnenmy(LPCOLLISIONEVENT e)
 
 void Player::OnCollisionWithItem(LPCOLLISIONEVENT e)
 {
-	int temp = e->desObject->GetState();
-	Player* player = Player::GetInstance();
-	switch (temp)
+	int item = e->desObject->GetState();
+	switch (item)
 	{
 	case B_BIG:
-		player->SetGunDMG(5);
-		player->SetBulletType(4);
+		SetGunDMG(2);
+		SetBulletType(4);
 		break;
 	case B_REGEN:
-		player->GainHP();
+		GainHP();
 		break;
 	}
 	e->desObject->SetState(B_EATEN);
@@ -249,6 +248,8 @@ void Player::GetRespawnPoint(float& xRespawn, float& yRespawn)
 void Player::Reset()
 {
 	hp = MAX_HP + 1;
+	SetGunDMG(1);
+	SetBulletType(1);
 	UntouchableStart();
 }
 

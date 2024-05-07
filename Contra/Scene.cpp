@@ -44,16 +44,6 @@ Scene::Scene(LPWSTR path)
 	ss >> bossArea.top;
 	ss >> bossArea.bottom;
 
-	float portalX, portalY, sceneID;
-
-	ss >> portalX;
-	ss >> portalY;
-	ss >> sceneID;
-
-	portal = new Portal();
-	portal->SetPosition(portalX, portalY);
-	portal->SetSceneID(sceneID);
-
 	file.close();
 }
 
@@ -69,7 +59,6 @@ void Scene::BeginScene()
 
 	delete objectTree;
 	objectTree = new BinaryTree(objectPath, background->GetWidth(), background->GetHeight(),binaryTreeType);
-	objectTree->InsertObject(11111, portal);
 }
 
 void Scene :: Update(DWORD dt)
@@ -182,7 +171,6 @@ Scene::~Scene()
 {
 	delete background;
 	delete objectTree;
-	delete portal;
 
 	for (int i = 0; i < objectOnScreen.size(); i++)
 		delete objectOnScreen[i];

@@ -28,6 +28,9 @@ void Gun::Charge(float bulletX, float bulletY, int direction, int bulletType)
 	case 4:
 		bullet = new BigBullet(bulletX, bulletY, direction, spd);
 		break;
+	case 5:
+		bullet = new MoonBullet(bulletX, bulletY, direction, spd);
+		break;
 	}
 
 	bullets.push_back(bullet);

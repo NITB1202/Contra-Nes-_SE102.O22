@@ -576,7 +576,7 @@ bool PlayerPointGunDownState::GetGunDirection(float& x, float& y, int& gunDir)
 	}
 	else
 	{
-		x = player->GetX();
+		x = player->GetX() - 8;
 		gunDir = SHOOT_DOWNLEFT;
 	}
 
@@ -599,7 +599,6 @@ int PlayerDieState::GetStateAnimation()
 	}
 	else
 	{
-
 		if (direction == RIGHT)
 			return PLAYER_LAY_DIE_RIGHT_ANIMATION;
 		else

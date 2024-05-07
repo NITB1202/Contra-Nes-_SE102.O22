@@ -77,7 +77,6 @@ void Sniper::Update(DWORD dt)
 				this->AnimationID = SNIPER_HIDDEN_END_ANIMATION;
 				if (Angle(this->x, this->y, px, py) == 180) {
 					Sgun->Charge(GetX(), GetY() - 8, SHOOT_LEFT, 2);
-					Sgun->Update(dt);
 				}
 			}
 		}

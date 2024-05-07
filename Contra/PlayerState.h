@@ -111,7 +111,7 @@ public:
 class PlayerDieState :public PlayerState
 {
 private:
-	int startTime;
+	ULONGLONG startTime;
 public:
 	PlayerDieState(int dir) : PlayerState(dir) {
 		startTime = GetTickCount64();

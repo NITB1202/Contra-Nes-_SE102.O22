@@ -1,11 +1,14 @@
 #include "Fire.h"
 #include "ObjectConfig.h"
 
+void Fire::SetState(int state)
+{
+	GameObject::SetState(state);
+	if (state == 1) vx = -0.15;
+}
+
 void Fire::Update(DWORD dt)
 {
-	if (state == 1)
-		vx = -vx;
-
 	distance -= abs(vx) * dt;
 
 	if (distance <= 0)

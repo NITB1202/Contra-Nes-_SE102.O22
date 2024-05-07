@@ -1,5 +1,6 @@
 #include "Turret.h"
 #include "Player.h"
+#include "PlayerState.h"
 #include "ObjectConfig.h"
 #include <cmath>
 
@@ -146,8 +147,6 @@ void Turret::Update(DWORD dt)
 					Tgun->Charge(GetX() + 31, GetY() - 23, SHOOT_DOWNRIGHT, 2);
 					break;
 				}
-				Tgun->Update(dt);
-
 			}
 		}
 		else
@@ -178,11 +177,21 @@ void Turret::OnColllisionWithBullet(LPCOLLISIONEVENT e)
 {
 	Player* player = Player::GetInstance();
 	int dmg = player->GetGunDMG();
-	hp = hp - dmg;
+	hp -= dmg;
 
 	if (hp <= 0 && !inDieAnimation)
 	{
 		inDieAnimation = true;
 		dieAnimationStart = GetTickCount64();
 	}
+}
+
+bool Turret::IsCollidable()
+{
+	if (inDieAnimation) return false;
+	PlayerState* playerState = Player::GetInstance()->GetCurrentState();
+	if (playerState == dynamic_cast<PlayerFallState*>(playerState))
+		return false;
+
+	return true;
 }

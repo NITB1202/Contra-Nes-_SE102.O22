@@ -45,7 +45,9 @@ void Camera::UpdateByX(DWORD dt)
 	Player* player = Player::GetInstance();
 	RECT bossArea = Game::GetInstance()->GetCurrentScene()->GetBossArea();
 
-	if (camx + width <= bossArea.right && MyUtility::CheckIntersect(bossArea, this->GetBound()))
+	if (camx + width == bossArea.right) return;
+
+	if (camx + width < bossArea.right && MyUtility::CheckIntersect(bossArea, this->GetBound()))
 	{
 		camx += vx * dt;
 
@@ -64,7 +66,9 @@ void Camera::UpdateByY(DWORD dt)
 	Player* player = Player::GetInstance();
 	RECT bossArea = Game::GetInstance()->GetCurrentScene()->GetBossArea();
 
-	if (camy <= bossArea.top && MyUtility::CheckIntersect(bossArea, this->GetBound()))
+	if (camy == bossArea.top) return;
+
+	if (camy < bossArea.top && MyUtility::CheckIntersect(bossArea, this->GetBound()))
 	{
 		camy += vy * dt;
 		if (camy > bossArea.top)

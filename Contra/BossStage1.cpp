@@ -1,6 +1,7 @@
 #include "BossStage1.h"
 #include "ObjectConfig.h"
 #include "Game.h"
+#include "Portal.h"
 
 //Boss gun
 void BossGun::Update(DWORD dt)
@@ -119,6 +120,8 @@ BossStage1::BossStage1()
 	gunRight->SetSpeed(0.05);
 
 	door = new BossDoor();
+	update = false;
+	openPortal = false;
 }
 
 void BossStage1::SetPosition(float x, float y)
@@ -141,14 +144,23 @@ RECT BossStage1::GetCollisionBound()
 
 void BossStage1::Update(DWORD dt)
 {
-	if (!insertToObjectTree)
+	if (!update)
 	{
-		insertToObjectTree = true;
-
 		BinaryTree* objectTree = Game::GetInstance()->GetCurrentScene()->GetObjectTree();
-		objectTree->InsertObject(3000, gunLeft);
-		objectTree->InsertObject(3001, gunRight);
-		objectTree->InsertObject(3002, door);
+		objectTree->InsertObject(266, gunLeft);
+		objectTree->InsertObject(267, gunRight);
+		objectTree->InsertObject(268, door);
+
+		update = true;
+	}
+
+	if (!openPortal && door->IsDeleted())
+	{
+		openPortal = true;
+		LPPORTAL portal = new Portal();
+		portal->SetSceneID(1);
+		portal->SetPosition(6670, 120);
+		Game::GetInstance()->GetCurrentScene()->GetObjectTree()->InsertObject(269, portal);
 	}
 }
 

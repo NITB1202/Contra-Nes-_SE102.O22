@@ -9,7 +9,7 @@ class BossGun :public GameObject
 private:
 	bool isDestroy = false;
 	bool inExplodeAnimation = false;
-	DWORD explodeStart = -1;
+	ULONGLONG explodeStart = -1;
 
 	Gun* gun;
 public:
@@ -19,7 +19,8 @@ public:
 		width = 32;
 		height = 12;
 		hp = 5;
-		gun = new Gun(0.1);
+		gun = new Gun();
+		gun->SetSpeed(0.1);
 		gun->SetChargeTime(1000);
 	}
 	void SetSpeed(float spd) { gun->SetSpeed(spd); }
@@ -38,7 +39,7 @@ private:
 
 	int explodeState = 0;
 	bool inExplodeAnimation = false;
-	DWORD explodeStart = -1;
+	ULONGLONG explodeStart = -1;
 public:
 	BossDoor()
 	{
@@ -56,17 +57,16 @@ public:
 class BossStage1 :public GameObject
 {
 private:
-	bool insertToObjectTree = false;
-
 	BossGun* gunLeft;
 	BossGun* gunRight;
 	BossDoor* door;
+	bool update;
+	bool openPortal;
 public:
 	BossStage1();
 	RECT GetCollisionBound();
 
 	void SetPosition(float x, float y);
-
 	void Update(DWORD dt);
 	void Render();
 

@@ -14,21 +14,22 @@ class Turret : public GameObject
 {
 public:
 	bool inDieAnimation = false;
-	int dieAnimationStart = -1;
+	ULONGLONG dieAnimationStart = -1;
 	int preState = 0, openDelay = 0, hp = 10;
-	bool IsCollidable() { return !inDieAnimation; }
 	Gun* Tgun;
 	void OnCollisionWith(LPCOLLISIONEVENT e);
 	void OnColllisionWithBullet(LPCOLLISIONEVENT e);
 
 	Turret()
 	{
-		baseType = ENEMY;
+		baseType = OTHER;
 		width = TURRET_WIDTH;
 		height = TURRET_HEIGHT;
-		Tgun = new Gun(0.2);
+		Tgun = new Gun();
+		Tgun->SetSpeed(0.2);
 		Tgun->SetChargeTime(2000);
 	};
+	bool IsCollidable();
 	void Render() override;
 	void Update(DWORD dt) override;
 	int Angle(int x1, int y1, int x2, int y2);

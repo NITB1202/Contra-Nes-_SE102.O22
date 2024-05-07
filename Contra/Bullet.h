@@ -18,7 +18,12 @@ public:
 		height = 0;
 	}
 	bool OutOfScreen();
-	virtual void Update(DWORD dt) = 0;
+	virtual void SetUp();
+	virtual void Update(DWORD dt)
+	{
+		x += vx * dt;
+		y += vy * dt;
+	}
 	virtual void Render() = 0;
 };
 
@@ -27,8 +32,9 @@ class NormalBullet : public Bullet
 public:
 	NormalBullet(float x, float y, int direction, float spd) : Bullet(x,y,direction,spd)
 	{
-		width = 8;
-		height = 8;
+		width = 6;
+		height = 6;
+		SetUp();
 	}
 	void Update(DWORD dt);
 	void Render();
@@ -42,7 +48,9 @@ public:
 		baseType = ENEMY;
 		width = 6;
 		height = 6;
+		SetUp();
 	}
+	void SetUp();
 	void Update(DWORD dt);
 	void Render();
 };
@@ -70,9 +78,25 @@ class BigBullet : public Bullet
 public:
 	BigBullet(float x, float y, int direction, float spd) : Bullet(x, y, direction, spd)
 	{
-		width = 16;
-		height = 16;
+		width = 8;
+		height = 8;
+		SetUp();
 	}
+	void Update(DWORD dt);
+	void Render();
+};
+
+class MoonBullet : public Bullet
+{
+public:
+	MoonBullet(float x, float y, int direction, float spd) : Bullet(x, y, direction, spd)
+	{
+		baseType = ENEMY;
+		width = 36;
+		height = 32;
+		SetUp();
+	}
+	void SetUp();
 	void Update(DWORD dt);
 	void Render();
 };

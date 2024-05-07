@@ -20,7 +20,7 @@ private:
 	bool untouchable = false;
 	bool isUnderWater = false;
 
-	int untouchableStart = -1;
+	ULONGLONG untouchableStart = -1;
 
 public:
 	Player()
@@ -28,7 +28,8 @@ public:
 		baseType = PLAYER;
 		hp = MAX_HP;
 		currentState = new PlayerStandingState(RIGHT);
-		gun = new Gun(0.3);
+		gun = new Gun();
+		gun->SetSpeed(0.3);
 	};
 	static Player* GetInstance();
 

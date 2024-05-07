@@ -22,7 +22,7 @@ class Sniper:public GameObject
 private:
 	int destination = 200;
 	int distance;
-	int dieAnimationStart = -1;
+	ULONGLONG dieAnimationStart = -1;
 	bool inDieAnimation = false;
 public:
 	Gun* Sgun;
@@ -31,7 +31,8 @@ public:
 		hp = 2;
 		baseType = ENEMY;
 		distance = destination;
-		Sgun = new Gun(0.2);
+		Sgun = new Gun();
+		Sgun->SetSpeed(0.2);
 		Sgun->SetChargeTime(2000);
 	}
 	int getState() { return state; }
