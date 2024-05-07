@@ -8,7 +8,6 @@
 
 #define CANNON_HEIGHT 64
 #define CANNON_WIDTH 64
-#define DIE_ANIMATION_DURATION 300
 
 class Cannon : public GameObject
 {

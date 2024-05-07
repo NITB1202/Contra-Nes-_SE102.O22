@@ -1,4 +1,4 @@
 Map\\Map1\\Map1Tileset.png
 Map\\Map1\\Map1Matrix.txt
 Map\\Map1\\Map1ObjList.txt
-111 100 400 1 0 405 1 6520 6720 448 0
+111 100 400 1 0 405 1 6520 6720 448 0 100

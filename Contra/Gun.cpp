@@ -1,9 +1,21 @@
 #include "Gun.h"
 #include "Game.h"
 #include "Collision.h"
+#include "SoundManager.h"
 
 void Gun::Charge(float bulletX, float bulletY, int direction, int bulletType)
 {
+	if (reloadStart != -1)
+	{
+		if (GetTickCount64() - reloadStart > reloadTime)
+		{
+			reloadStart = -1;
+			cap = MAX_CAP;
+		}
+
+		return;
+	}
+
 	if (lastShootTime == -1)
 		lastShootTime = GetTickCount64();
 	else
@@ -18,6 +30,7 @@ void Gun::Charge(float bulletX, float bulletY, int direction, int bulletType)
 	{
 	case 1:
 		bullet = new NormalBullet(bulletX, bulletY, direction,spd);
+		SoundManager::GetInstance()->Play(NORMAL_BULLET_SHOOT_SOUND);
 		break;
 	case 2:
 		bullet = new TurretBullet(bulletX, bulletY, direction,spd);
@@ -33,7 +46,14 @@ void Gun::Charge(float bulletX, float bulletY, int direction, int bulletType)
 		break;
 	}
 
+
 	bullets.push_back(bullet);
+
+	cap--;
+
+	if (cap <= 0)
+		reloadStart = GetTickCount64();
+
 }
 
 void Gun::Update(DWORD dt)

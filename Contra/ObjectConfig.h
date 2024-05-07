@@ -182,6 +182,12 @@
 
 #define TEST 1111
 
+//sound define
+
+#define MAP1_BG_SOUND 100
+#define MAP2_BG_SOUND 101
+#define NORMAL_BULLET_SHOOT_SOUND 102
+
 enum Direction {
 	LEFT = -1,
 	RIGHT = 1

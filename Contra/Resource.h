@@ -2,6 +2,7 @@
 #include "AnimationLib.h"
 #include "Game.h"
 #include "objectConfig.h"
+#include "SoundManager.h"
 #include <fstream>
 #include <sstream>
 
@@ -12,16 +13,16 @@ void LoadResource()
 	AnimationLib* aniLib = AnimationLib::GetInstance();
 	string resourcePath = "image\\load_resources.txt";
 
-	ifstream file(resourcePath);
-	if (!file.is_open())
+	ifstream animationFile(resourcePath);
+	if (!animationFile.is_open())
 		return;
 
 	vector<string> animationPath;
 	string line;
-	while (getline(file, line))
+	while (getline(animationFile, line))
 		animationPath.push_back(line);
 
-	file.close();
+	animationFile.close();
 
 	for (int i = 0; i < animationPath.size(); i++)
 	{
@@ -57,7 +58,7 @@ void LoadResource()
 
 	tex = game->LoadTexture(TEXTURE_PATH_NORMAL_BULLET);
 	aniLib->AddAnimation(NORMAL_BULLET, Animation(tex,tex->getWidth(), tex->getHeight()));
-
+	
 	tex = game->LoadTexture(TEXTURE_PATH_BIG_BULLET);
 	aniLib->AddAnimation(BIG_BULLET, Animation(tex, tex->getWidth(), tex->getHeight()));
 	aniLib->AddAnimation(BOSS_BULLET, Animation(tex, tex->getWidth(), tex->getHeight(), 2, 2));
@@ -73,5 +74,22 @@ void LoadResource()
 
 	tex = game->LoadTexture(TEXTURE_PATH_TEST);
 	aniLib->AddAnimation(TEST, Animation(tex, tex->getWidth(), tex->getHeight()));
+
+	string soundsPath = "Sound\\load_sound.txt";
+
+	ifstream soundFile(soundsPath);
+	if (!soundFile.is_open())
+		return;
+
+	while (getline(soundFile,line))
+	{
+		int ID; string soundPath;
+		stringstream s(line);
+		s >> ID;
+		s >> soundPath;
+		SoundManager::GetInstance()->AddSound(ID, soundPath);
+	}
+
+	soundFile.close();
 }
 

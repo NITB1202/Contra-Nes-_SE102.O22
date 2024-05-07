@@ -30,6 +30,7 @@ public:
 		currentState = new PlayerStandingState(RIGHT);
 		gun = new Gun();
 		gun->SetSpeed(0.3);
+		gun->SetReloadTime(1000);
 	};
 	static Player* GetInstance();
 

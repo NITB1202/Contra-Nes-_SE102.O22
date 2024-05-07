@@ -2,6 +2,7 @@
 #include "Player.h"
 #include "MyUtility.h"
 #include "Runman.h"
+#include "SoundManager.h"
 
 #include <fstream>
 #include <sstream>
@@ -44,6 +45,8 @@ Scene::Scene(LPWSTR path)
 	ss >> bossArea.top;
 	ss >> bossArea.bottom;
 
+	ss >> soundID;
+
 	file.close();
 }
 
@@ -59,6 +62,7 @@ void Scene::BeginScene()
 
 	delete objectTree;
 	objectTree = new BinaryTree(objectPath, background->GetWidth(), background->GetHeight(),binaryTreeType);
+	SoundManager::GetInstance()->Play(soundID, true);
 }
 
 void Scene :: Update(DWORD dt)
@@ -165,6 +169,11 @@ vector<LPGAMEOBJECT> Scene::GetCollidableObject(LPGAMEOBJECT obj)
 		collidableObject.push_back(randomSpawnEnemy[i]);
 
 	return collidableObject;
+}
+
+void Scene::EndScene()
+{
+	SoundManager::GetInstance()->Stop(soundID);
 }
 
 Scene::~Scene()

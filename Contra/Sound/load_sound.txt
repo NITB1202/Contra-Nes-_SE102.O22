@@ -1,0 +1,3 @@
+100 Sound\\BG_Map1.wav
+101 Sound\\BG_Map2.wav
+102 Sound\\normal_bullet.wav

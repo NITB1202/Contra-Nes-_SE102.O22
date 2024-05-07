@@ -16,7 +16,6 @@
 #include <string>
 #include <Windows.h>
 
-#define SNIPER_OBJECT 1002
 #define TURRET_OBJECT 1003
 #define SNIPER_OBJECT 1004
 #define CANNON_OBJECT 1005

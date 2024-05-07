@@ -1,5 +1,6 @@
 #include "game.h"
 #include "MyUtility.h"
+#include "SoundManager.h"
 
 #include <fstream>
 #include <sstream>
@@ -129,6 +130,15 @@ void Game::InitDirect3D(HWND hwnd,HINSTANCE hInstance)
 	StateDesc.RenderTargetWriteMask[0] = D3D10_COLOR_WRITE_ENABLE_ALL;
 	pD3DDevice->CreateBlendState(&StateDesc, &this->pBlendStateAlpha);
 
+	hr = DirectSoundCreate8(NULL, &directSoundDevice, NULL);
+
+	// Set DirectSound cooperative level
+	if(directSoundDevice != NULL)
+	{
+		hr = directSoundDevice->SetCooperativeLevel(hwnd, DSSCL_PRIORITY);
+		// Check the return code
+		if FAILED(hr) return;
+	}	
 }
 
 LPTEXTURE Game::LoadTexture(LPCWSTR texturePath)
@@ -456,6 +466,7 @@ void Game::Update(DWORD dt)
 		player->Update(dt);
 		camera->Update(dt);
 	}
+	SoundManager::GetInstance()->Update();
 }
 
 void Game::Render()
@@ -483,4 +494,5 @@ Game::~Game()
 	pRenderTargetView->Release();
 	pSwapChain->Release();
 	pD3DDevice->Release();
+	directSoundDevice->Release();
 }

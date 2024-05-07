@@ -23,6 +23,7 @@ private:
 	float cameraStartX, cameraStartY;
 
 	RECT bossArea;
+	int soundID;
 
 public:
 
@@ -44,6 +45,8 @@ public:
 	LPBINARYTREE GetObjectTree() { return objectTree; }
 
 	RECT GetBossArea() { return bossArea; }
+
+	void EndScene();
 
 	~Scene();
 };
