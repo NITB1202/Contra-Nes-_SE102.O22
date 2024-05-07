@@ -40,6 +40,7 @@ void Gun::Charge(float bulletX, float bulletY, int direction, int bulletType)
 		break;
 	case 4:
 		bullet = new BigBullet(bulletX, bulletY, direction, spd);
+		SoundManager::GetInstance()->Play(NORMAL_BULLET_SHOOT_SOUND);
 		break;
 	case 5:
 		bullet = new MoonBullet(bulletX, bulletY, direction, spd);

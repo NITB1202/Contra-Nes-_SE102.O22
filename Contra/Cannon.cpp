@@ -1,6 +1,7 @@
 #include "Cannon.h"
 #include "ObjectConfig.h"
 #include "Player.h"
+#include "SoundManager.h"
 #include <math.h>
 
 void Cannon::OnCollisionWith(LPCOLLISIONEVENT e)
@@ -19,6 +20,7 @@ void Cannon::OnColllisionWithBullet(LPCOLLISIONEVENT e)
 	{
 		inDieAnimation = true;
 		dieAnimationStart = GetTickCount64();
+		SoundManager::GetInstance()->Play(ENEMY_KILLED);
 	}
 }
 

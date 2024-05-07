@@ -2,6 +2,7 @@
 #include "Player.h"
 #include "PlayerState.h"
 #include "ObjectConfig.h"
+#include "SoundManager.h"
 #include <cmath>
 
 int Turret::Angle(int x1, int y1, int x2, int y2)
@@ -183,6 +184,7 @@ void Turret::OnColllisionWithBullet(LPCOLLISIONEVENT e)
 	{
 		inDieAnimation = true;
 		dieAnimationStart = GetTickCount64();
+		SoundManager::GetInstance()->Play(ENEMY_KILLED);
 	}
 }
 

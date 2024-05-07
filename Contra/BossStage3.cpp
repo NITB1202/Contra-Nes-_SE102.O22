@@ -1,5 +1,6 @@
 #include "BossStage3.h"
 #include "ObjectConfig.h"
+#include "SoundManager.h"
 #include "Game.h"
 
 #define PI 3.14
@@ -357,5 +358,6 @@ void BossStage3::OnCollisionWith(LPCOLLISIONEVENT e)
 		leftHand->Destroy();
 		rightHand->Destroy();
 		explodeStart = GetTickCount64();
+		SoundManager::GetInstance()->Play(BOSS_DESTROY);
 	}
 }

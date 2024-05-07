@@ -1,6 +1,7 @@
 #include "BossStage1.h"
 #include "ObjectConfig.h"
 #include "Game.h"
+#include "SoundManager.h"
 #include "Portal.h"
 
 //Boss gun
@@ -54,6 +55,7 @@ void BossGun::OnCollisionWith(LPCOLLISIONEVENT e)
 		{
 			inExplodeAnimation = true;
 			explodeStart = GetTickCount64();
+			SoundManager::GetInstance()->Play(ENEMY_KILLED);
 		}
 	}
 }
@@ -103,6 +105,7 @@ void BossDoor::OnCollisionWith(LPCOLLISIONEVENT e)
 		{
 			inExplodeAnimation = true;
 			explodeStart = GetTickCount64();
+			SoundManager::GetInstance()->Play(BOSS_DESTROY);
 		}
 	}
 }

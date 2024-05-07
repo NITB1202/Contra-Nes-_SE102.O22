@@ -2,6 +2,7 @@
 #include "Menu.h"
 #include "Game.h"
 #include "ObjectConfig.h"
+#include "SoundManager.h"
 
 void Menu::Update(DWORD dt)
 {

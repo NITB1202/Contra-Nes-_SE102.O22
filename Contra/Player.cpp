@@ -119,8 +119,10 @@ void Player::OnCollisionWithEnenmy(LPCOLLISIONEVENT e)
 	if (untouchable)
 		return;
 
-	if (currentState != dynamic_cast<PlayerDieState*>(currentState))
+	if (currentState != dynamic_cast<PlayerDieState*>(currentState)) {
 		SetCurrentState(new PlayerDieState(e->nx));
+		SoundManager::GetInstance()->Play(DEAD_MUSIC);
+	}
 }
 
 void Player::OnCollisionWithItem(LPCOLLISIONEVENT e)
@@ -136,6 +138,7 @@ void Player::OnCollisionWithItem(LPCOLLISIONEVENT e)
 		GainHP();
 		break;
 	}
+	SoundManager::GetInstance()->Play(EAT_ITEM_SOUND);
 	e->desObject->SetState(B_EATEN);
 }
 

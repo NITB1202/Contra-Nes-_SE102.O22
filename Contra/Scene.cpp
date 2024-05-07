@@ -63,6 +63,7 @@ void Scene::BeginScene()
 	delete objectTree;
 	objectTree = new BinaryTree(objectPath, background->GetWidth(), background->GetHeight(),binaryTreeType);
 	SoundManager::GetInstance()->Play(soundID, true);
+	SoundManager::GetInstance()->SetVolume(soundID, -1000);
 }
 
 void Scene :: Update(DWORD dt)
