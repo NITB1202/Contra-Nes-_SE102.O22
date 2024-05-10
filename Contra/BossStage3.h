@@ -2,6 +2,7 @@
 #include "GameObject.h"
 #include "BossState.h"
 #include "Gun.h"
+#include "Transition.h"
 
 class BossHandBall : public GameObject
 {
@@ -31,6 +32,7 @@ public:
 class BossHand : public GameObject
 {
 private:
+
 	ULONGLONG insertTime = -1;
 	ULONGLONG explodeAnimationStart = -1;
 	bool isDestroy = false;
@@ -77,6 +79,7 @@ private:
 	bool destroy;
 
 	AnimationHandler* effectHandler;
+	Transition* credit;
 
 public:
 	BossStage3();
@@ -85,8 +88,9 @@ public:
 	void Render();
 
 	void SetPosition(float x, float y);
-	bool IsCollidable() { return currentState == dynamic_cast<BossOpen*>(currentState); }
+	bool IsCollidable();
 	void OnCollisionWith(LPCOLLISIONEVENT e);
+	bool IsBlocking() { return !destroy; }
 
 	~BossStage3();
 };

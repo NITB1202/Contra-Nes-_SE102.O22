@@ -7,7 +7,7 @@ class Buff : public GameObject
 public:
 	bool inDieAnimation = false, afterBreak = false;
 	ULONGLONG dieAnimationStart = -1;
-	int preState = 0, openDelay = 0, hp = 10, buffStat;
+	int preState = 0, openDelay = 0, hp = 3, buffStat;
 
 	Buff()
 	{

@@ -2,6 +2,7 @@
 #include "RunmanState.h"
 #include "Game.h"
 #include "ObjectConfig.h"
+#include "SoundManager.h"
 
 void Runman::SetCurrentState(RunmanState* runmanState)
 {
@@ -92,5 +93,6 @@ void Runman::OnColllisionWithBullet(LPCOLLISIONEVENT e)
 	{
 		SetCurrentState(new RunmanDieByShooting(e->nx));
 		inDieAnimation = true;
+		SoundManager::GetInstance()->Play(ATTACK_CANNON_SOUND);
 	}
 }

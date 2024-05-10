@@ -19,6 +19,8 @@ private:
 	int dmg = 1;
 	int cap = MAX_CAP;
 	int reloadTime = 0;
+	bool canReload = true;
+
 public:
 	void Charge(float bulletX, float bulletY, int direction, int bulletType = 1);
 	void SetChargeTime(int chargeTime) { this->chargeTime = chargeTime; }
@@ -28,6 +30,7 @@ public:
 	void SetBulletType(int bulletType) { this->bulletType = bulletType; }
 	int GetBulletType() { return this->bulletType; }
 	void SetReloadTime(int t) { reloadTime = t; }
+	void NoReload() { canReload = false; }
 
 	void Update(DWORD dt);
 	void Render();

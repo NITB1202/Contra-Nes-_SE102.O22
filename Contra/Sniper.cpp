@@ -1,6 +1,8 @@
 #include "Sniper.h"
 #include "Player.h"
 #include "ObjectConfig.h"
+#include "SoundManager.h"
+
 #include <math.h>
 
 int Sniper::Angle(int x1, int y1, int x2, int y2) {
@@ -153,5 +155,6 @@ void Sniper::OnColllisionWithBullet(LPCOLLISIONEVENT e)
 		vx = -e->nx*SNIPER_DEFLECT_SPD;
 		vy = SNIPER_DEFLECT_SPD;
 		dieAnimationStart = GetTickCount64();
+		SoundManager::GetInstance()->Play(ATTACK_CANNON_SOUND);
 	}
 }

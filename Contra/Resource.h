@@ -72,6 +72,12 @@ void LoadResource()
 	tex = game->LoadTexture(TEXTURE_PATH_INTRO_BACKGROUND);
 	aniLib->AddAnimation(INTRO_BACKGROUND, Animation(tex, tex->getWidth(), tex->getHeight()));
 
+	tex = game->LoadTexture(TEXTURE_PATH_SCENE_TRANSITION);
+	aniLib->AddAnimation(SCENE_TRANSITION, Animation(tex, tex->getWidth(), tex->getHeight()));
+
+	tex = game->LoadTexture(TEXTURE_PATH_CREDIT);
+	aniLib->AddAnimation(CREDIT_BACKGROUND, Animation(tex, tex->getWidth(), tex->getHeight()));
+
 	tex = game->LoadTexture(TEXTURE_PATH_TEST);
 	aniLib->AddAnimation(TEST, Animation(tex, tex->getWidth(), tex->getHeight()));
 

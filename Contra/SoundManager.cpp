@@ -20,8 +20,9 @@ void SoundManager::AddSound(int ID, string soundLink)
 void SoundManager::Stop(int ID)
 {
     LPDIRECTSOUNDBUFFER buffer = soundPlaying[ID];
+    if (buffer == NULL) return;
     buffer->Stop();
-    buffer->Release();
+    //buffer->Release();
 }
 
 void SoundManager::SetVolume(int ID, int level)
@@ -39,10 +40,15 @@ void SoundManager::SetVolume(int ID, int level)
 
 HRESULT SoundManager::Play(int ID, bool loop)
 {
-	// Check if the sound is on playlist
-	for (auto it = soundPlaying.begin(); it != soundPlaying.end(); it++)
-		if (it->first == ID)
-			return E_FAIL;
+    bool exist = false;
+
+    // Check if the sound is on playlist
+    for (auto it = soundPlaying.begin(); it != soundPlaying.end(); it++)
+        if (it->first == ID)
+        {
+            exist = true;
+            break;
+        }
 
     string soundLink = soundLinks[ID];
 
@@ -76,6 +82,10 @@ HRESULT SoundManager::Play(int ID, bool loop)
     fileSize = static_cast<DWORD>(file.tellg());
     file.seekg(44, ios::beg); // Skip the header
     DWORD dataChunkSize = fileSize - 44; // Total size of audio data
+    DWORD durationInSeconds = dataChunkSize / wfx.nAvgBytesPerSec;
+
+    if (exist && durationInSeconds > 1)
+        return E_FAIL;
 
     // Create the sound buffer
     DSBUFFERDESC dsbd;
@@ -141,6 +151,11 @@ HRESULT SoundManager::Play(int ID, bool loop)
 
 bool SoundManager::IsPlaying(int ID)
 {
+    if (ID == 1003)
+    {
+        int a = 6;
+    }
+
     DWORD dwStatus;
     LPDIRECTSOUNDBUFFER buffer = soundPlaying[ID];
     if (buffer == NULL)
@@ -162,6 +177,8 @@ void SoundManager::Update()
         if (!IsPlaying(it->first))
         {
             Stop(it->first);
+            //it->second->Stop();
+            //it->second->Release();
             it = soundPlaying.erase(it);
         }
         else

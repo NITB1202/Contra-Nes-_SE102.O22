@@ -1,6 +1,7 @@
 #include "BossStage3.h"
 #include "ObjectConfig.h"
 #include "Game.h"
+#include "SoundManager.h"
 
 #define PI 3.14
 
@@ -66,7 +67,10 @@ void BossHandBall::Render()
 void BossHandBall::OnCollisionWith(LPCOLLISIONEVENT e)
 {
 	if (e->desObject->GetBaseType() == BULLET)
+	{
 		damaged = true;
+		SoundManager::GetInstance()->Play(ATTACK_CANNON_SOUND);
+	}
 }
 
 BossHand::BossHand()
@@ -198,8 +202,8 @@ BossHand::~BossHand()
 
 BossStage3::BossStage3()
 {
-	baseType = ENEMY;
-	hp = 30;
+	baseType = OTHER;
+	hp = 15;
 
 	appear = false;
 	arriveTime = -1;
@@ -227,6 +231,7 @@ BossStage3::BossStage3()
 	gun = new Gun();
 	gun->SetSpeed(0.2);
 	gun->SetChargeTime(0);
+	gun->NoReload();
 }
 
 void BossStage3::Update(DWORD dt)
@@ -267,6 +272,8 @@ void BossStage3::Update(DWORD dt)
 		{
 			destroy = true;
 			inExplodeAnimation = false;
+			height = 200;
+			SoundManager::GetInstance()->Play(BOSS_PASS_SOUND);
 		}
 
 		return;
@@ -337,6 +344,7 @@ void BossStage3::SetPosition(float x, float y)
 
 BossStage3::~BossStage3()
 {
+	delete credit;
 	delete leftHand;
 	delete rightHand;
 	delete currentState;
@@ -345,17 +353,49 @@ BossStage3::~BossStage3()
 
 void BossStage3::OnCollisionWith(LPCOLLISIONEVENT e)
 {
-	if (destroy || !appear) return;
+	if (!appear) return;
 
-	Player* player = Player::GetInstance();
-	int dmg = player->GetGunDMG();
-	hp -= dmg;
+	SoundManager* sound = SoundManager::GetInstance();
 
-	if (hp <= 0 && !inExplodeAnimation)
+	if (e->desObject->GetBaseType() == BULLET)
 	{
-		inExplodeAnimation = true;
-		leftHand->Destroy();
-		rightHand->Destroy();
-		explodeStart = GetTickCount64();
+		Player* player = Player::GetInstance();
+		int dmg = player->GetGunDMG();
+		hp -= dmg;
+
+		if(!inExplodeAnimation)
+			sound->Play(ATTACK_CANNON_SOUND);
+
+		if (hp <= 0 && !inExplodeAnimation)
+		{
+			inExplodeAnimation = true;
+			leftHand->Destroy();
+			rightHand->Destroy();
+			explodeStart = GetTickCount64();
+			sound->Stop(Game::GetInstance()->GetCurrentScene()->GetSoundID());
+			sound->Play(BOSS_DESTROY_SOUND);
+		}
 	}
+
+	if (destroy && e->srcObject->GetBaseType() == PLAYER)
+	{
+
+		Game* game = Game::GetInstance();
+		if (!game->showMenu)
+		{
+			game->showMenu = true;
+			sound->Stop(Game::GetInstance()->GetCurrentScene()->GetSoundID());
+			game->SetCurrentMenu(CREDIT_MENU);
+			game->GetCurrentMenu()->BeginTransition();
+		}
+
+		return;
+	}
+}
+
+bool BossStage3::IsCollidable()
+{
+	if (destroy) return true;
+
+	return currentState == dynamic_cast<BossOpen*>(currentState);
 }

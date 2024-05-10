@@ -2,6 +2,7 @@
 #include "ObjectConfig.h"
 #include "Game.h"
 #include "Portal.h"
+#include "SoundManager.h"
 
 //Boss gun
 void BossGun::Update(DWORD dt)
@@ -50,11 +51,16 @@ void BossGun::OnCollisionWith(LPCOLLISIONEVENT e)
 		int dmg = player->GetGunDMG();
 		hp = hp - dmg;
 
+		if(!inExplodeAnimation)
+			SoundManager::GetInstance()->Play(ATTACK_CANNON_SOUND);
+
 		if (hp <= 0 && !inExplodeAnimation && !isDestroy)
 		{
 			inExplodeAnimation = true;
 			explodeStart = GetTickCount64();
 		}
+
+
 	}
 }
 
@@ -99,10 +105,15 @@ void BossDoor::OnCollisionWith(LPCOLLISIONEVENT e)
 		int dmg = player->GetGunDMG();
 		hp = hp - dmg;
 
+		if (!inExplodeAnimation)
+			SoundManager::GetInstance()->Play(ATTACK_CANNON_SOUND);
+
 		if (hp <= 0 && !inExplodeAnimation)
 		{
 			inExplodeAnimation = true;
 			explodeStart = GetTickCount64();
+			SoundManager::GetInstance()->Stop(Game::GetInstance()->GetCurrentScene()->GetSoundID());
+			SoundManager::GetInstance()->Play(BOSS_DESTROY_SOUND);
 		}
 	}
 }
@@ -161,6 +172,7 @@ void BossStage1::Update(DWORD dt)
 		portal->SetSceneID(1);
 		portal->SetPosition(6670, 120);
 		Game::GetInstance()->GetCurrentScene()->GetObjectTree()->InsertObject(269, portal);
+		SoundManager::GetInstance()->Play(BOSS_PASS_SOUND);
 	}
 }
 

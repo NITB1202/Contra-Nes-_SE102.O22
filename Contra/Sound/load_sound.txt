@@ -1,3 +1,15 @@
-100 Sound\\BG_Map1.wav
-101 Sound\\BG_Map2.wav
 102 Sound\\normal_bullet.wav
+103 Sound\\Eat_Item.wav
+104 Sound\\Attack_Cannon.wav
+105 Sound\\Jump.wav
+107 Sound\\Dead.wav
+108 Sound\\explode.wav
+109 Sound\\Boss_Encounter.wav
+110 Sound\\Destroy_Boss.wav
+111 Sound\\Pass_Boss.wav
+112 Sound\\big_bullet.wav
+1000 Sound\\Intro.wav
+1001 Sound\\Game_Over.wav
+1002 Sound\\WinGame.wav
+1003 Sound\\BG_Map1.wav
+1004 Sound\\BG_Map2.wav

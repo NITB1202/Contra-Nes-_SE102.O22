@@ -238,15 +238,17 @@ void Game::InitMenu()
 		stringstream ss(line);
 		
 		float menuX, menuY;
-		int option, optionHeight, backgroundID;
+		int option, optionHeight, backgroundID, soundID, transType;
 
 		ss >> menuX;
 		ss >> menuY;
 		ss >> option;
 		ss >> optionHeight;
 		ss >> backgroundID;
+		ss >> soundID;
+		ss >> transType;
 
-		LPMENU menu = new Menu(menuX, menuY, option, optionHeight,backgroundID);
+		LPMENU menu = new Menu(menuX, menuY, option, optionHeight, backgroundID, soundID, transType);
 		menus.push_back(menu);
 	}
 
@@ -269,6 +271,16 @@ void Game :: InitScene()
 	}
 
 	sceneFile.close();
+}
+
+void Game::SetCurrentMenu(int id)
+{
+	currentMenu = id;
+	menus[currentMenu]->Reset();
+	ClearBackGround();
+	if (id == INTRO_MENU)
+		menus[currentMenu]->BeginTransition();
+
 }
 
 void Game::DrawInScreenCoord(float x, float y, LPTEXTURE tex, float scaleX, float scaleY, int flipHorizontal, RECT* rect)
@@ -463,8 +475,11 @@ void Game::Update(DWORD dt)
 	else
 	{
 		scenes[currentScene]->Update(dt);
-		player->Update(dt);
-		camera->Update(dt);
+		if (!scenes[currentScene]->InTransition())
+		{
+			player->Update(dt);
+			camera->Update(dt);
+		}
 	}
 	SoundManager::GetInstance()->Update();
 }
@@ -476,7 +491,9 @@ void Game::Render()
 	else
 	{
 		scenes[currentScene]->Render();
-		if (player->GetHp() > 0) player->Render();
+
+		if (!scenes[currentScene]->InTransition())
+			if (player->GetHp() > 0) player->Render();
 	}
 }
 

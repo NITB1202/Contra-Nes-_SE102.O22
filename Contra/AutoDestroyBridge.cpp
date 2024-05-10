@@ -1,6 +1,7 @@
 #include "AutoDestroyBridge.h"
 #include "Player.h"
 #include "ObjectConfig.h"
+#include "SoundManager.h"
 
 int AutoDestroyBridge::GetDestroyDistance()
 {
@@ -39,6 +40,7 @@ void AutoDestroyBridge::Update(DWORD dt)
 		destroyState++;
 		explode = true;
 		explodeStart = GetTickCount64();
+		SoundManager::GetInstance()->Play(EXPLODE_SOUND);
 	}
 
 	if (explode && GetTickCount64() - explodeStart > EXPLODE_EFFECT_DURATION)

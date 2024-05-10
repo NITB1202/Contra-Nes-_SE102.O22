@@ -3,6 +3,7 @@
 #include "MyUtility.h"
 #include "Runman.h"
 #include "SoundManager.h"
+#include "Game.h"
 
 #include <fstream>
 #include <sstream>
@@ -46,6 +47,19 @@ Scene::Scene(LPWSTR path)
 	ss >> bossArea.bottom;
 
 	ss >> soundID;
+	
+	int transitionType;
+
+	ss >> transitionType;
+
+	Game* game = Game::GetInstance();
+
+	//horizontal = 1, vertical = 2
+
+	if (transitionType == 1)
+		trans = new Transition(0, 0, game->GetBackBufferWidth(), 0, 0.3, 0, SCENE_TRANSITION);
+	else
+		trans = new Transition(0, 0, 0, -game->GetBackBufferHeight(), 0, -0.3, SCENE_TRANSITION);
 
 	file.close();
 }
@@ -63,11 +77,18 @@ void Scene::BeginScene()
 	delete objectTree;
 	objectTree = new BinaryTree(objectPath, background->GetWidth(), background->GetHeight(),binaryTreeType);
 	SoundManager::GetInstance()->Play(soundID, true);
+	trans->Begin();
 }
 
 void Scene :: Update(DWORD dt)
 {
 	background->Update();
+
+	if (!trans->IsFinish())
+	{
+		trans->Update(dt);
+		return;
+	}
 
 	//Check if the object is actually collide with camera
 	RECT cameraBound = Camera::GetInstance()->GetBound();
@@ -150,6 +171,12 @@ void Scene :: Render()
 {
 	background->Render();
 
+	if (!trans->IsFinish())
+	{
+		trans->Render();
+		return;
+	}
+
 	for (int i = 0; i < objectOnScreen.size(); i++)
 		objectOnScreen[i]->Render();
 
@@ -171,15 +198,11 @@ vector<LPGAMEOBJECT> Scene::GetCollidableObject(LPGAMEOBJECT obj)
 	return collidableObject;
 }
 
-void Scene::EndScene()
-{
-	SoundManager::GetInstance()->Stop(soundID);
-}
-
 Scene::~Scene()
 {
 	delete background;
 	delete objectTree;
+	delete trans;
 
 	for (int i = 0; i < objectOnScreen.size(); i++)
 		delete objectOnScreen[i];

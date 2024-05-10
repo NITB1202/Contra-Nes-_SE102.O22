@@ -77,10 +77,7 @@ public:
 
 	LPTEXTURE LoadTexture(LPCWSTR texturePath);
 	LPSCENE GetCurrentScene() { return scenes[currentScene]; }
-	void SetCurrentMenu(int id) { 
-		currentMenu = id;
-		menus[currentMenu]->Reset();
-	}
+	void SetCurrentMenu(int id);
 	void SwitchScene(int sceneID) { currentScene = sceneID; }
 	LPMENU GetCurrentMenu() { return menus[currentMenu]; }
 

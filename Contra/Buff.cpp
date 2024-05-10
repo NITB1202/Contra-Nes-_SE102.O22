@@ -2,6 +2,7 @@
 #include "Player.h"
 #include "ObjectConfig.h"
 #include "Game.h"
+#include "SoundManager.h"
 
 #define BUFF_VX 0.05f
 #define BUFF_VY 0.2f
@@ -107,6 +108,10 @@ void Buff::OnColllisionWithBullet(LPCOLLISIONEVENT e)
 	Player* player = Player::GetInstance();
 	int dmg = player->GetGunDMG();
 	hp = hp - dmg;
+
+	if (!afterBreak)
+		SoundManager::GetInstance()->Play(ATTACK_CANNON_SOUND);
+
 	if (hp <= 0 && !inDieAnimation && !afterBreak)
 	{
 		inDieAnimation = true;

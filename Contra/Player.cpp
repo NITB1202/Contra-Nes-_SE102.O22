@@ -22,11 +22,13 @@ void Player::Update(DWORD dt)
 	if (hp <= 0)
 	{
 		Game* game = Game::GetInstance();
+		SoundManager* sound = SoundManager::GetInstance();
 		if (!game->showMenu)
 		{
 			game->showMenu = true;
-			game->ClearBackGround();
 			game->SetCurrentMenu(GAMEOVER_MENU);
+			sound->Stop(game->GetCurrentScene()->GetSoundID());
+			sound->Play(GAMEOVER_SOUND);
 		}
 		return;
 	}
@@ -136,6 +138,7 @@ void Player::OnCollisionWithItem(LPCOLLISIONEVENT e)
 		GainHP();
 		break;
 	}
+	SoundManager::GetInstance()->Play(EAT_ITEM_SOUND);
 	e->desObject->SetState(B_EATEN);
 }
 

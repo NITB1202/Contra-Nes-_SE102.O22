@@ -41,12 +41,9 @@ public:
 class PlayerJumpingState : public PlayerState
 {
 private:
-	int maxJumpHeight = 70;
+	int maxJumpHeight = 75;
 public:
-	PlayerJumpingState(int dir, float currentY) : PlayerState(dir) {
-		direction = dir;
-		maxJumpHeight = currentY + maxJumpHeight;
-	}
+	PlayerJumpingState(int dir, float currentY);
 	int GetStateAnimation();
 	void UpdateStatus();
 	bool CanShoot() { return false; }
@@ -113,9 +110,7 @@ class PlayerDieState :public PlayerState
 private:
 	ULONGLONG startTime;
 public:
-	PlayerDieState(int dir) : PlayerState(dir) {
-		startTime = GetTickCount64();
-	}
+	PlayerDieState(int dir);
 	int GetStateAnimation();
 	void UpdateStatus();
 	bool CanShoot() { return false;}
@@ -135,6 +130,6 @@ public:
 #define PLAYER_DIE_HEIGHT 46
 
 #define DIE_ANIMATION_DURATION 500
-#define DIE_ANIMATION_DEFLECT_SPEED_X 0.1f
+#define DIE_ANIMATION_DEFLECT_SPEED_X 0.05f
 #define DIE_ANIMATION_DEFLECT_SPEED_Y 0.1f
 #define RESET_TIME 1000

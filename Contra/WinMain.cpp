@@ -10,7 +10,7 @@
 
 #define SCREEN_WIDTH 500
 #define SCREEN_HEIGHT 440
-#define MAX_FRAME_RATE 60
+#define MAX_FRAME_RATE 120
 
 HWND CreateGameWindow(HINSTANCE hInstance, int screenWidth, int screenHeight, int nCmdShow);
 void LoadResource();
@@ -174,6 +174,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 	game->InitScene();
 	game->InitMenu();
+	game->SetCurrentMenu(INTRO_MENU);
 	
 	GameRun();
 

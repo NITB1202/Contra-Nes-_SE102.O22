@@ -132,6 +132,8 @@
 //asset define
 #define TEXTURE_PATH_GAMEOVER_BACKGROUND L"image\\Asset\\GameOver.png"
 #define TEXTURE_PATH_INTRO_BACKGROUND L"image\\Asset\\intro.png"
+#define TEXTURE_PATH_SCENE_TRANSITION L"image\\Asset\\scene_transition.png"
+#define TEXTURE_PATH_CREDIT L"image\\Asset\\credit.png"
 
 #define LIFE_ASSET_WIDTH 28
 
@@ -140,6 +142,8 @@
 #define CURSOR 452
 #define INTRO_BACKGROUND 453
 #define FLYING_ROCK 454
+#define SCENE_TRANSITION 455
+#define CREDIT_BACKGROUND 456
 
 //effect define
 #define DIE_EFFECT_ANIMATION 500
@@ -175,6 +179,7 @@
 
 #define GAMEOVER_MENU 0
 #define INTRO_MENU 1
+#define CREDIT_MENU 2
 
 #define GRAVITY 0.001f
 
@@ -184,9 +189,23 @@
 
 //sound define
 
-#define MAP1_BG_SOUND 100
-#define MAP2_BG_SOUND 101
 #define NORMAL_BULLET_SHOOT_SOUND 102
+#define EAT_ITEM_SOUND 103
+#define ATTACK_CANNON_SOUND 104
+#define JUMP_SOUND 105
+#define DEAD_SOUND 107
+#define EXPLODE_SOUND 108
+#define BOSS_ENCOUNTER 109
+#define BOSS_DESTROY_SOUND 110
+#define BOSS_PASS_SOUND 111
+#define BIG_BULLET_SHOOT_SOUND 112
+
+#define INTRO_SOUND 1000
+#define GAMEOVER_SOUND 1001
+#define WINGAME_SOUND 1002
+#define MAP1_BG_SOUND 1003
+#define MAP2_BG_SOUND 1004
+
 
 enum Direction {
 	LEFT = -1,

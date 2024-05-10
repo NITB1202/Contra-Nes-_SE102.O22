@@ -1,6 +1,7 @@
 #pragma once
 #include "Map.h"
 #include "BinaryTree.h"
+#include "Transition.h"
 
 #define MAX_SPAWN_ENEMY 3
 #define SPAWN_SEPARATION 3000
@@ -24,6 +25,7 @@ private:
 
 	RECT bossArea;
 	int soundID;
+	Transition* trans  = NULL;
 
 public:
 
@@ -45,8 +47,8 @@ public:
 	LPBINARYTREE GetObjectTree() { return objectTree; }
 
 	RECT GetBossArea() { return bossArea; }
-
-	void EndScene();
+	int GetSoundID() { return soundID; }
+	bool InTransition() { return !trans->IsFinish(); }
 
 	~Scene();
 };

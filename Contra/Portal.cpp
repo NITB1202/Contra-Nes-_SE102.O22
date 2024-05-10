@@ -2,6 +2,7 @@
 #include "MyUtility.h"
 #include "Player.h"
 #include "Game.h"
+#include "SoundManager.h"
 
 void Portal::Update(DWORD dt)
 {
@@ -10,7 +11,7 @@ void Portal::Update(DWORD dt)
 
 	if (MyUtility::CheckIntersect(player->GetCollisionBound(), this->GetCollisionBound()))
 	{
-		game->GetCurrentScene()->EndScene();
+		SoundManager::GetInstance()->Stop(game->GetCurrentScene()->GetSoundID());
 		game->SwitchScene(sceneID);
 		game->ClearBackGround();
 		game->GetCurrentScene()->ClearSpawnEnemy();

@@ -1,6 +1,7 @@
 #include "PlayerState.h"
 #include "Player.h"
 #include "Game.h"
+#include "SoundManager.h"
 #include "ObjectConfig.h"
 #include <dinput.h>
 
@@ -215,6 +216,13 @@ bool PlayerRunningState::GetGunDirection(float& x, float& y, int& gunDir)
 }
 
 //Player jumping func
+
+PlayerJumpingState::PlayerJumpingState(int dir, float currentY) : PlayerState(dir)
+{
+	direction = dir;
+	maxJumpHeight = currentY + maxJumpHeight;
+	SoundManager::GetInstance()->Play(JUMP_SOUND);
+}
 
 int PlayerJumpingState::GetStateAnimation()
 {
@@ -586,6 +594,13 @@ bool PlayerPointGunDownState::GetGunDirection(float& x, float& y, int& gunDir)
 }
 
 //Player die func
+
+PlayerDieState::PlayerDieState(int dir) : PlayerState(dir)
+{
+	startTime = GetTickCount64();
+	SoundManager::GetInstance()->Play(DEAD_SOUND);
+}
+
 int PlayerDieState::GetStateAnimation()
 {
 	Player* player = Player::GetInstance();

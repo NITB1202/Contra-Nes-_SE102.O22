@@ -2,20 +2,36 @@
 #include "Menu.h"
 #include "Game.h"
 #include "ObjectConfig.h"
+#include "SoundManager.h"
 
 void Menu::Update(DWORD dt)
 {
+	if (trans != NULL && !trans->IsFinish())
+	{
+		trans->Update(dt);
+		return;
+	}
+
 	selectArrowY = menuY + (select - 1) * optionHeight;
 }
 
 void Menu::Render()
 {
-	animationHandler->DrawAsset(backGroundID, 0, 0);
+	if (trans != NULL && !trans->IsFinish())
+	{
+		trans->Render();
+		return;
+	}
+
+	animationHandler->DrawAsset(backgroundID, 0, 0);
 	animationHandler->DrawAsset(CURSOR,selectArrowX, selectArrowY);
 }
 
 void Menu::OnKeyDown(int keyCode)
 {
+	if (trans != NULL && !trans->IsFinish())
+		return;
+
 	if (keyCode == DIK_A)
 	{
 		HandlerOption();
@@ -39,8 +55,9 @@ void Menu::HandlerOption()
 {
 	Game* game = Game::GetInstance();
 	Player* player = Player::GetInstance();
+	SoundManager* sound = SoundManager::GetInstance();
 
-	switch (backGroundID)
+	switch (backgroundID)
 	{
 	case GAMEOVER_BACKGROUND:
 	{
@@ -50,12 +67,13 @@ void Menu::HandlerOption()
 		{
 			game->showMenu = false;
 			game->ClearBackGround();
+			sound->Stop(GAMEOVER_SOUND);
+			sound->Play(game->GetCurrentScene()->GetSoundID());
 			player->Reset();
 			break;
 		}
 		case 2:
 		{
-			game->ClearBackGround();
 			game->SetCurrentMenu(INTRO_MENU);
 			break;
 		}
@@ -77,5 +95,28 @@ void Menu::HandlerOption()
 		}
 		break;
 	}
+	case CREDIT_BACKGROUND:
+	{
+		game->SetCurrentMenu(INTRO_MENU);
+		sound->Stop(WINGAME_SOUND);
+		break;
 	}
+	}
+}
+
+void Menu::BeginTransition()
+{
+	Game* game = Game::GetInstance();
+
+	if (trans == NULL)
+	{
+		if (transType == 1)
+			trans = new Transition(game->GetBackBufferWidth(), 0, 0, 0, -0.2, 0, backgroundID);
+		else
+			trans = new Transition(0, game->GetBackBufferWidth(), 0, 0, 0, -0.2, backgroundID);
+	}
+	trans->Begin();
+
+	SoundManager* soundManager = SoundManager::GetInstance();
+	soundManager->Play(backgroundSound);
 }
