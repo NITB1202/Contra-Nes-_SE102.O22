@@ -1,6 +1,7 @@
 #include "Buff.h"
 #include "Player.h"
 #include "ObjectConfig.h"
+#include "SoundManager.h"
 #include "Game.h"
 #include "SoundManager.h"
 
@@ -123,6 +124,7 @@ void Buff::OnColllisionWithBullet(LPCOLLISIONEVENT e)
 
 		vx = e->nx * BUFF_VX;
 		vy = BUFF_VY;
+		SoundManager::GetInstance()->Play(ENEMY_KILLED);
 	}
 }
 

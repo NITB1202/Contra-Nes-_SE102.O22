@@ -1,5 +1,6 @@
 #include "BossStage3.h"
 #include "ObjectConfig.h"
+#include "SoundManager.h"
 #include "Game.h"
 #include "SoundManager.h"
 

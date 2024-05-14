@@ -2,6 +2,7 @@
 #include "Player.h"
 #include "Game.h"
 #include "MyUtility.h"
+#include "SoundManager.h"
 
 Camera* Camera::instance = NULL;
 
